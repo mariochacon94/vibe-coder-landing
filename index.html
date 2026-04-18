@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vibe Coder • Mario</title>
+    <style>
+      /* ==================== MODERN CSS RESET ==================== */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      /* Remove default list styles */
+      ul,
+      ol {
+        list-style: none;
+      }
+
+      /* Make images easier to work with */
+      img,
+      picture,
+      video,
+      canvas,
+      svg {
+        display: block;
+        max-width: 100%;
+      }
+
+      /* Inherit fonts for better consistency */
+      input,
+      button,
+      textarea,
+      select {
+        font: inherit;
+      }
+
+      /* Better text rendering */
+      body {
+        line-height: 1.5;
+        -webkit-text-size-adjust: 100%;
+      }
+
+      /* Accessibility: respect reduced motion */
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+
+      /* ==================== CUSTOM CSS VARIABLES (for future dark mode) ==================== */
+      :root {
+        /* Light mode colors */
+        --bg-color: #ffffff;
+        --text-color: #0a0a0a;
+        --accent-color: #6366f1; /* indigo vibe */
+        --card-bg: #f8fafc;
+
+        /* Typography */
+        --font-sans: system-ui, -apple-system, sans-serif;
+      }
+
+      /* Dark mode support (we'll toggle this later in the week) */
+      .dark {
+        --bg-color: #0a0a0a;
+        --text-color: #f1f5f9;
+        --accent-color: #818cf8;
+        --card-bg: #1e2937;
+      }
+
+      /* Apply the variables */
+      body {
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        font-family: var(--font-sans);
+      }
+      /* Hero Styles */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 2rem;
+      }
+
+      .hero h1 {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        color: var(--text-color);
+      }
+
+      .tagline {
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+        color: #64748b;
+        max-width: 500px;
+      }
+
+      .cta-button {
+        background-color: var(--accent-color);
+        color: white;
+        border: none;
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+        border-radius: 9999px;
+        cursor: pointer;
+        transition: transform 0.2s;
+      }
+
+      .cta-button:hover {
+        transform: scale(1.05);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <!-- We'll add logo and links later -->
+        <div>Vibe Coder</div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <h1>Hello, I'm Mario</h1>
+        <p class="tagline">Turning ideas into clean, beautiful digital vibes</p>
+        <button class="cta-button">See My Work</button>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2026 Mario • Vibe Coder</p>
+    </footer>
+  </body>
+</html>
