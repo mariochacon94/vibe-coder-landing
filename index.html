@@ -3,145 +3,188 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vibe Coder • Mario</title>
-    <style>
-      /* ==================== MODERN CSS RESET ==================== */
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
-      }
-
-      * {
-        margin: 0;
-        padding: 0;
-      }
-
-      /* Remove default list styles */
-      ul,
-      ol {
-        list-style: none;
-      }
-
-      /* Make images easier to work with */
-      img,
-      picture,
-      video,
-      canvas,
-      svg {
-        display: block;
-        max-width: 100%;
-      }
-
-      /* Inherit fonts for better consistency */
-      input,
-      button,
-      textarea,
-      select {
-        font: inherit;
-      }
-
-      /* Better text rendering */
-      body {
-        line-height: 1.5;
-        -webkit-text-size-adjust: 100%;
-      }
-
-      /* Accessibility: respect reduced motion */
-      @media (prefers-reduced-motion: reduce) {
-        *,
-        *::before,
-        *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
-
-      /* ==================== CUSTOM CSS VARIABLES (for future dark mode) ==================== */
-      :root {
-        /* Light mode colors */
-        --bg-color: #ffffff;
-        --text-color: #0a0a0a;
-        --accent-color: #6366f1; /* indigo vibe */
-        --card-bg: #f8fafc;
-
-        /* Typography */
-        --font-sans: system-ui, -apple-system, sans-serif;
-      }
-
-      /* Dark mode support (we'll toggle this later in the week) */
-      .dark {
-        --bg-color: #0a0a0a;
-        --text-color: #f1f5f9;
-        --accent-color: #818cf8;
-        --card-bg: #1e2937;
-      }
-
-      /* Apply the variables */
-      body {
-        background-color: var(--bg-color);
-        color: var(--text-color);
-        font-family: var(--font-sans);
-      }
-      /* Hero Styles */
-      .hero {
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        padding: 2rem;
-      }
-
-      .hero h1 {
-        font-size: 3.5rem;
-        margin-bottom: 1rem;
-        color: var(--text-color);
-      }
-
-      .tagline {
-        font-size: 1.5rem;
-        margin-bottom: 2rem;
-        color: #64748b;
-        max-width: 500px;
-      }
-
-      .cta-button {
-        background-color: var(--accent-color);
-        color: white;
-        border: none;
-        padding: 1rem 2rem;
-        font-size: 1.1rem;
-        border-radius: 9999px;
-        cursor: pointer;
-        transition: transform 0.2s;
-      }
-
-      .cta-button:hover {
-        transform: scale(1.05);
-      }
-    </style>
+    <title>Day 2 - Flexbox + Grid Mastery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
   </head>
-  <body>
-    <header>
-      <nav>
-        <!-- We'll add logo and links later -->
-        <div>Vibe Coder</div>
-      </nav>
-    </header>
+  <body class="bg-zinc-950 text-white font-sans">
+    <div class="max-w-screen-2xl mx-auto px-6 py-12">
+      <h1 class="text-4xl font-bold text-center mb-12">
+        Day 2: Flexbox + Grid Mastery
+      </h1>
 
-    <main>
-      <section class="hero">
-        <h1>Hello, I'm Mario</h1>
-        <p class="tagline">Turning ideas into clean, beautiful digital vibes</p>
-        <button class="cta-button">See My Work</button>
+      <!-- NAVBAR (Flexbox) -->
+      <section class="mb-24">
+        <h2 class="text-2xl font-semibold mb-6 flex items-center gap-2">
+          <i class="fa-solid fa-bars"></i> 1. Navbar – Flexbox
+        </h2>
+
+        <nav class="bg-white text-zinc-900 rounded-3xl py-5 px-8 shadow-2xl">
+          <div class="flex items-center justify-between max-w-6xl mx-auto">
+            <!-- Logo -->
+            <div class="flex items-center gap-3">
+              <div
+                class="w-9 h-9 bg-blue-600 rounded-2xl flex items-center justify-center text-white font-bold text-xl"
+              >
+                L
+              </div>
+              <span class="font-bold text-2xl">Layoutly</span>
+            </div>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center gap-8 text-lg">
+              <a href="#" class="hover:text-blue-600 transition">Features</a>
+              <a href="#" class="hover:text-blue-600 transition">Pricing</a>
+              <a href="#" class="hover:text-blue-600 transition">Blog</a>
+              <a href="#" class="hover:text-blue-600 transition">Docs</a>
+            </div>
+
+            <!-- Right side buttons -->
+            <div class="flex items-center gap-4">
+              <button
+                class="hidden sm:flex px-6 py-3 text-zinc-900 hover:bg-zinc-100 rounded-3xl font-medium transition"
+              >
+                Log in
+              </button>
+              <button
+                class="px-8 py-3 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold transition"
+              >
+                Get started
+              </button>
+
+              <!-- Mobile hamburger -->
+              <button class="md:hidden text-2xl">
+                <i class="fa-solid fa-bars"></i>
+              </button>
+            </div>
+          </div>
+        </nav>
       </section>
-    </main>
+      <!-- CARD GRID (Grid) -->
+      <section class="mb-24">
+        <h2 class="text-2xl font-semibold mb-6">2. Card Grid – CSS Grid</h2>
 
-    <footer>
-      <p>&copy; 2026 Mario • Vibe Coder</p>
-    </footer>
+        <div
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto"
+        >
+          <!-- Card 1 -->
+          <div
+            class="bg-zinc-900 rounded-3xl p-8 hover:-translate-y-2 transition-all duration-300 border border-zinc-800"
+          >
+            <div
+              class="w-14 h-14 bg-purple-500 rounded-2xl flex items-center justify-center mb-6 text-3xl"
+            >
+              🚀
+            </div>
+            <h3 class="text-2xl font-semibold mb-3">Lightning Fast</h3>
+            <p class="text-zinc-400">
+              Build layouts in minutes instead of hours.
+            </p>
+            <div class="mt-8 text-blue-400 font-medium flex items-center gap-2">
+              Learn more <i class="fa-solid fa-arrow-right"></i>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div
+            class="bg-zinc-900 rounded-3xl p-8 hover:-translate-y-2 transition-all duration-300 border border-zinc-800"
+          >
+            <div
+              class="w-14 h-14 bg-amber-500 rounded-2xl flex items-center justify-center mb-6 text-3xl"
+            >
+              📱
+            </div>
+            <h3 class="text-2xl font-semibold mb-3">Mobile First</h3>
+            <p class="text-zinc-400">Responsive by default. No extra work.</p>
+            <div class="mt-8 text-blue-400 font-medium flex items-center gap-2">
+              Learn more <i class="fa-solid fa-arrow-right"></i>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div
+            class="bg-zinc-900 rounded-3xl p-8 hover:-translate-y-2 transition-all duration-300 border border-zinc-800"
+          >
+            <div
+              class="w-14 h-14 bg-emerald-500 rounded-2xl flex items-center justify-center mb-6 text-3xl"
+            >
+              🎨
+            </div>
+            <h3 class="text-2xl font-semibold mb-3">Beautiful Defaults</h3>
+            <p class="text-zinc-400">
+              Tailwind gives you production-ready styles instantly.
+            </p>
+            <div class="mt-8 text-blue-400 font-medium flex items-center gap-2">
+              Learn more <i class="fa-solid fa-arrow-right"></i>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- HERO SPLIT (Flex + Grid) -->
+      <section>
+        <h2 class="text-2xl font-semibold mb-6">3. Hero Split – Flex + Grid</h2>
+
+        <div
+          class="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-3xl px-10 py-16 max-w-6xl mx-auto"
+        >
+          <div class="flex flex-col lg:flex-row gap-12 items-center">
+            <!-- Left content (Flex child) -->
+            <div class="flex-1">
+              <h1 class="text-6xl font-bold leading-none mb-6">
+                Build faster.<br />Look better.
+              </h1>
+              <p class="text-2xl text-blue-100 mb-10">
+                Master Flexbox & Grid in one afternoon with Tailwind.
+              </p>
+              <button
+                class="px-10 py-5 bg-white text-zinc-900 rounded-3xl text-xl font-semibold hover:scale-105 transition"
+              >
+                Start Day 2 →
+              </button>
+            </div>
+
+            <!-- Right side: Grid inside Flex -->
+            <div class="flex-1 grid grid-cols-2 gap-6">
+              <div
+                class="bg-white/10 backdrop-blur-xl rounded-3xl p-8 text-center"
+              >
+                <div class="text-5xl mb-4">📐</div>
+                <h4 class="font-semibold">Flexbox</h4>
+                <p class="text-blue-100 text-sm">1D layout magic</p>
+              </div>
+              <div
+                class="bg-white/10 backdrop-blur-xl rounded-3xl p-8 text-center"
+              >
+                <div class="text-5xl mb-4">🔲</div>
+                <h4 class="font-semibold">CSS Grid</h4>
+                <p class="text-blue-100 text-sm">2D layout power</p>
+              </div>
+              <div
+                class="bg-white/10 backdrop-blur-xl rounded-3xl p-8 text-center"
+              >
+                <div class="text-5xl mb-4">📏</div>
+                <h4 class="font-semibold">Responsive</h4>
+                <p class="text-blue-100 text-sm">md: lg: breakpoints</p>
+              </div>
+              <div
+                class="bg-white/10 backdrop-blur-xl rounded-3xl p-8 text-center"
+              >
+                <div class="text-5xl mb-4">⚡</div>
+                <h4 class="font-semibold">Tailwind</h4>
+                <p class="text-blue-100 text-sm">Zero custom CSS</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      // Tailwind script already loaded via CDN
+    </script>
   </body>
 </html>
