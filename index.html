@@ -1,190 +1,336 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Day 2 - Flexbox + Grid Mastery</title>
+    <title>Day 3 - Components & Interactivity | Vibe Coder</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
     />
+    <script>
+      // Tailwind config with dark mode
+      tailwind.config = {
+        darkMode: "class",
+        content: [],
+      };
+    </script>
   </head>
-  <body class="bg-zinc-950 text-white font-sans">
+  <body class="bg-zinc-950 dark:bg-zinc-950 text-white font-sans min-h-screen">
     <div class="max-w-screen-2xl mx-auto px-6 py-12">
-      <h1 class="text-4xl font-bold text-center mb-12">
-        Day 2: Flexbox + Grid Mastery
+      <h1 class="text-4xl font-bold text-center mb-12 text-blue-400">
+        Day 3: Components & Basic Interactivity
       </h1>
 
-      <!-- NAVBAR (Flexbox) -->
-      <section class="mb-24">
-        <h2 class="text-2xl font-semibold mb-6 flex items-center gap-2">
-          <i class="fa-solid fa-bars"></i> 1. Navbar – Flexbox
+      <!-- 1. Interactive Navbar with Mobile Menu -->
+      <section class="mb-20">
+        <h2 class="text-2xl font-semibold mb-6 flex items-center gap-3">
+          <i class="fa-solid fa-bars"></i> 1. Navbar + Mobile Menu (JS)
         </h2>
 
-        <nav class="bg-white text-zinc-900 rounded-3xl py-5 px-8 shadow-2xl">
+        <nav
+          class="bg-white/10 backdrop-blur-md border border-white/10 rounded-3xl py-5 px-8 sticky top-6 z-50"
+        >
           <div class="flex items-center justify-between max-w-6xl mx-auto">
-            <!-- Logo -->
             <div class="flex items-center gap-3">
               <div
                 class="w-9 h-9 bg-blue-600 rounded-2xl flex items-center justify-center text-white font-bold text-xl"
               >
-                L
+                V
               </div>
-              <span class="font-bold text-2xl">Layoutly</span>
+              <span class="font-bold text-2xl tracking-tight">VibeCoder</span>
             </div>
 
             <!-- Desktop Menu -->
-            <div class="hidden md:flex items-center gap-8 text-lg">
-              <a href="#" class="hover:text-blue-600 transition">Features</a>
-              <a href="#" class="hover:text-blue-600 transition">Pricing</a>
-              <a href="#" class="hover:text-blue-600 transition">Blog</a>
-              <a href="#" class="hover:text-blue-600 transition">Docs</a>
+            <div
+              id="desktop-menu"
+              class="hidden md:flex items-center gap-8 text-lg"
+            >
+              <a href="#" class="hover:text-blue-400 transition">Home</a>
+              <a href="#" class="hover:text-blue-400 transition">Components</a>
+              <a href="#" class="hover:text-blue-400 transition">Pricing</a>
+              <a href="#" class="hover:text-blue-400 transition">Blog</a>
             </div>
 
-            <!-- Right side buttons -->
             <div class="flex items-center gap-4">
               <button
-                class="hidden sm:flex px-6 py-3 text-zinc-900 hover:bg-zinc-100 rounded-3xl font-medium transition"
+                id="theme-toggle"
+                class="w-10 h-10 flex items-center justify-center text-xl rounded-2xl hover:bg-white/10 transition"
+              >
+                <i class="fa-solid fa-moon"></i>
+              </button>
+              <button
+                class="hidden sm:block px-6 py-3 text-zinc-900 dark:text-white hover:bg-white/10 rounded-3xl font-medium transition"
               >
                 Log in
               </button>
               <button
                 class="px-8 py-3 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold transition"
               >
-                Get started
+                Get started free
               </button>
 
-              <!-- Mobile hamburger -->
-              <button class="md:hidden text-2xl">
+              <!-- Mobile Hamburger -->
+              <button id="mobile-menu-btn" class="md:hidden text-3xl p-2">
                 <i class="fa-solid fa-bars"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Mobile Menu (hidden by default) -->
+          <div
+            id="mobile-menu"
+            class="hidden md:hidden mt-6 pt-6 border-t border-white/10"
+          >
+            <div class="flex flex-col gap-6 text-lg">
+              <a href="#" class="hover:text-blue-400">Home</a>
+              <a href="#" class="hover:text-blue-400">Components</a>
+              <a href="#" class="hover:text-blue-400">Pricing</a>
+              <a href="#" class="hover:text-blue-400">Blog</a>
+              <button class="mt-4 w-full py-4 bg-white/10 rounded-3xl">
+                Log in
               </button>
             </div>
           </div>
         </nav>
       </section>
-      <!-- CARD GRID (Grid) -->
-      <section class="mb-24">
-        <h2 class="text-2xl font-semibold mb-6">2. Card Grid – CSS Grid</h2>
-
-        <div
-          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto"
-        >
-          <!-- Card 1 -->
-          <div
-            class="bg-zinc-900 rounded-3xl p-8 hover:-translate-y-2 transition-all duration-300 border border-zinc-800"
+      <!-- 2. Button Variants -->
+      <section class="mb-20">
+        <h2 class="text-2xl font-semibold mb-6">2. Reusable Button Variants</h2>
+        <div class="flex flex-wrap gap-4 justify-center">
+          <button
+            class="px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold transition"
           >
-            <div
-              class="w-14 h-14 bg-purple-500 rounded-2xl flex items-center justify-center mb-6 text-3xl"
+            Primary
+          </button>
+          <button
+            class="px-8 py-4 border border-white/30 hover:bg-white/10 rounded-3xl font-semibold transition"
+          >
+            Secondary
+          </button>
+          <button
+            class="px-8 py-4 bg-emerald-600 hover:bg-emerald-700 rounded-3xl font-semibold transition flex items-center gap-2"
+          >
+            <i class="fa-solid fa-download"></i> Download
+          </button>
+          <button
+            class="px-8 py-4 text-red-400 hover:bg-red-500/10 rounded-3xl font-semibold transition"
+          ></button>
+        </div>
+      </section>
+      <!-- 3. Pricing Cards -->
+      <section class="mb-20">
+        <h2 class="text-2xl font-semibold mb-6 text-center">
+          3. Pricing Cards Component
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <!-- Free Card -->
+          <div
+            class="bg-zinc-900 border border-white/10 rounded-3xl p-8 hover:border-blue-500/50 transition-all"
+          >
+            <h3 class="text-2xl font-semibold mb-2">Starter</h3>
+            <div class="text-5xl font-bold mb-6">
+              $0<span class="text-base font-normal text-zinc-400">/mo</span>
+            </div>
+            <ul class="space-y-4 mb-10 text-zinc-300">
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-check text-emerald-400"></i> 3 projects
+              </li>
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-check text-emerald-400"></i> Basic
+                templates
+              </li>
+            </ul>
+            <button
+              class="w-full py-4 border border-white/30 rounded-3xl font-medium hover:bg-white/10"
             >
-              🚀
-            </div>
-            <h3 class="text-2xl font-semibold mb-3">Lightning Fast</h3>
-            <p class="text-zinc-400">
-              Build layouts in minutes instead of hours.
-            </p>
-            <div class="mt-8 text-blue-400 font-medium flex items-center gap-2">
-              Learn more <i class="fa-solid fa-arrow-right"></i>
-            </div>
+              Get started
+            </button>
           </div>
 
-          <!-- Card 2 -->
+          <!-- Pro Card (popular) -->
           <div
-            class="bg-zinc-900 rounded-3xl p-8 hover:-translate-y-2 transition-all duration-300 border border-zinc-800"
+            class="bg-gradient-to-b from-zinc-900 to-zinc-950 border-2 border-blue-500 rounded-3xl p-8 -mt-4 relative"
           >
             <div
-              class="w-14 h-14 bg-amber-500 rounded-2xl flex items-center justify-center mb-6 text-3xl"
+              class="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-600 text-xs font-bold px-6 py-1 rounded-full"
             >
-              📱
+              MOST POPULAR
             </div>
-            <h3 class="text-2xl font-semibold mb-3">Mobile First</h3>
-            <p class="text-zinc-400">Responsive by default. No extra work.</p>
-            <div class="mt-8 text-blue-400 font-medium flex items-center gap-2">
-              Learn more <i class="fa-solid fa-arrow-right"></i>
+            <h3 class="text-2xl font-semibold mb-2">Pro</h3>
+            <div class="text-5xl font-bold mb-6">
+              $29<span class="text-base font-normal text-zinc-400">/mo</span>
             </div>
+            <ul class="space-y-4 mb-10 text-zinc-300">
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-check text-emerald-400"></i> Unlimited
+                projects
+              </li>
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-check text-emerald-400"></i> All templates
+              </li>
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-check text-emerald-400"></i> Priority
+                support
+              </li>
+            </ul>
+            <button
+              class="w-full py-4 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold"
+            >
+              Start free trial
+            </button>
           </div>
 
-          <!-- Card 3 -->
+          <!-- Team Card -->
           <div
-            class="bg-zinc-900 rounded-3xl p-8 hover:-translate-y-2 transition-all duration-300 border border-zinc-800"
+            class="bg-zinc-900 border border-white/10 rounded-3xl p-8 hover:border-blue-500/50 transition-all"
           >
-            <div
-              class="w-14 h-14 bg-emerald-500 rounded-2xl flex items-center justify-center mb-6 text-3xl"
+            <h3 class="text-2xl font-semibold mb-2">Team</h3>
+            <div class="text-5xl font-bold mb-6">
+              $79<span class="text-base font-normal text-zinc-400">/mo</span>
+            </div>
+            <ul class="space-y-4 mb-10 text-zinc-300">
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-check text-emerald-400"></i> Everything in
+                Pro
+              </li>
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-check text-emerald-400"></i> Team seats
+              </li>
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-check text-emerald-400"></i> Analytics
+              </li>
+            </ul>
+            <button
+              class="w-full py-4 border border-white/30 rounded-3xl font-medium hover:bg-white/10"
             >
-              🎨
-            </div>
-            <h3 class="text-2xl font-semibold mb-3">Beautiful Defaults</h3>
-            <p class="text-zinc-400">
-              Tailwind gives you production-ready styles instantly.
-            </p>
-            <div class="mt-8 text-blue-400 font-medium flex items-center gap-2">
-              Learn more <i class="fa-solid fa-arrow-right"></i>
-            </div>
+              Contact sales
+            </button>
           </div>
         </div>
       </section>
-
-      <!-- HERO SPLIT (Flex + Grid) -->
+      <!-- 4. Testimonial Slider + Dark Mode -->
       <section>
-        <h2 class="text-2xl font-semibold mb-6">3. Hero Split – Flex + Grid</h2>
+        <h2 class="text-2xl font-semibold mb-6 text-center">
+          4. Testimonial Slider & Dark Mode
+        </h2>
 
         <div
-          class="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-3xl px-10 py-16 max-w-6xl mx-auto"
+          class="max-w-2xl mx-auto bg-zinc-900/70 border border-white/10 rounded-3xl p-10"
         >
-          <div class="flex flex-col lg:flex-row gap-12 items-center">
-            <!-- Left content (Flex child) -->
-            <div class="flex-1">
-              <h1 class="text-6xl font-bold leading-none mb-6">
-                Build faster.<br />Look better.
-              </h1>
-              <p class="text-2xl text-blue-100 mb-10">
-                Master Flexbox & Grid in one afternoon with Tailwind.
-              </p>
-              <button
-                class="px-10 py-5 bg-white text-zinc-900 rounded-3xl text-xl font-semibold hover:scale-105 transition"
-              >
-                Start Day 2 →
-              </button>
+          <div id="testimonial" class="text-center">
+            <p id="quote" class="text-xl italic mb-8">
+              "Tailwind made me 3x faster at building UIs. The components from
+              Day 3 feel production-ready already!"
+            </p>
+            <div class="flex items-center justify-center gap-4">
+              <div class="w-12 h-12 bg-purple-500 rounded-full"></div>
+              <div>
+                <p class="font-semibold">Sarah Chen</p>
+                <p class="text-zinc-400 text-sm">Frontend Engineer @ Stripe</p>
+              </div>
             </div>
+          </div>
 
-            <!-- Right side: Grid inside Flex -->
-            <div class="flex-1 grid grid-cols-2 gap-6">
-              <div
-                class="bg-white/10 backdrop-blur-xl rounded-3xl p-8 text-center"
-              >
-                <div class="text-5xl mb-4">📐</div>
-                <h4 class="font-semibold">Flexbox</h4>
-                <p class="text-blue-100 text-sm">1D layout magic</p>
-              </div>
-              <div
-                class="bg-white/10 backdrop-blur-xl rounded-3xl p-8 text-center"
-              >
-                <div class="text-5xl mb-4">🔲</div>
-                <h4 class="font-semibold">CSS Grid</h4>
-                <p class="text-blue-100 text-sm">2D layout power</p>
-              </div>
-              <div
-                class="bg-white/10 backdrop-blur-xl rounded-3xl p-8 text-center"
-              >
-                <div class="text-5xl mb-4">📏</div>
-                <h4 class="font-semibold">Responsive</h4>
-                <p class="text-blue-100 text-sm">md: lg: breakpoints</p>
-              </div>
-              <div
-                class="bg-white/10 backdrop-blur-xl rounded-3xl p-8 text-center"
-              >
-                <div class="text-5xl mb-4">⚡</div>
-                <h4 class="font-semibold">Tailwind</h4>
-                <p class="text-blue-100 text-sm">Zero custom CSS</p>
-              </div>
-            </div>
+          <div class="flex justify-center gap-4 mt-10">
+            <button
+              id="prev-btn"
+              class="w-12 h-12 border border-white/30 rounded-2xl hover:bg-white/10"
+            >
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <button
+              id="next-btn"
+              class="w-12 h-12 border border-white/30 rounded-2xl hover:bg-white/10"
+            >
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
           </div>
         </div>
       </section>
     </div>
 
     <script>
-      // Tailwind script already loaded via CDN
+      // Mobile Menu Toggle
+      const mobileBtn = document.getElementById("mobile-menu-btn");
+      const mobileMenu = document.getElementById("mobile-menu");
+
+      mobileBtn.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+        const icon = mobileBtn.querySelector("i");
+        icon.classList.toggle("fa-bars");
+        icon.classList.toggle("fa-xmark");
+      });
+
+      // Dark Mode Toggle
+      const themeToggle = document.getElementById("theme-toggle");
+      const html = document.documentElement;
+
+      function setTheme(isDark) {
+        if (isDark) {
+          html.classList.add("dark");
+          themeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
+          localStorage.theme = "dark";
+        } else {
+          html.classList.remove("dark");
+          themeToggle.innerHTML = '<i class="fa-solid fa-moon"></i>';
+          localStorage.theme = "light";
+        }
+      }
+
+      themeToggle.addEventListener("click", () => {
+        const isDark = !html.classList.contains("dark");
+        setTheme(isDark);
+      });
+
+      // Load saved theme or respect system preference
+      if (
+        localStorage.theme === "dark" ||
+        (!("theme" in localStorage) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        setTheme(true);
+      } else {
+        setTheme(false);
+      }
+
+      // Simple Testimonial Slider (array of quotes)
+      const quotes = [
+        {
+          text: "Tailwind made me 3x faster at building UIs. The components from Day 3 feel production-ready already!",
+          author: "Sarah Chen",
+          role: "Frontend Engineer @ Stripe",
+        },
+        {
+          text: "The mobile menu and dark mode toggle were so easy to add. Loving this daily challenge!",
+          author: "Alex Rivera",
+          role: "Indie Hacker",
+        },
+        {
+          text: "Finally understand how to combine Flex, Grid and JS in real projects. Thank you!",
+          author: "Maria Lopez",
+          role: "UI Designer turned Dev",
+        },
+      ];
+
+      let current = 0;
+      const quoteEl = document.getElementById("quote");
+
+      function showTestimonial(index) {
+        quoteEl.textContent = `"${quotes[index].text}"`;
+        // You can expand this to also update author/role if you want
+      }
+
+      document.getElementById("next-btn").addEventListener("click", () => {
+        current = (current + 1) % quotes.length;
+        showTestimonial(current);
+      });
+
+      document.getElementById("prev-btn").addEventListener("click", () => {
+        current = (current - 1 + quotes.length) % quotes.length;
+        showTestimonial(current);
+      });
     </script>
   </body>
 </html>
