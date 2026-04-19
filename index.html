@@ -78,21 +78,20 @@
             </div>
           </div>
 
-          <!-- Mobile Menu (hidden by default) -->
-          <div
-            id="mobile-menu"
-            class="hidden md:hidden mt-6 pt-6 border-t border-white/10"
-          >
-            <div class="flex flex-col gap-6 text-lg">
-              <a href="#" class="hover:text-blue-400">Home</a>
-              <a href="#" class="hover:text-blue-400">Components</a>
-              <a href="#" class="hover:text-blue-400">Pricing</a>
-              <a href="#" class="hover:text-blue-400">Blog</a>
-              <button class="mt-4 w-full py-4 bg-white/10 rounded-3xl">
-                Log in
-              </button>
-            </div>
-          </div>
+             <!-- Mobile Menu (improved) -->
+    <div id="mobile-menu" class="hidden md:hidden mt-6 pt-6 border-t border-white/10">
+      <div class="flex flex-col gap-6 text-lg">
+        <a href="#" class="hover:text-blue-400 transition">Home</a>
+        <a href="#" class="hover:text-blue-400 transition">Components</a>
+        <a href="#" class="hover:text-blue-400 transition">Pricing</a>
+        <a href="#" class="hover:text-blue-400 transition">Blog</a>
+        
+        <div class="pt-6 border-t border-white/10 flex flex-col gap-4">
+          <button class="py-4 text-left hover:text-blue-400 transition">Log in</button>
+          <button class="py-4 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold">Get started free</button>
+        </div>
+      </div>
+    </div>
         </nav>
       </section>
       <!-- 2. Button Variants -->
@@ -210,46 +209,30 @@
           </div>
         </div>
       </section>
-      <!-- 4. Testimonial Slider + Dark Mode -->
-      <section>
-        <h2 class="text-2xl font-semibold mb-6 text-center">
-          4. Testimonial Slider & Dark Mode
-        </h2>
-
-        <div
-          class="max-w-2xl mx-auto bg-zinc-900/70 border border-white/10 rounded-3xl p-10"
-        >
-          <div id="testimonial" class="text-center">
-            <p id="quote" class="text-xl italic mb-8">
-              "Tailwind made me 3x faster at building UIs. The components from
-              Day 3 feel production-ready already!"
-            </p>
-            <div class="flex items-center justify-center gap-4">
-              <div class="w-12 h-12 bg-purple-500 rounded-full"></div>
-              <div>
-                <p class="font-semibold">Sarah Chen</p>
-                <p class="text-zinc-400 text-sm">Frontend Engineer @ Stripe</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="flex justify-center gap-4 mt-10">
-            <button
-              id="prev-btn"
-              class="w-12 h-12 border border-white/30 rounded-2xl hover:bg-white/10"
-            >
-              <i class="fa-solid fa-chevron-left"></i>
-            </button>
-            <button
-              id="next-btn"
-              class="w-12 h-12 border border-white/30 rounded-2xl hover:bg-white/10"
-            >
-              <i class="fa-solid fa-chevron-right"></i>
-            </button>
+       <!-- 4. Improved Testimonial Slider -->
+  <section class="mb-20">
+    <h2 class="text-2xl font-semibold mb-8 text-center">4. Testimonial Slider</h2>
+    
+    <div class="max-w-2xl mx-auto bg-zinc-900/70 border border-white/10 rounded-3xl p-10">
+      <div id="testimonial" class="text-center">
+        <p id="quote" class="text-xl italic mb-8 leading-relaxed">"Tailwind made me 3x faster at building UIs. The components from Day 3 feel production-ready already!"</p>
+        
+        <div class="flex items-center justify-center gap-4">
+          <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex-shrink-0"></div>
+          <div class="text-left">
+            <p id="author" class="font-semibold">Sarah Chen</p>
+            <p id="role" class="text-zinc-400 text-sm">Frontend Engineer @ Stripe</p>
           </div>
         </div>
-      </section>
+      </div>
+      
+      <div class="flex justify-center gap-4 mt-10">
+        <button id="prev-btn" class="w-12 h-12 border border-white/30 rounded-2xl hover:bg-white/10 transition flex items-center justify-center"><i class="fa-solid fa-chevron-left"></i></button>
+        <button id="next-btn" class="w-12 h-12 border border-white/30 rounded-2xl hover:bg-white/10 transition flex items-center justify-center"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
     </div>
+  </section>
+    
 
     <script>
       // Mobile Menu Toggle
@@ -295,42 +278,48 @@
         setTheme(false);
       }
 
-      // Simple Testimonial Slider (array of quotes)
-      const quotes = [
-        {
-          text: "Tailwind made me 3x faster at building UIs. The components from Day 3 feel production-ready already!",
-          author: "Sarah Chen",
-          role: "Frontend Engineer @ Stripe",
-        },
-        {
-          text: "The mobile menu and dark mode toggle were so easy to add. Loving this daily challenge!",
-          author: "Alex Rivera",
-          role: "Indie Hacker",
-        },
-        {
-          text: "Finally understand how to combine Flex, Grid and JS in real projects. Thank you!",
-          author: "Maria Lopez",
-          role: "UI Designer turned Dev",
-        },
-      ];
-
-      let current = 0;
-      const quoteEl = document.getElementById("quote");
-
-      function showTestimonial(index) {
-        quoteEl.textContent = `"${quotes[index].text}"`;
-        // You can expand this to also update author/role if you want
+          // ==================== TESTIMONIAL SLIDER ====================
+    const quotes = [
+      { 
+        text: "Tailwind made me 3x faster at building UIs. The components from Day 3 feel production-ready already!", 
+        author: "Sarah Chen", 
+        role: "Frontend Engineer @ Stripe" 
+      },
+      { 
+        text: "The mobile menu and dark mode toggle were so easy to add. Loving this daily challenge!", 
+        author: "Alex Rivera", 
+        role: "Indie Hacker" 
+      },
+      { 
+        text: "Finally understand how to combine Flex, Grid and JS in real projects. Thank you!", 
+        author: "Maria Lopez", 
+        role: "UI Designer turned Dev" 
       }
-
-      document.getElementById("next-btn").addEventListener("click", () => {
-        current = (current + 1) % quotes.length;
-        showTestimonial(current);
-      });
-
-      document.getElementById("prev-btn").addEventListener("click", () => {
-        current = (current - 1 + quotes.length) % quotes.length;
-        showTestimonial(current);
-      });
+    ];
+    
+    let current = 0;
+    const quoteEl = document.getElementById('quote');
+    const authorEl = document.getElementById('author');
+    const roleEl = document.getElementById('role');
+    
+    function showTestimonial(index) {
+      quoteEl.textContent = `"${quotes[index].text}"`;
+      authorEl.textContent = quotes[index].author;
+      roleEl.textContent = quotes[index].role;
+    }
+    
+    document.getElementById('next-btn').addEventListener('click', () => {
+      current = (current + 1) % quotes.length;
+      showTestimonial(current);
+    });
+    
+    document.getElementById('prev-btn').addEventListener('click', () => {
+      current = (current - 1 + quotes.length) % quotes.length;
+      showTestimonial(current);
+    });
+    
+    // Show first testimonial on load
+    showTestimonial(0);
     </script>
   </body>
 </html>
