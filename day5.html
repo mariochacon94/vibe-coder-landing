@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day 5 - Navigation, Tabs & Advanced Interactivity</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        content: [],
+      };
+    </script>
+  </head>
+  <body class="bg-zinc-950 text-white font-sans min-h-screen">
+    <div class="max-w-screen-2xl mx-auto px-6 py-12">
+      <!-- Main Title -->
+      <h1
+        class="text-5xl font-bold text-center mb-16 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
+      >
+        Day 5: Navigation, Tabs & Advanced Interactivity
+      </h1>
+
+      <!-- 1. Modern Sidebar Navigation -->
+      <section class="mb-24">
+        <h2 class="text-3xl font-semibold mb-10 text-center">
+          1. Modern Sidebar Navigation
+        </h2>
+
+        <div class="flex flex-col lg:flex-row gap-8 max-w-6xl mx-auto">
+          <!-- Sidebar -->
+          <div
+            class="w-full lg:w-64 bg-zinc-900 border border-white/10 rounded-3xl p-6 h-fit"
+          >
+            <div class="flex items-center gap-3 mb-10">
+              <div
+                class="w-9 h-9 bg-gradient-to-br from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center text-white font-bold"
+              >
+                V
+              </div>
+              <span class="font-bold text-2xl">VibeCoder</span>
+            </div>
+
+            <nav class="space-y-2">
+              <a
+                href="#"
+                onclick="setActive(this)"
+                class="nav-link flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-white/10 transition-all active-nav"
+              >
+                <i class="fa-solid fa-house w-5"></i>
+                <span>Dashboard</span>
+              </a>
+              <a
+                href="#"
+                onclick="setActive(this)"
+                class="nav-link flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-white/10 transition-all"
+              >
+                <i class="fa-solid fa-compass w-5"></i>
+                <span>Explore</span>
+              </a>
+              <a
+                href="#"
+                onclick="setActive(this)"
+                class="nav-link flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-white/10 transition-all"
+              >
+                <i class="fa-solid fa-book w-5"></i>
+                <span>Learn</span>
+              </a>
+              <a
+                href="#"
+                onclick="setActive(this)"
+                class="nav-link flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-white/10 transition-all"
+              >
+                <i class="fa-solid fa-user w-5"></i>
+                <span>Profile</span>
+              </a>
+            </nav>
+          </div>
+
+          <!-- Main Content Area -->
+          <div
+            class="flex-1 bg-zinc-900 border border-white/10 rounded-3xl p-10 min-h-[500px]"
+          >
+            <h3 class="text-2xl font-semibold mb-6">Welcome back, Mario 👋</h3>
+            <p class="text-zinc-400">
+              This is where your main content would go. Click the sidebar items
+              to see the active state change.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Tabbed Content System - Placed as its own full section -->
+      <section class="mb-24">
+        <h2 class="text-3xl font-semibold mb-10 text-center">
+          2. Tabbed Content System
+        </h2>
+
+        <div class="max-w-4xl mx-auto">
+          <!-- Tabs -->
+          <div class="flex border-b border-white/10 mb-8 overflow-x-auto">
+            <button
+              onclick="switchTab(0)"
+              class="tab-btn px-8 py-4 font-medium border-b-2 border-blue-500 text-blue-400 whitespace-nowrap"
+            >
+              Overview
+            </button>
+            <button
+              onclick="switchTab(1)"
+              class="tab-btn px-8 py-4 font-medium text-zinc-400 hover:text-white transition whitespace-nowrap"
+            >
+              Features
+            </button>
+            <button
+              onclick="switchTab(2)"
+              class="tab-btn px-8 py-4 font-medium text-zinc-400 hover:text-white transition whitespace-nowrap"
+            >
+              Pricing
+            </button>
+          </div>
+
+          <!-- Tab Panels -->
+          <div id="tab-content" class="min-h-[300px]">
+            <div class="tab-panel">
+              <h3 class="text-2xl font-semibold mb-4">Overview</h3>
+              <p class="text-zinc-400 leading-relaxed">
+                You've made incredible progress in just 5 days. From basic
+                layouts to interactive forms and animations — you're building
+                real skills that will last.
+              </p>
+            </div>
+
+            <div class="tab-panel hidden">
+              <h3 class="text-2xl font-semibold mb-4">Features</h3>
+              <p class="text-zinc-400 leading-relaxed">
+                All the components you've built so far (mobile menus, pricing
+                cards, forms, accordions) are production-ready and can be reused
+                in real projects.
+              </p>
+            </div>
+
+            <div class="tab-panel hidden">
+              <h3 class="text-2xl font-semibold mb-4">Pricing</h3>
+              <p class="text-zinc-400 leading-relaxed">
+                Choose the plan that best fits your vibe coding journey. Whether
+                you're learning, building side projects, or going pro.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- 3. Smooth Scroll Spy with Progress Bar -->
+      <section class="mb-24">
+        <h2 class="text-3xl font-semibold mb-10 text-center">
+          3. Smooth Scroll Spy + Progress Bar
+        </h2>
+
+        <div class="max-w-4xl mx-auto">
+          <!-- Progress Bar -->
+          <div class="sticky top-6 z-50 mb-10">
+            <div class="h-1.5 bg-white/10 rounded-full overflow-hidden">
+              <div
+                id="progress-bar"
+                class="h-full bg-gradient-to-r from-blue-500 to-purple-500 w-0 transition-all duration-200"
+              ></div>
+            </div>
+          </div>
+
+          <!-- Scrollable Content Sections -->
+          <div class="space-y-32">
+            <div
+              id="section1"
+              class="scroll-section bg-zinc-900 border border-white/10 rounded-3xl p-10"
+            >
+              <h3 class="text-2xl font-semibold mb-4">
+                Section 1: Your Progress
+              </h3>
+              <p class="text-zinc-400 leading-relaxed">
+                You've completed 5 full days of consistent practice. From
+                layouts to interactive components — you're building real
+                momentum.
+              </p>
+            </div>
+
+            <div
+              id="section2"
+              class="scroll-section bg-zinc-900 border border-white/10 rounded-3xl p-10"
+            >
+              <h3 class="text-2xl font-semibold mb-4">
+                Section 2: Skills Gained
+              </h3>
+              <p class="text-zinc-400 leading-relaxed">
+                Flexbox, Grid, reusable components, forms with validation,
+                animations, accordions, and now advanced navigation patterns.
+              </p>
+            </div>
+
+            <div
+              id="section3"
+              class="scroll-section bg-zinc-900 border border-white/10 rounded-3xl p-10"
+            >
+              <h3 class="text-2xl font-semibold mb-4">Section 3: Next Level</h3>
+              <p class="text-zinc-400 leading-relaxed">
+                You're no longer just learning Tailwind — you're becoming a Vibe
+                Coder who can ship polished, interactive interfaces quickly.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- 4. Mini Dashboard with Live Counters -->
+      <section class="mb-24">
+        <h2 class="text-3xl font-semibold mb-10 text-center">
+          4. Mini Dashboard with Live Counters
+        </h2>
+
+        <div
+          class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+        >
+          <!-- Stat Card 1 -->
+          <div
+            class="bg-zinc-900 border border-white/10 rounded-3xl p-8 hover:border-blue-500/50 transition-all group"
+          >
+            <div class="flex justify-between items-start mb-6">
+              <div>
+                <p class="text-zinc-400 text-sm">Days Completed</p>
+                <h3
+                  id="days-count"
+                  class="text-5xl font-bold text-blue-400 mt-2"
+                >
+                  5
+                </h3>
+              </div>
+              <div
+                class="text-4xl text-blue-400 group-hover:scale-110 transition-transform"
+              >
+                🏆
+              </div>
+            </div>
+            <p
+              class="text-emerald-400 text-sm font-medium flex items-center gap-2"
+            >
+              <span class="text-xl">↑</span> Consistent streak
+            </p>
+          </div>
+
+          <!-- Stat Card 2 -->
+          <div
+            class="bg-zinc-900 border border-white/10 rounded-3xl p-8 hover:border-purple-500/50 transition-all group"
+          >
+            <div class="flex justify-between items-start mb-6">
+              <div>
+                <p class="text-zinc-400 text-sm">Components Built</p>
+                <h3
+                  id="components-count"
+                  class="text-5xl font-bold text-purple-400 mt-2"
+                >
+                  18
+                </h3>
+              </div>
+              <div
+                class="text-4xl text-purple-400 group-hover:scale-110 transition-transform"
+              >
+                🧩
+              </div>
+            </div>
+            <p
+              class="text-emerald-400 text-sm font-medium flex items-center gap-2"
+            >
+              <span class="text-xl">↑</span> Reusable &amp; polished
+            </p>
+          </div>
+
+          <!-- Stat Card 3 -->
+          <div
+            class="bg-zinc-900 border border-white/10 rounded-3xl p-8 hover:border-emerald-500/50 transition-all group"
+          >
+            <div class="flex justify-between items-start mb-6">
+              <div>
+                <p class="text-zinc-400 text-sm">Hours Practiced</p>
+                <h3
+                  id="hours-count"
+                  class="text-5xl font-bold text-emerald-400 mt-2"
+                >
+                  22
+                </h3>
+              </div>
+              <div
+                class="text-4xl text-emerald-400 group-hover:scale-110 transition-transform"
+              >
+                ⏱️
+              </div>
+            </div>
+            <p
+              class="text-emerald-400 text-sm font-medium flex items-center gap-2"
+            >
+              <span class="text-xl">↑</span> Focused practice
+            </p>
+          </div>
+
+          <!-- Stat Card 4 -->
+          <div
+            class="bg-zinc-900 border border-white/10 rounded-3xl p-8 hover:border-amber-500/50 transition-all group"
+          >
+            <div class="flex justify-between items-start mb-6">
+              <div>
+                <p class="text-zinc-400 text-sm">Projects Shipped</p>
+                <h3
+                  id="projects-count"
+                  class="text-5xl font-bold text-amber-400 mt-2"
+                >
+                  3
+                </h3>
+              </div>
+              <div
+                class="text-4xl text-amber-400 group-hover:scale-110 transition-transform"
+              >
+                🚀
+              </div>
+            </div>
+            <p
+              class="text-emerald-400 text-sm font-medium flex items-center gap-2"
+            >
+              <span class="text-xl">↑</span> Live on Vercel
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      // ==================== 1. SIDEBAR ACTIVE STATE ====================
+      function setActive(link) {
+        document.querySelectorAll(".nav-link").forEach((item) => {
+          item.classList.remove("active-nav", "bg-white/10");
+        });
+        link.classList.add("active-nav", "bg-white/10");
+      }
+
+      // ==================== 2. TAB SWITCHING ====================
+      function switchTab(tabIndex) {
+        document.querySelectorAll(".tab-btn").forEach((btn) => {
+          btn.classList.remove(
+            "border-b-2",
+            "border-blue-500",
+            "text-blue-400",
+          );
+          btn.classList.add("text-zinc-400");
+        });
+
+        const activeBtn = document.querySelectorAll(".tab-btn")[tabIndex];
+        activeBtn.classList.add(
+          "border-b-2",
+          "border-blue-500",
+          "text-blue-400",
+        );
+        activeBtn.classList.remove("text-zinc-400");
+
+        document.querySelectorAll(".tab-panel").forEach((panel) => {
+          panel.classList.add("hidden");
+        });
+
+        document
+          .querySelectorAll(".tab-panel")
+          [tabIndex].classList.remove("hidden");
+      }
+
+      // ==================== 3. SMOOTH SCROLL SPY + PROGRESS BAR ====================
+      const progressBar = document.getElementById("progress-bar");
+
+      function updateProgressBar() {
+        let scrollTop = window.scrollY;
+        let docHeight =
+          document.documentElement.scrollHeight -
+          document.documentElement.clientHeight;
+        let scrollPercent = (scrollTop / docHeight) * 100;
+        progressBar.style.width = scrollPercent + "%";
+      }
+
+      // ==================== 4. LIVE COUNTERS ANIMATION ====================
+      function animateCounter(id, target, duration = 2000) {
+        const element = document.getElementById(id);
+        let start = 0;
+        const increment = target / (duration / 16);
+
+        function update() {
+          start += increment;
+          if (start >= target) {
+            element.textContent = target;
+          } else {
+            element.textContent = Math.floor(start);
+            requestAnimationFrame(update);
+          }
+        }
+        update();
+      }
+
+      // Trigger counters when user scrolls to dashboard section
+      function triggerCounters() {
+        const dashboardSection = document.querySelector(".grid-cols-1"); // targets the dashboard grid
+        if (!dashboardSection) return;
+
+        const rect = dashboardSection.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.8) {
+          // Animate each counter
+          animateCounter("days-count", 5, 1500);
+          animateCounter("components-count", 18, 1800);
+          animateCounter("hours-count", 22, 2000);
+          animateCounter("projects-count", 3, 1200);
+
+          // Remove listener after triggering once
+          window.removeEventListener("scroll", triggerCounters);
+        }
+      }
+
+      // ==================== INITIALIZATION ====================
+      window.onload = function () {
+        // Initialize tabs
+        switchTab(0);
+
+        // Initialize progress bar
+        updateProgressBar();
+
+        // Listen for scroll events
+        window.addEventListener("scroll", () => {
+          updateProgressBar();
+          triggerCounters();
+        });
+
+        // Trigger counters immediately if already in view
+        setTimeout(triggerCounters, 800);
+      };
+    </script>
+  </body>
+</html>
