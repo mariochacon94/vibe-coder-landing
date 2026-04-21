@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day 4 - Forms, Animations & Advanced Components</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        content: [],
+      };
+    </script>
+  </head>
+  <body class="bg-zinc-950 text-white font-sans min-h-screen">
+    <div class="max-w-screen-2xl mx-auto px-6 py-12">
+      <!-- Main Title -->
+      <h1
+        class="text-5xl font-bold text-center mb-16 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
+      >
+        Day 4: Forms, Animations & Advanced Components
+      </h1>
+
+      <!-- 1. Animated Feature Grid -->
+      <section class="mb-20">
+        <h2 class="text-3xl font-semibold mb-10 text-center">
+          1. Animated Feature Grid
+        </h2>
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto"
+        >
+          <div
+            class="group bg-zinc-900 border border-white/10 rounded-3xl p-8 hover:border-blue-500/50 transition-all duration-300 hover:-translate-y-3 hover:shadow-2xl"
+          >
+            <div
+              class="w-14 h-14 bg-blue-500/10 text-blue-400 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform"
+            >
+              ⚡
+            </div>
+            <h3 class="text-2xl font-semibold mb-3">Lightning Fast</h3>
+            <p class="text-zinc-400">
+              Build beautiful UIs in minutes instead of hours.
+            </p>
+          </div>
+
+          <div
+            class="group bg-zinc-900 border border-white/10 rounded-3xl p-8 hover:border-purple-500/50 transition-all duration-300 hover:-translate-y-3 hover:shadow-2xl"
+          >
+            <div
+              class="w-14 h-14 bg-purple-500/10 text-purple-400 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform"
+            >
+              🎨
+            </div>
+            <h3 class="text-2xl font-semibold mb-3">Beautiful by Default</h3>
+            <p class="text-zinc-400">
+              Tailwind gives production-ready design instantly.
+            </p>
+          </div>
+
+          <div
+            class="group bg-zinc-900 border border-white/10 rounded-3xl p-8 hover:border-emerald-500/50 transition-all duration-300 hover:-translate-y-3 hover:shadow-2xl"
+          >
+            <div
+              class="w-14 h-14 bg-emerald-500/10 text-emerald-400 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform"
+            >
+              📱
+            </div>
+            <h3 class="text-2xl font-semibold mb-3">Mobile First</h3>
+            <p class="text-zinc-400">Everything just works on every device.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. FAQ Accordion -->
+      <section class="mb-20">
+        <h2 class="text-3xl font-semibold mb-10 text-center">
+          2. FAQ Accordion
+        </h2>
+        <div class="max-w-2xl mx-auto space-y-4">
+          <div
+            class="faq-item bg-zinc-900 border border-white/10 rounded-3xl overflow-hidden"
+          >
+            <button
+              onclick="toggleFAQ(this)"
+              class="w-full px-8 py-6 text-left flex justify-between items-center hover:bg-white/5 transition-colors"
+            >
+              <span class="font-medium"
+                >How long does it take to learn Tailwind?</span
+              >
+              <i
+                class="fa-solid fa-chevron-down transition-transform duration-300"
+              ></i>
+            </button>
+            <div class="faq-answer hidden px-8 pb-6 text-zinc-400">
+              With daily focused practice like this challenge, you can build
+              real UIs in under a week.
+            </div>
+          </div>
+
+          <div
+            class="faq-item bg-zinc-900 border border-white/10 rounded-3xl overflow-hidden"
+          >
+            <button
+              onclick="toggleFAQ(this)"
+              class="w-full px-8 py-6 text-left flex justify-between items-center hover:bg-white/5 transition-colors"
+            >
+              <span class="font-medium">Do I need to know custom CSS?</span>
+              <i
+                class="fa-solid fa-chevron-down transition-transform duration-300"
+              ></i>
+            </button>
+            <div class="faq-answer hidden px-8 pb-6 text-zinc-400">
+              No. Tailwind handles 95% of what you need for beautiful
+              interfaces.
+            </div>
+          </div>
+
+          <div
+            class="faq-item bg-zinc-900 border border-white/10 rounded-3xl overflow-hidden"
+          >
+            <button
+              onclick="toggleFAQ(this)"
+              class="w-full px-8 py-6 text-left flex justify-between items-center hover:bg-white/5 transition-colors"
+            >
+              <span class="font-medium">Can I use this in real projects?</span>
+              <i
+                class="fa-solid fa-chevron-down transition-transform duration-300"
+              ></i>
+            </button>
+            <div class="faq-answer hidden px-8 pb-6 text-zinc-400">
+              Absolutely. Many production apps are built entirely with Tailwind.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Contact Form -->
+      <section class="mb-20">
+        <h2 class="text-3xl font-semibold mb-10 text-center">
+          3. Contact Form
+        </h2>
+        <div
+          class="max-w-lg mx-auto bg-zinc-900 border border-white/10 rounded-3xl p-10"
+        >
+          <form id="contact-form" class="space-y-6">
+            <div>
+              <label class="block text-sm font-medium mb-2">Name</label>
+              <input
+                type="text"
+                id="name"
+                required
+                class="w-full bg-zinc-800 border border-white/20 rounded-2xl px-5 py-4 focus:outline-none focus:border-blue-500 transition-colors"
+              />
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-2">Email</label>
+              <input
+                type="email"
+                id="email"
+                required
+                class="w-full bg-zinc-800 border border-white/20 rounded-2xl px-5 py-4 focus:outline-none focus:border-blue-500 transition-colors"
+              />
+              <p id="email-error" class="text-red-400 text-sm mt-1 hidden">
+                Please enter a valid email
+              </p>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-2">Message</label>
+              <textarea
+                id="message"
+                rows="5"
+                required
+                class="w-full bg-zinc-800 border border-white/20 rounded-3xl px-5 py-4 focus:outline-none focus:border-blue-500 transition-colors resize-y"
+              ></textarea>
+            </div>
+            <button
+              type="submit"
+              id="submit-btn"
+              class="w-full py-5 bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl font-semibold text-lg hover:scale-105 active:scale-95 transition-all duration-200 flex items-center justify-center gap-3"
+            >
+              <span id="btn-text">Send Message</span>
+              <i id="btn-icon" class="fa-solid fa-paper-plane"></i>
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <!-- 4. Success Modal - Placed at root level -->
+      <div
+        id="success-modal"
+        class="hidden fixed inset-0 bg-black/80 flex items-center justify-center z-50"
+      >
+        <div
+          class="bg-zinc-900 border border-white/10 rounded-3xl p-12 max-w-sm mx-6 text-center animate-bounce-once"
+        >
+          <div
+            class="w-24 h-24 mx-auto mb-6 bg-emerald-500/10 rounded-full flex items-center justify-center text-6xl"
+          >
+            🎉
+          </div>
+          <h3 class="text-3xl font-semibold mb-3">Message Sent!</h3>
+          <p class="text-zinc-400 mb-8">
+            Thank you. I'll get back to you soon.
+          </p>
+          <button
+            onclick="closeModal()"
+            class="px-10 py-4 bg-white text-zinc-900 rounded-3xl font-semibold hover:bg-zinc-100 transition"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // ==================== 1. FAQ Accordion ====================
+      function toggleFAQ(btn) {
+        const answer = btn.nextElementSibling;
+        const icon = btn.querySelector("i");
+
+        answer.classList.toggle("hidden");
+        icon.classList.toggle("rotate-180");
+      }
+
+      // ==================== 2. Contact Form with Validation ====================
+      const form = document.getElementById("contact-form");
+      const emailInput = document.getElementById("email");
+      const emailError = document.getElementById("email-error");
+      const submitBtn = document.getElementById("submit-btn");
+      const btnText = document.getElementById("btn-text");
+      const btnIcon = document.getElementById("btn-icon");
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        // Simple email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(emailInput.value)) {
+          emailError.classList.remove("hidden");
+          return;
+        }
+
+        emailError.classList.add("hidden");
+
+        // Show loading state
+        submitBtn.disabled = true;
+        btnText.textContent = "Sending...";
+        btnIcon.classList.remove("fa-paper-plane");
+        btnIcon.classList.add("fa-spinner", "animate-spin");
+
+        // Simulate sending (1.8 seconds)
+        setTimeout(() => {
+          // Show success modal
+          document.getElementById("success-modal").classList.remove("hidden");
+          document.getElementById("success-modal").classList.add("flex");
+
+          // Reset form
+          form.reset();
+          submitBtn.disabled = false;
+          btnText.textContent = "Send Message";
+          btnIcon.classList.remove("fa-spinner", "animate-spin");
+          btnIcon.classList.add("fa-paper-plane");
+        }, 1800);
+      });
+
+      // ==================== 3. Success Modal Functions ====================
+      function closeModal() {
+        const modal = document.getElementById("success-modal");
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+      }
+
+      // Close modal when clicking outside the box
+      document
+        .getElementById("success-modal")
+        .addEventListener("click", function (e) {
+          if (e.target === this) {
+            closeModal();
+          }
+        });
+    </script>
+  </body>
+</html>
