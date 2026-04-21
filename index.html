@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mario • Vibe Coder Journey</title>
+    <title>Mario Chacon • Vibe Coder</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
       rel="stylesheet"
@@ -12,136 +12,200 @@
     <script>
       tailwind.config = { darkMode: "class" };
     </script>
+    <style>
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(40px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .animate-fade-in-up {
+        animation: fadeInUp 0.8s ease forwards;
+      }
+      .glass {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(20px);
+      }
+    </style>
   </head>
-  <body class="bg-zinc-950 text-white font-sans min-h-screen">
-    <div class="max-w-screen-2xl mx-auto px-6 py-16">
-      <div class="text-center mb-16">
-        <div class="inline-flex items-center gap-4 mb-6">
-          <div
-            class="w-14 h-14 bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl flex items-center justify-center text-3xl font-bold shadow-lg"
-          >
-            MC
-          </div>
-          <h1
-            class="text-6xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent"
-          >
-            Vibe Coder Journey
-          </h1>
-        </div>
-        <p class="text-2xl text-zinc-400 max-w-2xl mx-auto">
-          Daily public practice • Building modern, delightful UIs with Tailwind
-          CSS
-        </p>
-        <p class="text-sm text-zinc-500 mt-3">
-          Currently on Day 6 • 6 exercises completed
-        </p>
-      </div>
-
+  <body class="bg-zinc-950 text-white font-sans min-h-screen overflow-x-hidden">
+    <!-- Hero -->
+    <section class="min-h-screen flex items-center relative">
       <div
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto"
-      >
-        <!-- Day 4 -->
-        <a
-          href="day4.html"
-          class="group bg-zinc-900 border border-white/10 rounded-3xl overflow-hidden hover:border-amber-400/50 transition-all hover:-translate-y-3"
-        >
-          <div class="h-2 bg-gradient-to-r from-amber-400 to-yellow-400"></div>
-          <div class="p-8">
-            <div class="flex justify-between items-start mb-6">
-              <div>
-                <span class="text-amber-400 text-xs font-mono tracking-widest"
-                  >DAY 04</span
-                >
-                <h3 class="text-2xl font-semibold mt-2">Forms &amp; Polish</h3>
-              </div>
-              <div
-                class="text-5xl opacity-75 group-hover:scale-110 transition-transform"
-              >
-                📝
-              </div>
-            </div>
-            <p class="text-zinc-400 text-[15px] leading-relaxed">
-              Contact forms with validation, success modals, FAQ accordion, and
-              smooth animations.
-            </p>
-            <div
-              class="mt-8 text-amber-400 text-sm font-medium flex items-center gap-2 group-hover:gap-3 transition-all"
-            >
-              View Day 4 <i class="fa-solid fa-arrow-right"></i>
-            </div>
-          </div>
-        </a>
+        class="absolute inset-0 bg-gradient-to-br from-blue-950/40 via-purple-950/40 to-zinc-950"
+      ></div>
 
-        <!-- Day 5 -->
-        <a
-          href="day5.html"
-          class="group bg-zinc-900 border border-white/10 rounded-3xl overflow-hidden hover:border-rose-400/50 transition-all hover:-translate-y-3"
+      <div class="relative z-10 max-w-5xl mx-auto px-6 text-center">
+        <div
+          class="inline-flex items-center gap-3 mb-8 px-8 py-3 glass rounded-full border border-white/10"
         >
-          <div class="h-2 bg-gradient-to-r from-rose-400 to-pink-400"></div>
-          <div class="p-8">
-            <div class="flex justify-between items-start mb-6">
-              <div>
-                <span class="text-rose-400 text-xs font-mono tracking-widest"
-                  >DAY 05</span
-                >
-                <h3 class="text-2xl font-semibold mt-2">
-                  Navigation &amp; Tabs
-                </h3>
-              </div>
-              <div
-                class="text-5xl opacity-75 group-hover:scale-110 transition-transform"
-              >
-                🧭
-              </div>
-            </div>
-            <p class="text-zinc-400 text-[15px] leading-relaxed">
-              Modern sidebar, tabbed interfaces, scroll spy progress bar, and
-              animated dashboard.
-            </p>
-            <div
-              class="mt-8 text-rose-400 text-sm font-medium flex items-center gap-2 group-hover:gap-3 transition-all"
-            >
-              View Day 5 <i class="fa-solid fa-arrow-right"></i>
-            </div>
-          </div>
-        </a>
+          <div class="w-3 h-3 bg-emerald-400 rounded-full animate-pulse"></div>
+          <span
+            class="uppercase tracking-[3px] text-sm font-medium text-emerald-400"
+            >Day 7 • Final Portfolio</span
+          >
+        </div>
 
-        <!-- Day 6 -->
-        <a
-          href="day6.html"
-          class="group bg-zinc-900 border border-white/10 rounded-3xl overflow-hidden hover:border-sky-400/50 transition-all hover:-translate-y-3"
+        <h1
+          class="text-7xl md:text-8xl font-bold leading-none mb-6 bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent"
         >
-          <div class="h-2 bg-gradient-to-r from-sky-400 to-cyan-400"></div>
-          <div class="p-8">
-            <div class="flex justify-between items-start mb-6">
-              <div>
-                <span class="text-sky-400 text-xs font-mono tracking-widest"
-                  >DAY 06</span
-                >
-                <h3 class="text-2xl font-semibold mt-2">Advanced Animations</h3>
-              </div>
-              <div
-                class="text-5xl opacity-75 group-hover:scale-110 transition-transform"
-              >
-                ✨
-              </div>
-            </div>
-            <p class="text-zinc-400 text-[15px] leading-relaxed">
-              Magnetic buttons, staggered reveals, skeleton loaders, and joyful
-              confetti effects.
-            </p>
-            <div
-              class="mt-8 text-sky-400 text-sm font-medium flex items-center gap-2 group-hover:gap-3 transition-all"
-            >
-              View Day 6 <i class="fa-solid fa-arrow-right"></i>
-            </div>
-          </div>
-        </a>
+          Mario Chacon
+        </h1>
+        <p class="text-3xl text-zinc-400 mb-8">Vibe Coder &amp; UI Engineer</p>
+
+        <p class="max-w-2xl mx-auto text-xl text-zinc-500 mb-12">
+          7 days of deliberate daily practice.<br />
+          From layouts to delightful micro-interactions — this is my public
+          journey.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#projects"
+            class="px-10 py-5 bg-white text-zinc-900 rounded-3xl font-semibold text-lg hover:bg-zinc-100 transition-all active:scale-95 flex items-center justify-center gap-3"
+          >
+            Explore My Work
+            <i class="fa-solid fa-arrow-down"></i>
+          </a>
+          <a
+            href="#about"
+            class="px-10 py-5 border border-white/30 hover:bg-white/10 rounded-3xl font-semibold text-lg transition-all"
+          >
+            My Story
+          </a>
+        </div>
       </div>
 
-      <div class="text-center mt-20 text-zinc-500 text-sm">
-        Built daily with Tailwind CSS • One focused exercise per day
+      <div class="absolute bottom-12 left-1/2 -translate-x-1/2 animate-bounce">
+        <i class="fa-solid fa-chevron-down text-3xl text-white/40"></i>
       </div>
-    </div>
+    </section>
+
+    <!-- Projects Showcase -->
+    <section id="projects" class="py-24 bg-zinc-900">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="text-center mb-16">
+          <h2 class="text-5xl font-bold mb-4">7 Days of Growth</h2>
+          <p class="text-zinc-400">
+            Click any project to view the full exercise
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <a
+            href="day4.html"
+            class="group bg-zinc-950 border border-white/10 rounded-3xl overflow-hidden hover:border-amber-400/60 transition-all hover:-translate-y-4"
+          >
+            <div
+              class="h-2 bg-gradient-to-r from-amber-400 to-yellow-500"
+            ></div>
+            <div class="p-8">
+              <div class="text-6xl mb-6">📝</div>
+              <div
+                class="uppercase text-xs tracking-widest text-amber-400 mb-2"
+              >
+                Day 4
+              </div>
+              <h3 class="text-3xl font-semibold mb-4">Forms &amp; Delight</h3>
+              <p class="text-zinc-400">
+                Contact forms with validation, success modals, FAQ, and smooth
+                animations.
+              </p>
+              <div
+                class="mt-10 text-amber-400 flex items-center gap-3 group-hover:gap-4 transition-all"
+              >
+                View Project <i class="fa-solid fa-arrow-right"></i>
+              </div>
+            </div>
+          </a>
+
+          <a
+            href="day5.html"
+            class="group bg-zinc-950 border border-white/10 rounded-3xl overflow-hidden hover:border-rose-400/60 transition-all hover:-translate-y-4"
+          >
+            <div class="h-2 bg-gradient-to-r from-rose-400 to-pink-500"></div>
+            <div class="p-8">
+              <div class="text-6xl mb-6">🧭</div>
+              <div class="uppercase text-xs tracking-widest text-rose-400 mb-2">
+                Day 5
+              </div>
+              <h3 class="text-3xl font-semibold mb-4">
+                Navigation &amp; Dashboard
+              </h3>
+              <p class="text-zinc-400">
+                Sidebar, tabs, scroll spy, and animated counters.
+              </p>
+              <div
+                class="mt-10 text-rose-400 flex items-center gap-3 group-hover:gap-4 transition-all"
+              >
+                View Project <i class="fa-solid fa-arrow-right"></i>
+              </div>
+            </div>
+          </a>
+
+          <a
+            href="day6.html"
+            class="group bg-zinc-950 border border-white/10 rounded-3xl overflow-hidden hover:border-sky-400/60 transition-all hover:-translate-y-4"
+          >
+            <div class="h-2 bg-gradient-to-r from-sky-400 to-cyan-400"></div>
+            <div class="p-8">
+              <div class="text-6xl mb-6">✨</div>
+              <div class="uppercase text-xs tracking-widest text-sky-400 mb-2">
+                Day 6
+              </div>
+              <h3 class="text-3xl font-semibold mb-4">Micro-interactions</h3>
+              <p class="text-zinc-400">
+                Magnetic buttons, skeletons, staggered animations &amp;
+                confetti.
+              </p>
+              <div
+                class="mt-10 text-sky-400 flex items-center gap-3 group-hover:gap-4 transition-all"
+              >
+                View Project <i class="fa-solid fa-arrow-right"></i>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final Reflection -->
+    <section id="about" class="py-28">
+      <div class="max-w-3xl mx-auto px-6 text-center">
+        <h2 class="text-5xl font-bold mb-10">One Week. Real Growth.</h2>
+        <div class="text-xl text-zinc-300 leading-relaxed">
+          From zero to building responsive layouts, interactive components,
+          forms, dashboards, and delightful micro-interactions in just 7
+          days.<br /><br />
+          This public practice has sharpened my skills in Tailwind, JavaScript,
+          animation, and most importantly — designing for how things
+          <span class="text-purple-400">feel</span>.
+        </div>
+        <div class="mt-16 text-zinc-500">The journey continues. Daily.</div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer
+      class="border-t border-white/10 py-12 text-center text-zinc-500 text-sm"
+    >
+      Built with passion in 7 days • Mario Chacon • Vibe Coder
+    </footer>
+
+    <script>
+      // Smooth scrolling
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          document.querySelector(this.getAttribute("href")).scrollIntoView({
+            behavior: "smooth",
+          });
+        });
+      });
+    </script>
   </body>
 </html>
