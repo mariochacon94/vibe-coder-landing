@@ -1,251 +1,216 @@
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mario • Vibe Coder Journey</title>
+    <title>Day 9 – Real Forms, Mode Toggle & Polish</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
     />
     <script>
-      tailwind.config = { darkMode: "class" };
+      tailwind.config = {
+        darkMode: "class",
+        content: [],
+      };
     </script>
-    <style>
-      .glass-counter {
-        background: rgba(255, 255, 255, 0.06);
-        backdrop-filter: blur(24px);
-        -webkit-backdrop-filter: blur(24px);
-        box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4);
-      }
-      .stat-glow {
-        animation: statPulse 4s ease-in-out infinite;
-      }
-      @keyframes statPulse {
-        0%,
-        100% {
-          opacity: 1;
-        }
-        50% {
-          opacity: 0.85;
-        }
-      }
-    </style>
   </head>
-  <body class="bg-zinc-950 text-white font-sans min-h-screen">
-    <div class="max-w-screen-2xl mx-auto px-6 py-20">
-      <div class="text-center mb-16">
-        <div class="inline-flex items-center gap-4 mb-6">
-          <div
-            class="w-14 h-14 bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl flex items-center justify-center text-3xl font-bold"
-          >
-            MC
-          </div>
-          <h1
-            class="text-6xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
-          >
-            Vibe Coder Journey
-          </h1>
-        </div>
-        <p class="text-2xl text-zinc-400">
-          7 Days of Deliberate Daily Practice
-        </p>
-      </div>
-
-      <!-- Premium Glossy Live Counter -->
-      <div class="flex justify-center mb-20">
-        <div
-          class="glass-counter inline-flex gap-16 bg-white/5 border border-white/10 rounded-3xl px-16 py-10"
-        >
-          <!-- Days Completed -->
-          <div class="text-center group">
-            <div class="flex justify-center mb-3">
-              <div
-                class="w-12 h-12 bg-gradient-to-br from-blue-400 to-cyan-400 rounded-2xl flex items-center justify-center text-2xl shadow-lg stat-glow"
-              >
-                📅
-              </div>
-            </div>
-            <div
-              id="days-count"
-              class="text-5xl font-bold tabular-nums text-white"
-            >
-              9
-            </div>
-            <div class="text-xs tracking-[2px] text-zinc-400 mt-1 font-medium">
-              DAYS COMPLETED
-            </div>
-          </div>
-
-          <!-- Projects Built -->
-          <div class="text-center group">
-            <div class="flex justify-center mb-3">
-              <div
-                class="w-12 h-12 bg-gradient-to-br from-purple-400 to-violet-400 rounded-2xl flex items-center justify-center text-2xl shadow-lg stat-glow"
-              >
-                🚀
-              </div>
-            </div>
-            <div
-              id="projects-count"
-              class="text-5xl font-bold tabular-nums text-white"
-            >
-              8
-            </div>
-            <div class="text-xs tracking-[2px] text-zinc-400 mt-1 font-medium">
-              PROJECTS BUILT
-            </div>
-          </div>
-
-          <!-- Hours Practiced -->
-          <div class="text-center group">
-            <div class="flex justify-center mb-3">
-              <div
-                class="w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-400 rounded-2xl flex items-center justify-center text-2xl shadow-lg stat-glow"
-              >
-                ⏱️
-              </div>
-            </div>
-            <div
-              id="hours-count"
-              class="text-5xl font-bold tabular-nums text-white"
-            >
-              48
-            </div>
-            <div class="text-xs tracking-[2px] text-zinc-400 mt-1 font-medium">
-              HOURS PRACTICED
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Week Cards (unchanged) -->
-      <div
-        id="week-view"
-        class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto"
+  <body
+    class="bg-white text-black dark:bg-zinc-950 dark:text-white font-sans min-h-screen"
+  >
+    <div class="max-w-screen-2xl mx-auto px-6 py-12">
+      <h1
+        class="text-5xl font-bold text-center mb-16 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
       >
-        <!-- Week 1 -->
-        <div
-          onclick="showWeek(1)"
-          class="group cursor-pointer bg-zinc-900 border border-white/10 rounded-3xl p-10 hover:border-blue-400/50 hover:-translate-y-3 transition-all duration-300"
-        >
-          <div class="uppercase text-xs tracking-widest text-blue-400 mb-4">
-            Week 1
-          </div>
-          <h3 class="text-4xl font-bold mb-6">Foundation</h3>
-          <p class="text-zinc-400 text-[15px]">
-            Setup, Flexbox & Grid mastery, first responsive layouts.
-          </p>
-          <div
-            class="mt-10 text-blue-400 text-sm flex items-center gap-3 group-hover:gap-4 transition-all"
-          >
-            View Week 1 Projects <i class="fa-solid fa-arrow-right"></i>
-          </div>
-        </div>
+        Day 9: Real Forms, Persistent Mode Toggle & Advanced Polish
+      </h1>
+      <!-- Minimal Back Button - Right below title -->
+      <a
+        href="index.html"
+        class="inline-flex items-center gap-2.5 px-5 py-2.5 mb-12 text-sm font-medium text-zinc-400 hover:text-white transition-all group mx-auto block w-fit"
+      >
+        <i
+          class="fa-solid fa-arrow-left text-base transition-transform group-hover:-translate-x-0.5"
+        ></i>
+        <span>Back to Portfolio</span>
+      </a>
 
-        <!-- Week 2 -->
-        <div
-          onclick="showWeek(2)"
-          class="group cursor-pointer bg-zinc-900 border border-white/10 rounded-3xl p-10 hover:border-purple-400/50 hover:-translate-y-3 transition-all duration-300"
-        >
-          <div class="uppercase text-xs tracking-widest text-purple-400 mb-4">
-            Week 2
-          </div>
-          <h3 class="text-4xl font-bold mb-6">Interactivity & Polish</h3>
-          <p class="text-zinc-400 text-[15px]">
-            Forms, animations, navigation, tabs, and micro-interactions.
-          </p>
-          <div
-            class="mt-10 text-purple-400 text-sm flex items-center gap-3 group-hover:gap-4 transition-all"
-          >
-            View Week 2 Projects <i class="fa-solid fa-arrow-right"></i>
-          </div>
-        </div>
-      </div>
+      <!-- 2.1 Enhanced Contact Form -->
+      <section class="mb-24">
+        <h2 class="text-3xl font-semibold mb-12 text-center">
+          1. Enhanced Contact Form with Real Submission
+        </h2>
 
-      <!-- Project List View -->
-      <div id="project-view" class="hidden max-w-4xl mx-auto">
-        <button
-          onclick="backToWeeks()"
-          class="mb-10 flex items-center gap-3 text-zinc-400 hover:text-white transition"
+        <div
+          class="max-w-lg mx-auto bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl p-10"
         >
-          <i class="fa-solid fa-arrow-left"></i> Back to Weeks
-        </button>
-        <div id="project-list" class="space-y-6"></div>
-      </div>
+          <form id="contact-form" class="space-y-8">
+            <div>
+              <label
+                class="block text-sm font-medium mb-2 text-zinc-700 dark:text-zinc-300"
+                >Your Name</label
+              >
+              <input
+                type="text"
+                id="name"
+                required
+                class="w-full bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-white/20 rounded-2xl px-6 py-4 focus:outline-none focus:border-blue-500 transition-all"
+              />
+            </div>
+
+            <div>
+              <label
+                class="block text-sm font-medium mb-2 text-zinc-700 dark:text-zinc-300"
+                >Email Address</label
+              >
+              <input
+                type="email"
+                id="email"
+                required
+                class="w-full bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-white/20 rounded-2xl px-6 py-4 focus:outline-none focus:border-blue-500 transition-all"
+              />
+              <p id="email-error" class="text-red-400 text-sm mt-2 hidden">
+                Please enter a valid email address.
+              </p>
+            </div>
+
+            <div>
+              <label
+                class="block text-sm font-medium mb-2 text-zinc-700 dark:text-zinc-300"
+                >Your Message</label
+              >
+              <textarea
+                id="message"
+                rows="6"
+                required
+                class="w-full bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-white/20 rounded-3xl px-6 py-4 focus:outline-none focus:border-blue-500 transition-all resize-y"
+              ></textarea>
+            </div>
+
+            <button
+              type="submit"
+              id="submit-btn"
+              class="w-full py-6 bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl font-semibold text-lg hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-3"
+            >
+              <span id="btn-text">Send Message</span>
+              <i id="btn-icon" class="fa-solid fa-paper-plane"></i>
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <!-- 2.2 Persistent Dark/Light Mode Toggle -->
+      <section class="mb-24">
+        <h2 class="text-3xl font-semibold mb-12 text-center">
+          2. Persistent Dark/Light Mode Toggle
+        </h2>
+
+        <div
+          class="max-w-md mx-auto bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl p-10 text-center"
+        >
+          <p class="text-zinc-600 dark:text-zinc-400 mb-8">
+            Toggle between dark and light mode. Your preference will be
+            remembered.
+          </p>
+
+          <button
+            id="theme-toggle"
+            class="w-14 h-14 mx-auto flex items-center justify-center text-3xl bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-2xl transition-all active:scale-90"
+          >
+            <i class="fa-solid fa-moon"></i>
+          </button>
+
+          <p class="text-xs text-zinc-500 mt-10">
+            Respects your system preference on first visit
+          </p>
+        </div>
+      </section>
     </div>
 
     <script>
-      // ==================== GLOSSY COUNTER ANIMATION ====================
-      function animateCounter(id, target, duration = 1800) {
-        const element = document.getElementById(id);
-        let start = 0;
-        const increment = target / (duration / 16);
+      // ==================== CONTACT FORM WITH VALIDATION ====================
+      const form = document.getElementById("contact-form");
+      const emailInput = document.getElementById("email");
+      const emailError = document.getElementById("email-error");
+      const submitBtn = document.getElementById("submit-btn");
+      const btnText = document.getElementById("btn-text");
+      const btnIcon = document.getElementById("btn-icon");
 
-        const timer = setInterval(() => {
-          start += increment;
-          if (start >= target) {
-            element.textContent = target;
-            clearInterval(timer);
-          } else {
-            element.textContent = Math.floor(start);
-          }
-        }, 16);
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(emailInput.value.trim())) {
+          emailError.classList.remove("hidden");
+          emailInput.classList.add("border-red-500");
+          return;
+        }
+
+        emailError.classList.add("hidden");
+        emailInput.classList.remove("border-red-500");
+
+        submitBtn.disabled = true;
+        btnText.textContent = "Sending...";
+        btnIcon.classList.remove("fa-paper-plane");
+        btnIcon.classList.add("fa-spinner", "animate-spin");
+
+        setTimeout(() => {
+          submitBtn.innerHTML = `
+            <span class="flex items-center justify-center gap-3">
+              Message Sent Successfully 
+              <i class="fa-solid fa-check"></i>
+            </span>
+          `;
+          submitBtn.classList.add("!bg-emerald-600");
+
+          setTimeout(() => {
+            form.reset();
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = `
+              <span id="btn-text">Send Message</span>
+              <i id="btn-icon" class="fa-solid fa-paper-plane"></i>
+            `;
+            submitBtn.classList.remove("!bg-emerald-600");
+          }, 2500);
+        }, 1600);
+      });
+
+      emailInput.addEventListener("input", () => {
+        emailError.classList.add("hidden");
+        emailInput.classList.remove("border-red-500");
+      });
+
+      // ==================== PERSISTENT DARK/LIGHT MODE TOGGLE ====================
+      const themeToggle = document.getElementById("theme-toggle");
+      const html = document.documentElement;
+
+      function setTheme(isDark) {
+        if (isDark) {
+          html.classList.add("dark");
+          themeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
+          localStorage.theme = "dark";
+        } else {
+          html.classList.remove("dark");
+          themeToggle.innerHTML = '<i class="fa-solid fa-moon"></i>';
+          localStorage.theme = "light";
+        }
       }
 
-      window.onload = function () {
-        animateCounter("days-count", 9);
-        animateCounter("projects-count", 8);
-        animateCounter("hours-count", 48);
-      };
+      themeToggle.addEventListener("click", () => {
+        const isDark = !html.classList.contains("dark");
+        setTheme(isDark);
+      });
 
-      // ==================== WEEK NAVIGATION (unchanged) ====================
-      const projectsData = {
-        1: {
-          title: "Week 1 - Foundation",
-          projects: [
-            { name: "Day 4 - Forms & Animations", link: "day4.html" },
-            { name: "Day 5 - Navigation & Dashboard", link: "day5.html" },
-            { name: "Day 6 - Advanced Animations", link: "day6.html" },
-          ],
-        },
-        2: {
-          title: "Week 2 - Interactivity & Polish",
-          projects: [
-            { name: "Day 8 - Mini SaaS Landing Page", link: "day8.html" },
-            { name: "Day 9 - Real Forms & Mode Toggle", link: "day9.html" },
-          ],
-        },
-      };
-
-      function showWeek(week) {
-        document.getElementById("week-view").classList.add("hidden");
-        const projectView = document.getElementById("project-view");
-        projectView.classList.remove("hidden");
-
-        const data = projectsData[week];
-        let html = `<h2 class="text-4xl font-bold mb-10">${data.title}</h2>`;
-
-        data.projects.forEach((project) => {
-          html += `
-          <a href="${project.link}" class="block bg-zinc-900 border border-white/10 rounded-3xl p-8 hover:border-white/30 hover:-translate-y-1 transition-all group">
-            <div class="flex justify-between items-center">
-              <div>
-                <h3 class="text-2xl font-semibold group-hover:text-blue-400 transition">${project.name}</h3>
-              </div>
-              <i class="fa-solid fa-arrow-right text-zinc-400 group-hover:text-white transition"></i>
-            </div>
-          </a>
-        `;
-        });
-
-        document.getElementById("project-list").innerHTML = html;
-      }
-
-      function backToWeeks() {
-        document.getElementById("project-view").classList.add("hidden");
-        document.getElementById("week-view").classList.remove("hidden");
+      // Load saved preference or respect system default
+      if (
+        localStorage.theme === "dark" ||
+        (!("theme" in localStorage) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        setTheme(true);
+      } else {
+        setTheme(false);
       }
     </script>
   </body>
