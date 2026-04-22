@@ -58,7 +58,6 @@
         <div
           class="glass-counter inline-flex gap-16 bg-white/5 border border-white/10 rounded-3xl px-16 py-10"
         >
-          <!-- Days Completed -->
           <div class="text-center group">
             <div class="flex justify-center mb-3">
               <div
@@ -71,14 +70,12 @@
               id="days-count"
               class="text-5xl font-bold tabular-nums text-white"
             >
-              9
+              10
             </div>
             <div class="text-xs tracking-[2px] text-zinc-400 mt-1 font-medium">
               DAYS COMPLETED
             </div>
           </div>
-
-          <!-- Projects Built -->
           <div class="text-center group">
             <div class="flex justify-center mb-3">
               <div
@@ -91,14 +88,12 @@
               id="projects-count"
               class="text-5xl font-bold tabular-nums text-white"
             >
-              8
+              9
             </div>
             <div class="text-xs tracking-[2px] text-zinc-400 mt-1 font-medium">
               PROJECTS BUILT
             </div>
           </div>
-
-          <!-- Hours Practiced -->
           <div class="text-center group">
             <div class="flex justify-center mb-3">
               <div
@@ -111,7 +106,7 @@
               id="hours-count"
               class="text-5xl font-bold tabular-nums text-white"
             >
-              48
+              51
             </div>
             <div class="text-xs tracking-[2px] text-zinc-400 mt-1 font-medium">
               HOURS PRACTICED
@@ -120,7 +115,7 @@
         </div>
       </div>
 
-      <!-- Week Cards (unchanged) -->
+      <!-- Week Cards -->
       <div
         id="week-view"
         class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto"
@@ -177,7 +172,7 @@
     </div>
 
     <script>
-      // ==================== GLOSSY COUNTER ANIMATION ====================
+      // ==================== GLOSSY LIVE COUNTER ====================
       function animateCounter(id, target, duration = 1800) {
         const element = document.getElementById(id);
         let start = 0;
@@ -195,12 +190,12 @@
       }
 
       window.onload = function () {
-        animateCounter("days-count", 9);
-        animateCounter("projects-count", 8);
-        animateCounter("hours-count", 48);
+        animateCounter("days-count", 10);
+        animateCounter("projects-count", 9);
+        animateCounter("hours-count", 51); // Updated to realistic total
       };
 
-      // ==================== WEEK NAVIGATION (unchanged) ====================
+      // ==================== WEEK NAVIGATION ====================
       const projectsData = {
         1: {
           title: "Week 1 - Foundation",
@@ -215,6 +210,10 @@
           projects: [
             { name: "Day 8 - Mini SaaS Landing Page", link: "day8.html" },
             { name: "Day 9 - Real Forms & Mode Toggle", link: "day9.html" },
+            {
+              name: "Day 10 - Advanced Interactions & 3D Effects",
+              link: "day10.html",
+            },
           ],
         },
       };
