@@ -12,10 +12,30 @@
     <script>
       tailwind.config = { darkMode: "class" };
     </script>
+    <style>
+      .glass-counter {
+        background: rgba(255, 255, 255, 0.06);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4);
+      }
+      .stat-glow {
+        animation: statPulse 4s ease-in-out infinite;
+      }
+      @keyframes statPulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.85;
+        }
+      }
+    </style>
   </head>
   <body class="bg-zinc-950 text-white font-sans min-h-screen">
     <div class="max-w-screen-2xl mx-auto px-6 py-20">
-      <div class="text-center mb-20">
+      <div class="text-center mb-16">
         <div class="inline-flex items-center gap-4 mb-6">
           <div
             class="w-14 h-14 bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl flex items-center justify-center text-3xl font-bold"
@@ -33,12 +53,79 @@
         </p>
       </div>
 
-      <!-- Week Cards -->
+      <!-- Premium Glossy Live Counter -->
+      <div class="flex justify-center mb-20">
+        <div
+          class="glass-counter inline-flex gap-16 bg-white/5 border border-white/10 rounded-3xl px-16 py-10"
+        >
+          <!-- Days Completed -->
+          <div class="text-center group">
+            <div class="flex justify-center mb-3">
+              <div
+                class="w-12 h-12 bg-gradient-to-br from-blue-400 to-cyan-400 rounded-2xl flex items-center justify-center text-2xl shadow-lg stat-glow"
+              >
+                📅
+              </div>
+            </div>
+            <div
+              id="days-count"
+              class="text-5xl font-bold tabular-nums text-white"
+            >
+              9
+            </div>
+            <div class="text-xs tracking-[2px] text-zinc-400 mt-1 font-medium">
+              DAYS COMPLETED
+            </div>
+          </div>
+
+          <!-- Projects Built -->
+          <div class="text-center group">
+            <div class="flex justify-center mb-3">
+              <div
+                class="w-12 h-12 bg-gradient-to-br from-purple-400 to-violet-400 rounded-2xl flex items-center justify-center text-2xl shadow-lg stat-glow"
+              >
+                🚀
+              </div>
+            </div>
+            <div
+              id="projects-count"
+              class="text-5xl font-bold tabular-nums text-white"
+            >
+              8
+            </div>
+            <div class="text-xs tracking-[2px] text-zinc-400 mt-1 font-medium">
+              PROJECTS BUILT
+            </div>
+          </div>
+
+          <!-- Hours Practiced -->
+          <div class="text-center group">
+            <div class="flex justify-center mb-3">
+              <div
+                class="w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-400 rounded-2xl flex items-center justify-center text-2xl shadow-lg stat-glow"
+              >
+                ⏱️
+              </div>
+            </div>
+            <div
+              id="hours-count"
+              class="text-5xl font-bold tabular-nums text-white"
+            >
+              48
+            </div>
+            <div class="text-xs tracking-[2px] text-zinc-400 mt-1 font-medium">
+              HOURS PRACTICED
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Week Cards (unchanged) -->
       <div
         id="week-view"
         class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto"
       >
-        <!-- Week 1 Card -->
+        <!-- Week 1 -->
         <div
           onclick="showWeek(1)"
           class="group cursor-pointer bg-zinc-900 border border-white/10 rounded-3xl p-10 hover:border-blue-400/50 hover:-translate-y-3 transition-all duration-300"
@@ -57,7 +144,7 @@
           </div>
         </div>
 
-        <!-- Week 2 Card -->
+        <!-- Week 2 -->
         <div
           onclick="showWeek(2)"
           class="group cursor-pointer bg-zinc-900 border border-white/10 rounded-3xl p-10 hover:border-purple-400/50 hover:-translate-y-3 transition-all duration-300"
@@ -85,14 +172,35 @@
         >
           <i class="fa-solid fa-arrow-left"></i> Back to Weeks
         </button>
-
-        <div id="project-list" class="space-y-6">
-          <!-- Projects injected by JavaScript -->
-        </div>
+        <div id="project-list" class="space-y-6"></div>
       </div>
     </div>
 
     <script>
+      // ==================== GLOSSY COUNTER ANIMATION ====================
+      function animateCounter(id, target, duration = 1800) {
+        const element = document.getElementById(id);
+        let start = 0;
+        const increment = target / (duration / 16);
+
+        const timer = setInterval(() => {
+          start += increment;
+          if (start >= target) {
+            element.textContent = target;
+            clearInterval(timer);
+          } else {
+            element.textContent = Math.floor(start);
+          }
+        }, 16);
+      }
+
+      window.onload = function () {
+        animateCounter("days-count", 9);
+        animateCounter("projects-count", 8);
+        animateCounter("hours-count", 48);
+      };
+
+      // ==================== WEEK NAVIGATION (unchanged) ====================
       const projectsData = {
         1: {
           title: "Week 1 - Foundation",
