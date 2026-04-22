@@ -14,7 +14,7 @@
     </script>
   </head>
   <body class="bg-zinc-950 text-white font-sans min-h-screen">
-    <div class="max-w-screen-2xl mx-auto px-6 py-16">
+    <div class="max-w-screen-2xl mx-auto px-6 py-20">
       <div class="text-center mb-20">
         <div class="inline-flex items-center gap-4 mb-6">
           <div
@@ -29,110 +29,116 @@
           </h1>
         </div>
         <p class="text-2xl text-zinc-400">
-          Daily practice • Building modern UIs with Tailwind
+          7 Days of Deliberate Daily Practice
         </p>
-        <p class="text-sm text-zinc-500 mt-2">Day 8 • 8 exercises completed</p>
       </div>
 
+      <!-- Week Cards -->
       <div
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto"
+        id="week-view"
+        class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto"
       >
-        <!-- Day 4 -->
-        <a
-          href="day4.html"
-          class="group bg-zinc-900 border border-white/10 rounded-3xl p-8 hover:border-amber-400/50 hover:-translate-y-3 transition-all"
+        <!-- Week 1 Card -->
+        <div
+          onclick="showWeek(1)"
+          class="group cursor-pointer bg-zinc-900 border border-white/10 rounded-3xl p-10 hover:border-blue-400/50 hover:-translate-y-3 transition-all duration-300"
         >
-          <div
-            class="h-2 bg-gradient-to-r from-amber-400 to-yellow-500 rounded-t-3xl mb-8"
-          ></div>
-          <div class="uppercase text-xs tracking-widest text-amber-400 mb-3">
-            DAY 04
+          <div class="uppercase text-xs tracking-widest text-blue-400 mb-4">
+            Week 1
           </div>
-          <h3 class="text-3xl font-semibold mb-4">Forms &amp; Delight</h3>
+          <h3 class="text-4xl font-bold mb-6">Foundation</h3>
           <p class="text-zinc-400 text-[15px]">
-            Contact forms, validation, success modals, and smooth animations.
+            Setup, Flexbox & Grid mastery, first responsive layouts.
           </p>
           <div
-            class="mt-10 text-amber-400 text-sm flex items-center gap-3 group-hover:gap-4 transition-all"
+            class="mt-10 text-blue-400 text-sm flex items-center gap-3 group-hover:gap-4 transition-all"
           >
-            View Project <i class="fa-solid fa-arrow-right"></i>
+            View Week 1 Projects <i class="fa-solid fa-arrow-right"></i>
           </div>
-        </a>
+        </div>
 
-        <!-- Day 5 -->
-        <a
-          href="day5.html"
-          class="group bg-zinc-900 border border-white/10 rounded-3xl p-8 hover:border-rose-400/50 hover:-translate-y-3 transition-all"
+        <!-- Week 2 Card -->
+        <div
+          onclick="showWeek(2)"
+          class="group cursor-pointer bg-zinc-900 border border-white/10 rounded-3xl p-10 hover:border-purple-400/50 hover:-translate-y-3 transition-all duration-300"
         >
-          <div
-            class="h-2 bg-gradient-to-r from-rose-400 to-pink-500 rounded-t-3xl mb-8"
-          ></div>
-          <div class="uppercase text-xs tracking-widest text-rose-400 mb-3">
-            DAY 05
+          <div class="uppercase text-xs tracking-widest text-purple-400 mb-4">
+            Week 2
           </div>
-          <h3 class="text-3xl font-semibold mb-4">
-            Navigation &amp; Dashboard
-          </h3>
+          <h3 class="text-4xl font-bold mb-6">Interactivity & Polish</h3>
           <p class="text-zinc-400 text-[15px]">
-            Sidebar, tabs, scroll spy, and animated counters.
+            Forms, animations, navigation, tabs, and micro-interactions.
           </p>
           <div
-            class="mt-10 text-rose-400 text-sm flex items-center gap-3 group-hover:gap-4 transition-all"
+            class="mt-10 text-purple-400 text-sm flex items-center gap-3 group-hover:gap-4 transition-all"
           >
-            View Project <i class="fa-solid fa-arrow-right"></i>
+            View Week 2 Projects <i class="fa-solid fa-arrow-right"></i>
           </div>
-        </a>
-
-        <!-- Day 6 -->
-        <a
-          href="day6.html"
-          class="group bg-zinc-900 border border-white/10 rounded-3xl p-8 hover:border-sky-400/50 hover:-translate-y-3 transition-all"
-        >
-          <div
-            class="h-2 bg-gradient-to-r from-sky-400 to-cyan-400 rounded-t-3xl mb-8"
-          ></div>
-          <div class="uppercase text-xs tracking-widest text-sky-400 mb-3">
-            DAY 06
-          </div>
-          <h3 class="text-3xl font-semibold mb-4">Micro-interactions</h3>
-          <p class="text-zinc-400 text-[15px]">
-            Magnetic buttons, staggered animations, skeleton loaders, and
-            confetti.
-          </p>
-          <div
-            class="mt-10 text-sky-400 text-sm flex items-center gap-3 group-hover:gap-4 transition-all"
-          >
-            View Project <i class="fa-solid fa-arrow-right"></i>
-          </div>
-        </a>
-
-        <!-- Day 8 -->
-        <a
-          href="day8.html"
-          class="group bg-zinc-900 border border-white/10 rounded-3xl p-8 hover:border-emerald-400/50 hover:-translate-y-3 transition-all"
-        >
-          <div
-            class="h-2 bg-gradient-to-r from-emerald-400 to-teal-400 rounded-t-3xl mb-8"
-          ></div>
-          <div class="uppercase text-xs tracking-widest text-emerald-400 mb-3">
-            DAY 08
-          </div>
-          <h3 class="text-3xl font-semibold mb-4">SaaS Landing Page</h3>
-          <p class="text-zinc-400 text-[15px]">
-            Full mini SaaS landing page with hero, features, pricing toggle, and
-            glassmorphism.
-          </p>
-          <div
-            class="mt-10 text-emerald-400 text-sm flex items-center gap-3 group-hover:gap-4 transition-all"
-          >
-            View Project <i class="fa-solid fa-arrow-right"></i>
-          </div>
-        </a>
+        </div>
       </div>
 
-      <div class="text-center mt-20 text-zinc-500 text-sm">
-        Built daily with focus and consistency • New project added every day
+      <!-- Project List View -->
+      <div id="project-view" class="hidden max-w-4xl mx-auto">
+        <button
+          onclick="backToWeeks()"
+          class="mb-10 flex items-center gap-3 text-zinc-400 hover:text-white transition"
+        >
+          <i class="fa-solid fa-arrow-left"></i> Back to Weeks
+        </button>
+
+        <div id="project-list" class="space-y-6">
+          <!-- Projects injected by JavaScript -->
+        </div>
       </div>
     </div>
+
+    <script>
+      const projectsData = {
+        1: {
+          title: "Week 1 - Foundation",
+          projects: [
+            { name: "Day 4 - Forms & Animations", link: "day4.html" },
+            { name: "Day 5 - Navigation & Dashboard", link: "day5.html" },
+            { name: "Day 6 - Advanced Animations", link: "day6.html" },
+          ],
+        },
+        2: {
+          title: "Week 2 - Interactivity & Polish",
+          projects: [
+            { name: "Day 8 - Mini SaaS Landing Page", link: "day8.html" },
+            { name: "Day 9 - Real Forms & Mode Toggle", link: "day9.html" },
+          ],
+        },
+      };
+
+      function showWeek(week) {
+        document.getElementById("week-view").classList.add("hidden");
+        const projectView = document.getElementById("project-view");
+        projectView.classList.remove("hidden");
+
+        const data = projectsData[week];
+        let html = `<h2 class="text-4xl font-bold mb-10">${data.title}</h2>`;
+
+        data.projects.forEach((project) => {
+          html += `
+          <a href="${project.link}" class="block bg-zinc-900 border border-white/10 rounded-3xl p-8 hover:border-white/30 hover:-translate-y-1 transition-all group">
+            <div class="flex justify-between items-center">
+              <div>
+                <h3 class="text-2xl font-semibold group-hover:text-blue-400 transition">${project.name}</h3>
+              </div>
+              <i class="fa-solid fa-arrow-right text-zinc-400 group-hover:text-white transition"></i>
+            </div>
+          </a>
+        `;
+        });
+
+        document.getElementById("project-list").innerHTML = html;
+      }
+
+      function backToWeeks() {
+        document.getElementById("project-view").classList.add("hidden");
+        document.getElementById("week-view").classList.remove("hidden");
+      }
+    </script>
   </body>
 </html>
