@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FocusFlow • Stay in your zone</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+
+    <style>
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(40px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .animate-fade-in-up {
+        animation: fadeInUp 0.8s ease forwards;
+      }
+
+      .glass {
+        background: rgba(255, 255, 255, 0.06);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+      }
+    </style>
+  </head>
+  <body class="bg-zinc-950 text-white font-sans min-h-screen">
+    <div class="max-w-screen-2xl mx-auto">
+      <!-- 2.1 Hero Section -->
+      <section
+        class="min-h-screen flex items-center relative overflow-hidden bg-zinc-950"
+      >
+        <div
+          class="absolute inset-0 bg-gradient-to-br from-zinc-950 via-zinc-900 to-black"
+        ></div>
+
+        <div class="relative z-10 max-w-5xl mx-auto px-6 text-center">
+          <div
+            class="inline-flex items-center gap-3 mb-10 px-8 py-3 glass rounded-3xl border border-white/10"
+          >
+            <div
+              class="w-2.5 h-2.5 bg-emerald-400 rounded-full animate-pulse"
+            ></div>
+            <span
+              class="uppercase tracking-[2px] text-xs font-medium text-emerald-300"
+              >Now in Public Beta</span
+            >
+          </div>
+
+          <h1
+            class="text-6xl md:text-7xl font-bold leading-none mb-6 bg-gradient-to-r from-white via-zinc-200 to-zinc-400 bg-clip-text text-transparent"
+          >
+            Stay Focused.<br />Get More Done.
+          </h1>
+
+          <p
+            class="text-2xl md:text-3xl text-zinc-400 max-w-3xl mx-auto mb-14 font-light tracking-tight"
+          >
+            The calm productivity tool that helps you enter deep focus — without
+            distractions, guilt, or burnout.
+          </p>
+
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <button
+              onclick="
+                document
+                  .getElementById('pricing')
+                  .scrollIntoView({ behavior: 'smooth' })
+              "
+              class="px-12 py-6 bg-white text-zinc-900 rounded-3xl font-semibold text-xl hover:bg-zinc-100 transition-all active:scale-95 shadow-2xl"
+            >
+              Start Free Trial
+            </button>
+            <button
+              onclick="
+                document
+                  .getElementById('features')
+                  .scrollIntoView({ behavior: 'smooth' })
+              "
+              class="px-12 py-6 border border-white/30 hover:bg-white/10 rounded-3xl font-semibold text-xl transition-all"
+            >
+              Watch 1-min Demo
+            </button>
+          </div>
+
+          <div
+            class="mt-16 flex items-center justify-center gap-10 text-sm text-zinc-500"
+          >
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-check text-emerald-400"></i>
+              No credit card needed
+            </div>
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-check text-emerald-400"></i>
+              Cancel anytime
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2.2 Navigation + Features -->
+      <section id="features" class="py-24 bg-zinc-900">
+        <div class="max-w-6xl mx-auto px-6">
+          <nav
+            class="glass border border-white/10 rounded-3xl px-8 py-5 mb-16 flex items-center justify-between"
+          >
+            <div class="flex items-center gap-8">
+              <div class="font-semibold text-xl">FocusFlow</div>
+              <div class="hidden md:flex gap-8 text-sm">
+                <a href="#" class="hover:text-white transition">Features</a>
+                <a href="#" class="hover:text-white transition">Pricing</a>
+                <a href="#" class="hover:text-white transition">Blog</a>
+              </div>
+            </div>
+            <button
+              onclick="
+                document
+                  .getElementById('pricing')
+                  .scrollIntoView({ behavior: 'smooth' })
+              "
+              class="px-8 py-3 bg-white text-zinc-900 rounded-2xl font-medium hover:bg-zinc-100 transition"
+            >
+              Get Started Free
+            </button>
+          </nav>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div
+              class="glass border border-white/10 rounded-3xl p-8 hover:border-white/30 transition-all"
+            >
+              <div class="text-4xl mb-6">⏱️</div>
+              <h3 class="text-2xl font-semibold mb-4">Deep Focus Mode</h3>
+              <p class="text-zinc-400">
+                Block distractions and enter flow state with gentle timers and
+                ambient sound.
+              </p>
+            </div>
+            <div
+              class="glass border border-white/10 rounded-3xl p-8 hover:border-white/30 transition-all"
+            >
+              <div class="text-4xl mb-6">📊</div>
+              <h3 class="text-2xl font-semibold mb-4">Progress Insights</h3>
+              <p class="text-zinc-400">
+                Beautiful analytics that show your focus patterns without
+                overwhelming you.
+              </p>
+            </div>
+            <div
+              class="glass border border-white/10 rounded-3xl p-8 hover:border-white/30 transition-all"
+            >
+              <div class="text-4xl mb-6">🌿</div>
+              <h3 class="text-2xl font-semibold mb-4">Calm Environment</h3>
+              <p class="text-zinc-400">
+                Minimalist design and soft animations that reduce mental
+                fatigue.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2.3 Pricing with Toggle -->
+      <section id="pricing" class="py-24 bg-zinc-950">
+        <div class="max-w-5xl mx-auto px-6">
+          <div class="text-center mb-16">
+            <h2 class="text-5xl font-bold mb-4">Simple, transparent pricing</h2>
+            <p class="text-zinc-400 text-xl">
+              Choose what works best for your focus journey
+            </p>
+          </div>
+
+          <div class="flex justify-center mb-12">
+            <div class="glass inline-flex rounded-3xl p-1">
+              <button
+                onclick="switchPricing(0)"
+                id="monthly-btn"
+                class="px-8 py-3 rounded-3xl font-medium transition-all"
+              >
+                Monthly
+              </button>
+              <button
+                onclick="switchPricing(1)"
+                id="yearly-btn"
+                class="px-8 py-3 rounded-3xl font-medium transition-all"
+              >
+                Yearly <span class="text-emerald-400 text-xs">(-20%)</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Free Plan -->
+            <div class="glass border border-white/10 rounded-3xl p-10">
+              <h3 class="text-2xl font-semibold mb-2">Starter</h3>
+              <div class="text-5xl font-bold mb-8">
+                $0<span class="text-base font-normal text-zinc-400"
+                  >/month</span
+                >
+              </div>
+              <ul class="space-y-4 mb-12 text-zinc-300">
+                <li class="flex items-center gap-3">
+                  <i class="fa-solid fa-check text-emerald-400"></i> Basic focus
+                  timer
+                </li>
+                <li class="flex items-center gap-3">
+                  <i class="fa-solid fa-check text-emerald-400"></i> Limited
+                  insights
+                </li>
+              </ul>
+              <button
+                class="w-full py-4 border border-white/30 rounded-3xl font-medium hover:bg-white/10 transition"
+              >
+                Get started free
+              </button>
+            </div>
+
+            <!-- Pro Plan -->
+            <div
+              class="glass border-2 border-purple-500 rounded-3xl p-10 relative -mt-6"
+            >
+              <div
+                class="absolute -top-4 left-1/2 -translate-x-1/2 bg-purple-600 text-xs font-bold px-6 py-1 rounded-full"
+              >
+                MOST POPULAR
+              </div>
+              <h3 class="text-2xl font-semibold mb-2">Pro</h3>
+              <div id="pro-price" class="text-5xl font-bold mb-8">
+                $9<span class="text-base font-normal text-zinc-400"
+                  >/month</span
+                >
+              </div>
+              <ul class="space-y-4 mb-12 text-zinc-300">
+                <li class="flex items-center gap-3">
+                  <i class="fa-solid fa-check text-emerald-400"></i> Unlimited
+                  focus sessions
+                </li>
+                <li class="flex items-center gap-3">
+                  <i class="fa-solid fa-check text-emerald-400"></i> Full
+                  analytics
+                </li>
+                <li class="flex items-center gap-3">
+                  <i class="fa-solid fa-check text-emerald-400"></i> Ambient
+                  sounds
+                </li>
+                <li class="flex items-center gap-3">
+                  <i class="fa-solid fa-check text-emerald-400"></i> Priority
+                  support
+                </li>
+              </ul>
+              <button
+                class="w-full py-4 bg-purple-600 hover:bg-purple-700 rounded-3xl font-semibold transition"
+              >
+                Start Pro Trial
+              </button>
+            </div>
+
+            <!-- Team Plan -->
+            <div class="glass border border-white/10 rounded-3xl p-10">
+              <h3 class="text-2xl font-semibold mb-2">Team</h3>
+              <div id="team-price" class="text-5xl font-bold mb-8">
+                $24<span class="text-base font-normal text-zinc-400"
+                  >/month</span
+                >
+              </div>
+              <ul class="space-y-4 mb-12 text-zinc-300">
+                <li class="flex items-center gap-3">
+                  <i class="fa-solid fa-check text-emerald-400"></i> Everything
+                  in Pro
+                </li>
+                <li class="flex items-center gap-3">
+                  <i class="fa-solid fa-check text-emerald-400"></i> Team seats
+                </li>
+                <li class="flex items-center gap-3">
+                  <i class="fa-solid fa-check text-emerald-400"></i> Shared
+                  workspaces
+                </li>
+              </ul>
+              <button
+                class="w-full py-4 border border-white/30 rounded-3xl font-medium hover:bg-white/10 transition"
+              >
+                Contact sales
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Final CTA -->
+      <section class="py-28 bg-gradient-to-br from-zinc-900 to-black">
+        <div class="max-w-3xl mx-auto px-6 text-center">
+          <h2 class="text-5xl font-bold mb-6">Ready to reclaim your focus?</h2>
+          <p class="text-2xl text-zinc-400 mb-12">
+            Join thousands who are getting more done with calm, intentional
+            productivity.
+          </p>
+
+          <button
+            onclick="
+              document
+                .getElementById('pricing')
+                .scrollIntoView({ behavior: 'smooth' })
+            "
+            class="px-16 py-7 bg-gradient-to-r from-blue-600 to-purple-600 text-xl font-semibold rounded-3xl hover:scale-105 active:scale-95 transition-all shadow-2xl"
+          >
+            Start Your Free Trial
+          </button>
+
+          <p class="text-zinc-500 mt-8 text-sm">
+            No credit card required • Cancel anytime
+          </p>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer
+        class="py-12 border-t border-white/10 text-center text-zinc-500 text-sm"
+      >
+        Built as part of the 7-Day Vibe Coder Challenge • Mario Chacon
+      </footer>
+    </div>
+
+    <script>
+      // Pricing Toggle - Fixed for both Pro and Team plans
+      function switchPricing(plan) {
+        const monthlyBtn = document.getElementById("monthly-btn");
+        const yearlyBtn = document.getElementById("yearly-btn");
+        const proPrice = document.getElementById("pro-price");
+        const teamPrice = document.getElementById("team-price");
+
+        if (plan === 0) {
+          monthlyBtn.classList.add("bg-white", "text-zinc-900");
+          yearlyBtn.classList.remove("bg-white", "text-zinc-900");
+
+          proPrice.innerHTML = `$9<span class="text-base font-normal text-zinc-400">/month</span>`;
+          if (teamPrice)
+            teamPrice.innerHTML = `$24<span class="text-base font-normal text-zinc-400">/month</span>`;
+        } else {
+          yearlyBtn.classList.add("bg-white", "text-zinc-900");
+          monthlyBtn.classList.remove("bg-white", "text-zinc-900");
+
+          proPrice.innerHTML = `$72<span class="text-base font-normal text-zinc-400">/year</span>`;
+          if (teamPrice)
+            teamPrice.innerHTML = `$192<span class="text-base font-normal text-zinc-400">/year</span>`;
+        }
+      }
+
+      // Initialize default to Monthly
+      window.onload = function () {
+        switchPricing(0);
+      };
+    </script>
+  </body>
+</html>
