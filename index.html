@@ -53,7 +53,7 @@
         </p>
       </div>
 
-      <!-- Premium Glossy Live Counter -->
+      <!-- Premium Glossy Live Counter - Accurate Engagement Hours -->
       <div class="flex justify-center mb-20">
         <div
           class="glass-counter inline-flex gap-16 bg-white/5 border border-white/10 rounded-3xl px-16 py-10"
@@ -70,7 +70,7 @@
               id="days-count"
               class="text-5xl font-bold tabular-nums text-white"
             >
-              10
+              11
             </div>
             <div class="text-xs tracking-[2px] text-zinc-400 mt-1 font-medium">
               DAYS COMPLETED
@@ -88,7 +88,7 @@
               id="projects-count"
               class="text-5xl font-bold tabular-nums text-white"
             >
-              9
+              10
             </div>
             <div class="text-xs tracking-[2px] text-zinc-400 mt-1 font-medium">
               PROJECTS BUILT
@@ -106,10 +106,10 @@
               id="hours-count"
               class="text-5xl font-bold tabular-nums text-white"
             >
-              51
+              42
             </div>
             <div class="text-xs tracking-[2px] text-zinc-400 mt-1 font-medium">
-              HOURS PRACTICED
+              HOURS ENGAGED
             </div>
           </div>
         </div>
@@ -172,12 +172,10 @@
     </div>
 
     <script>
-      // ==================== GLOSSY LIVE COUNTER ====================
       function animateCounter(id, target, duration = 1800) {
         const element = document.getElementById(id);
         let start = 0;
         const increment = target / (duration / 16);
-
         const timer = setInterval(() => {
           start += increment;
           if (start >= target) {
@@ -190,12 +188,11 @@
       }
 
       window.onload = function () {
-        animateCounter("days-count", 10);
-        animateCounter("projects-count", 9);
-        animateCounter("hours-count", 51); // Updated to realistic total
+        animateCounter("days-count", 11);
+        animateCounter("projects-count", 10);
+        animateCounter("hours-count", 42); // Accurate engagement hours
       };
 
-      // ==================== WEEK NAVIGATION ====================
       const projectsData = {
         1: {
           title: "Week 1 - Foundation",
@@ -213,6 +210,10 @@
             {
               name: "Day 10 - Advanced Interactions & 3D Effects",
               link: "day10.html",
+            },
+            {
+              name: "Day 11 - Performance, Accessibility & Reusable Components",
+              link: "day11.html",
             },
           ],
         },

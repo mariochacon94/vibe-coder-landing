@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day 11 – Performance, Accessibility & Reusable Components</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+    <script>
+      tailwind.config = { darkMode: "class" };
+    </script>
+    <style>
+      .vibe-btn {
+        @apply px-8 py-4 border-2 border-zinc-400 dark:border-zinc-300 rounded-3xl font-semibold text-lg transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg;
+      }
+      .vibe-btn-primary {
+        @apply bg-gradient-to-r from-blue-600 to-purple-600 text-white border-transparent;
+      }
+
+      /* Faster Balloons */
+      .balloon {
+        position: absolute;
+        font-size: 3.8rem;
+        animation: balloonRise linear forwards;
+        z-index: 100;
+        filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.3));
+      }
+      @keyframes balloonRise {
+        0% {
+          transform: translateY(100vh) rotate(-12deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-180px) rotate(12deg);
+          opacity: 0;
+        }
+      }
+
+      /* Solid Gold Success Text with Pearl White */
+      .success-text {
+        font-size: 6.8rem;
+        font-weight: 900;
+        letter-spacing: -0.04em;
+        background: #facc15; /* Solid luxurious gold */
+        color: #f8fafc; /* Pearl white */
+        padding: 0.25em 0.8em;
+        border: 6px solid #1e2937;
+        border-radius: 9999px;
+        box-shadow: 0 20px 40px -10px rgba(234, 179, 8, 0.5);
+        animation: successPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      @keyframes successPop {
+        0% {
+          transform: scale(0.4) translateY(40px);
+          opacity: 0;
+        }
+        70% {
+          transform: scale(1.12) translateY(-8px);
+        }
+        100% {
+          transform: scale(1) translateY(0);
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body
+    class="bg-white text-black dark:bg-zinc-950 dark:text-white font-sans min-h-screen"
+  >
+    <div class="max-w-screen-2xl mx-auto px-6 py-12">
+      <h1
+        class="text-5xl font-bold text-center mb-8 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
+      >
+        Day 11: Performance, Accessibility & Reusable Components
+      </h1>
+
+      <!-- Minimal Back Button -->
+      <a
+        href="index.html"
+        class="inline-flex items-center gap-2.5 px-5 py-2.5 mb-12 text-sm font-medium text-zinc-400 hover:text-white transition-all group mx-auto block w-fit"
+      >
+        <i
+          class="fa-solid fa-arrow-left text-base transition-transform group-hover:-translate-x-0.5"
+        ></i>
+        <span>Back to Portfolio</span>
+      </a>
+
+      <!-- 1. Performance Optimization -->
+      <section class="mb-24">
+        <h2 class="text-3xl font-semibold mb-12 text-center">
+          1. Performance Optimization & Lighthouse
+        </h2>
+        <div
+          class="max-w-3xl mx-auto bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl p-10"
+        >
+          <h3 class="text-xl font-semibold mb-6 flex items-center gap-3">
+            <span class="text-emerald-500">●</span> Current Lighthouse
+            Opportunities
+          </h3>
+          <ul class="space-y-6 text-sm">
+            <li class="flex justify-between items-center">
+              <span>Image Optimization (Lazy Loading)</span>
+              <span class="text-emerald-500 font-medium"
+                >Ready to Implement</span
+              >
+            </li>
+            <li class="flex justify-between items-center">
+              <span>Reduce JavaScript Execution Time</span>
+              <span class="text-emerald-500 font-medium"
+                >Ready to Implement</span
+              >
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 2. Accessibility Audit -->
+      <section class="mb-24">
+        <h2 class="text-3xl font-semibold mb-12 text-center">
+          2. Accessibility Audit & Fixes
+        </h2>
+        <div
+          class="max-w-3xl mx-auto bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl p-10"
+        >
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+              <h3 class="font-semibold mb-4 text-emerald-600">
+                ✅ What We Did Well
+              </h3>
+              <ul class="space-y-2 text-sm">
+                <li>• Good color contrast (dark mode)</li>
+                <li>• Semantic headings</li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="font-semibold mb-4 text-amber-600">⚠️ Quick Wins</h3>
+              <ul class="space-y-2 text-sm">
+                <li>• Add ARIA labels to icons</li>
+                <li>• Ensure proper focus indicators</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Demo Buttons -->
+          <div class="mt-10 pt-8 border-t border-zinc-200 dark:border-white/10">
+            <p class="text-sm text-zinc-500 mb-4">
+              Test these accessible buttons:
+            </p>
+            <div class="flex flex-wrap justify-center gap-6">
+              <button onclick="showSuccess()" class="vibe-btn vibe-btn-primary">
+                Primary Action
+              </button>
+              <button onclick="showSuccess()" class="vibe-btn">
+                Secondary Action
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Reusable Component System -->
+      <section class="mb-24">
+        <h2 class="text-3xl font-semibold mb-12 text-center">
+          3. Reusable Component System
+        </h2>
+        <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div
+            class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl p-8"
+          >
+            <h3 class="font-semibold mb-6">VibeButton Component</h3>
+            <button
+              onclick="showSuccess()"
+              class="vibe-btn vibe-btn-primary mb-4"
+            >
+              Primary Action
+            </button>
+            <button onclick="showSuccess()" class="vibe-btn">
+              Secondary Action
+            </button>
+          </div>
+
+          <div
+            class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl p-8"
+          >
+            <h3 class="font-semibold mb-6">VibeCard Component</h3>
+            <div class="vibe-card p-6">
+              <h4 class="font-semibold mb-2">Premium Feature</h4>
+              <p class="text-sm text-zinc-500">
+                This card can be reused everywhere.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Success Celebration -->
+    <div
+      id="success-celebration"
+      class="hidden fixed inset-0 pointer-events-none z-[100] flex items-center justify-center"
+    >
+      <div id="success-text" class="success-text">Success</div>
+    </div>
+
+    <script>
+      function showSuccess() {
+        const celebration = document.getElementById("success-celebration");
+        celebration.classList.remove("hidden");
+
+        // Large balloons only
+        for (let i = 0; i < 45; i++) {
+          const balloon = document.createElement("div");
+          balloon.className = "balloon";
+          balloon.textContent = "🎈";
+          balloon.style.left = Math.random() * 100 + "vw";
+          balloon.style.animationDuration = Math.random() * 2 + 2.5 + "s";
+          balloon.style.opacity = Math.random() * 0.4 + 0.8;
+          celebration.appendChild(balloon);
+
+          setTimeout(() => balloon.remove(), 5800);
+        }
+
+        // Auto hide
+        setTimeout(() => {
+          celebration.classList.add("hidden");
+          celebration.innerHTML = `<div id="success-text" class="success-text">Success</div>`;
+        }, 5200);
+      }
+    </script>
+  </body>
+</html>
