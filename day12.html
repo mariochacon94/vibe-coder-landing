@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day 12 – State Management & Dynamic Dashboards</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+    <script>
+      tailwind.config = { darkMode: "class" };
+    </script>
+  </head>
+  <body
+    class="bg-white text-black dark:bg-zinc-950 dark:text-white font-sans min-h-screen"
+  >
+    <div class="max-w-screen-2xl mx-auto px-6 py-12">
+      <h1
+        class="text-5xl font-bold text-center mb-8 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
+      >
+        Day 12: State Management & Dynamic Dashboards
+      </h1>
+
+      <!-- Minimal Back Button -->
+      <a
+        href="index.html"
+        class="inline-flex items-center gap-2.5 px-5 py-2.5 mb-12 text-sm font-medium text-zinc-400 hover:text-white transition-all group mx-auto block w-fit"
+      >
+        <i
+          class="fa-solid fa-arrow-left text-base transition-transform group-hover:-translate-x-0.5"
+        ></i>
+        <span>Back to Portfolio</span>
+      </a>
+
+      <!-- 2.1 State Management Dashboard -->
+      <section class="mb-24">
+        <h2 class="text-3xl font-semibold mb-12 text-center">
+          1. Dynamic Dashboard with State Management
+        </h2>
+
+        <div
+          class="max-w-4xl mx-auto bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl p-10"
+        >
+          <div class="flex justify-between items-center mb-8">
+            <h3 class="text-2xl font-semibold">Your Progress</h3>
+            <button
+              onclick="resetProgress()"
+              class="px-5 py-2 text-sm border border-red-300 dark:border-red-800 text-red-600 dark:text-red-400 rounded-2xl hover:bg-red-50 dark:hover:bg-red-950 transition"
+            >
+              Reset All Progress
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="stats-grid">
+            <!-- Stats will be injected by JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- 2.2 Dynamic Stats Management -->
+      <section class="mb-24">
+        <h2 class="text-3xl font-semibold mb-12 text-center">
+          2. Dynamic Stats Management
+        </h2>
+
+        <div
+          class="max-w-4xl mx-auto bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl p-10"
+        >
+          <div class="flex justify-between items-center mb-8">
+            <h3 class="text-2xl font-semibold">Live Progress Tracker</h3>
+            <div class="flex gap-3">
+              <button
+                onclick="addProject()"
+                class="px-5 py-2 bg-emerald-600 text-white rounded-2xl text-sm hover:bg-emerald-700 transition"
+              >
+                + Add Project
+              </button>
+              <button
+                onclick="addHour()"
+                class="px-5 py-2 bg-amber-600 text-white rounded-2xl text-sm hover:bg-amber-700 transition"
+              >
+                + Add Hour
+              </button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="dynamic-stats">
+            <!-- Dynamic stats injected here -->
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      // ==================== STATE MANAGEMENT DASHBOARD ====================
+      let userProgress = JSON.parse(localStorage.getItem("vibeProgress")) || {
+        daysCompleted: 11,
+        projectsBuilt: 10,
+        hoursPracticed: 42,
+        streak: 11,
+      };
+
+      function saveProgress() {
+        localStorage.setItem("vibeProgress", JSON.stringify(userProgress));
+      }
+
+      function renderStats() {
+        const grid = document.getElementById("stats-grid");
+        grid.innerHTML = `
+        <div class="bg-zinc-100 dark:bg-zinc-800 rounded-3xl p-8 text-center">
+          <div class="text-5xl font-bold text-blue-600 dark:text-blue-400">${userProgress.daysCompleted}</div>
+          <div class="text-sm tracking-widest text-zinc-500 mt-2">DAYS COMPLETED</div>
+        </div>
+        <div class="bg-zinc-100 dark:bg-zinc-800 rounded-3xl p-8 text-center">
+          <div class="text-5xl font-bold text-purple-600 dark:text-purple-400">${userProgress.projectsBuilt}</div>
+          <div class="text-sm tracking-widest text-zinc-500 mt-2">PROJECTS BUILT</div>
+        </div>
+        <div class="bg-zinc-100 dark:bg-zinc-800 rounded-3xl p-8 text-center">
+          <div class="text-5xl font-bold text-amber-600 dark:text-amber-400">${userProgress.hoursPracticed}</div>
+          <div class="text-sm tracking-widest text-zinc-500 mt-2">HOURS PRACTICED</div>
+        </div>
+      `;
+      }
+
+      function resetProgress() {
+        if (confirm("Reset all progress? This cannot be undone.")) {
+          userProgress = {
+            daysCompleted: 0,
+            projectsBuilt: 0,
+            hoursPracticed: 0,
+            streak: 0,
+          };
+          saveProgress();
+          renderStats();
+        }
+      }
+
+      // Initialize
+      window.onload = function () {
+        renderStats();
+      };
+
+      // Dynamic Stats Management
+      function addProject() {
+        userProgress.projectsBuilt++;
+        saveProgress();
+        renderStats();
+      }
+
+      function addHour() {
+        userProgress.hoursPracticed++;
+        saveProgress();
+        renderStats();
+      }
+
+      // Update renderStats to use the dynamic grid
+      function renderStats() {
+        const grid =
+          document.getElementById("dynamic-stats") ||
+          document.getElementById("stats-grid");
+        if (!grid) return;
+
+        grid.innerHTML = `
+        <div class="bg-zinc-100 dark:bg-zinc-800 rounded-3xl p-8 text-center">
+          <div class="text-5xl font-bold text-blue-600 dark:text-blue-400">${userProgress.daysCompleted}</div>
+          <div class="text-sm tracking-widest text-zinc-500 mt-2">DAYS COMPLETED</div>
+        </div>
+        <div class="bg-zinc-100 dark:bg-zinc-800 rounded-3xl p-8 text-center">
+          <div class="text-5xl font-bold text-purple-600 dark:text-purple-400">${userProgress.projectsBuilt}</div>
+          <div class="text-sm tracking-widest text-zinc-500 mt-2">PROJECTS BUILT</div>
+        </div>
+        <div class="bg-zinc-100 dark:bg-zinc-800 rounded-3xl p-8 text-center">
+          <div class="text-5xl font-bold text-amber-600 dark:text-amber-400">${userProgress.hoursPracticed}</div>
+          <div class="text-sm tracking-widest text-zinc-500 mt-2">HOURS PRACTICED</div>
+        </div>
+      `;
+      }
+    </script>
+  </body>
+</html>
