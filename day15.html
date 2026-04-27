@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day 15 – Advanced Dashboard Systems</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+    <script>
+      tailwind.config = { darkMode: "class" };
+    </script>
+  </head>
+  <body
+    class="bg-white text-black dark:bg-zinc-950 dark:text-white font-sans min-h-screen"
+  >
+    <div class="max-w-screen-2xl mx-auto px-6 py-12">
+      <h1
+        class="text-5xl font-bold text-center mb-8 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
+      >
+        Day 15: Advanced Dashboard Systems & Real-Time Interactions
+      </h1>
+
+      <!-- Minimal Back Button -->
+      <a
+        href="index.html"
+        class="inline-flex items-center gap-2.5 px-5 py-2.5 mb-12 text-sm font-medium text-zinc-400 hover:text-white transition-all group mx-auto block w-fit"
+      >
+        <i
+          class="fa-solid fa-arrow-left text-base transition-transform group-hover:-translate-x-0.5"
+        ></i>
+        <span>Back to Portfolio</span>
+      </a>
+      <!-- 2.1 Professional Dashboard Shell -->
+      <section class="mb-24">
+        <h2 class="text-3xl font-semibold mb-12 text-center">
+          1. Professional Analytics Dashboard
+        </h2>
+
+        <div class="max-w-7xl mx-auto">
+          <!-- Top Stats Bar -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+            <div
+              class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl p-8"
+            >
+              <div class="text-emerald-500 text-4xl mb-4">📈</div>
+              <div id="total-projects" class="text-4xl font-bold">12</div>
+              <div class="text-sm text-zinc-500">Total Projects</div>
+            </div>
+            <div
+              class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl p-8"
+            >
+              <div class="text-blue-500 text-4xl mb-4">⏱️</div>
+              <div id="hours-this-month" class="text-4xl font-bold">68</div>
+              <div class="text-sm text-zinc-500">Hours This Month</div>
+            </div>
+            <div
+              class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl p-8"
+            >
+              <div class="text-purple-500 text-4xl mb-4">🔥</div>
+              <div id="current-streak" class="text-4xl font-bold">14</div>
+              <div class="text-sm text-zinc-500">Day Streak</div>
+            </div>
+            <div
+              class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl p-8"
+            >
+              <div class="text-amber-500 text-4xl mb-4">🏆</div>
+              <div id="completion-rate" class="text-4xl font-bold">91%</div>
+              <div class="text-sm text-zinc-500">Completion Rate</div>
+            </div>
+          </div>
+
+          <!-- Main Content Area -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <!-- Left Sidebar Navigation -->
+            <div
+              class="lg:col-span-3 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl p-8 h-fit"
+            >
+              <h4 class="font-semibold mb-6">Navigation</h4>
+              <div class="space-y-2">
+                <div
+                  class="px-6 py-4 bg-blue-50 dark:bg-blue-950 rounded-2xl font-medium cursor-pointer"
+                >
+                  Overview
+                </div>
+                <div
+                  class="px-6 py-4 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-2xl cursor-pointer transition"
+                >
+                  Projects
+                </div>
+                <div
+                  class="px-6 py-4 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-2xl cursor-pointer transition"
+                >
+                  Analytics
+                </div>
+                <div
+                  class="px-6 py-4 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-2xl cursor-pointer transition"
+                >
+                  Settings
+                </div>
+              </div>
+            </div>
+
+            <!-- Main Dashboard Content -->
+            <div class="lg:col-span-9 space-y-8">
+              <!-- Chart Area Placeholder -->
+              <div
+                class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl p-10 h-96 flex items-center justify-center text-zinc-400"
+              >
+                [Live Chart Placeholder - Revenue / Progress Over Time]
+              </div>
+
+              <!-- Recent Activity -->
+              <div
+                class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl p-8"
+              >
+                <h4 class="font-semibold mb-6">Recent Activity</h4>
+                <div id="activity-list" class="space-y-6">
+                  <!-- Populated by JS -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- 2.2 Real-Time Activity Feed -->
+      <section class="mb-24">
+        <h2 class="text-3xl font-semibold mb-12 text-center">
+          2. Real-Time Activity Feed
+        </h2>
+
+        <div
+          class="max-w-4xl mx-auto bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl p-8"
+        >
+          <div class="flex items-center justify-between mb-8">
+            <h4 class="font-semibold">Live Activity</h4>
+            <div
+              id="live-dot"
+              class="flex items-center gap-2 text-emerald-500 text-sm font-medium"
+            >
+              <div
+                class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"
+              ></div>
+              LIVE
+            </div>
+          </div>
+
+          <div
+            id="activity-feed"
+            class="space-y-5 max-h-[420px] overflow-y-auto pr-4"
+          >
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </section>
+      <!-- 2.3 Premium Subscription Plans + Theme Options -->
+      <section class="mb-24">
+        <h2 class="text-3xl font-semibold mb-12 text-center">
+          3. Sellable Template Features
+        </h2>
+
+        <div class="max-w-5xl mx-auto">
+          <!-- Theme Switcher -->
+          <div class="flex justify-center mb-12">
+            <div
+              class="inline-flex bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl p-2"
+            >
+              <button
+                onclick="switchTheme(0)"
+                id="theme-light"
+                class="px-8 py-3 rounded-3xl font-medium transition-all"
+              >
+                Light
+              </button>
+              <button
+                onclick="switchTheme(1)"
+                id="theme-dark"
+                class="px-8 py-3 rounded-3xl font-medium transition-all bg-zinc-900 text-white dark:bg-white dark:text-zinc-900"
+              >
+                Dark
+              </button>
+            </div>
+          </div>
+
+          <!-- Subscription Cards -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Starter -->
+            <div
+              class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl p-10 hover:-translate-y-3 transition-all"
+            >
+              <h4 class="font-semibold text-lg mb-2">Starter</h4>
+              <div class="text-5xl font-bold mb-8">
+                $29<span class="text-base font-normal text-zinc-500">/mo</span>
+              </div>
+              <ul class="space-y-4 mb-10 text-sm">
+                <li class="flex items-center gap-3">
+                  <i class="fa-solid fa-check text-emerald-500"></i> Basic
+                  Dashboard
+                </li>
+                <li class="flex items-center gap-3">
+                  <i class="fa-solid fa-check text-emerald-500"></i> Live Stats
+                </li>
+                <li class="flex items-center gap-3">
+                  <i class="fa-solid fa-check text-emerald-500"></i> Activity
+                  Feed
+                </li>
+              </ul>
+              <button
+                class="w-full py-4 border border-zinc-300 dark:border-white/30 rounded-3xl font-medium hover:bg-zinc-100 dark:hover:bg-zinc-800 transition"
+              >
+                Get Starter
+              </button>
+            </div>
+
+            <!-- Pro (Popular) -->
+            <div
+              class="bg-gradient-to-br from-blue-600 to-purple-600 text-white rounded-3xl p-10 -mt-4 relative"
+            >
+              <div
+                class="absolute -top-4 right-8 bg-yellow-400 text-zinc-900 text-xs font-bold px-6 py-1 rounded-full"
+              >
+                MOST POPULAR
+              </div>
+              <h4 class="font-semibold text-lg mb-2">Pro</h4>
+              <div class="text-5xl font-bold mb-8">
+                $79<span class="text-base font-normal opacity-75">/mo</span>
+              </div>
+              <ul class="space-y-4 mb-10 text-sm">
+                <li class="flex items-center gap-3">
+                  <i class="fa-solid fa-check"></i> Everything in Starter
+                </li>
+                <li class="flex items-center gap-3">
+                  <i class="fa-solid fa-check"></i> Real-time API Sync
+                </li>
+                <li class="flex items-center gap-3">
+                  <i class="fa-solid fa-check"></i> Custom Themes
+                </li>
+                <li class="flex items-center gap-3">
+                  <i class="fa-solid fa-check"></i> Export Reports
+                </li>
+              </ul>
+              <button
+                class="w-full py-4 bg-white text-zinc-900 rounded-3xl font-semibold hover:scale-105 transition"
+              >
+                Start Pro Trial
+              </button>
+            </div>
+
+            <!-- Enterprise -->
+            <div
+              class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl p-10 hover:-translate-y-3 transition-all"
+            >
+              <h4 class="font-semibold text-lg mb-2">Enterprise</h4>
+              <div class="text-5xl font-bold mb-8">
+                $199<span class="text-base font-normal text-zinc-500">/mo</span>
+              </div>
+              <ul class="space-y-4 mb-10 text-sm">
+                <li class="flex items-center gap-3">
+                  <i class="fa-solid fa-check text-emerald-500"></i> All Pro
+                  Features
+                </li>
+                <li class="flex items-center gap-3">
+                  <i class="fa-solid fa-check text-emerald-500"></i> Team Seats
+                </li>
+                <li class="flex items-center gap-3">
+                  <i class="fa-solid fa-check text-emerald-500"></i> White Label
+                </li>
+                <li class="flex items-center gap-3">
+                  <i class="fa-solid fa-check text-emerald-500"></i> Priority
+                  Support
+                </li>
+              </ul>
+              <button
+                class="w-full py-4 border border-zinc-300 dark:border-white/30 rounded-3xl font-medium hover:bg-zinc-100 dark:hover:bg-zinc-800 transition"
+              >
+                Contact Sales
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      // ==================== DASHBOARD STATE ====================
+      let dashboardData = {
+        totalProjects: 13,
+        hoursThisMonth: 68,
+        currentStreak: 14,
+        completionRate: 91,
+      };
+
+      const activities = [
+        { time: "just now", action: "Completed Day 15 Dashboard", icon: "✅" },
+        {
+          time: "2m ago",
+          action: "Updated main portfolio index.html",
+          icon: "🔄",
+        },
+        { time: "11m ago", action: "Pushed Day 14 to Vercel", icon: "🚀" },
+      ];
+
+      function renderDashboard() {
+        document.getElementById("total-projects").textContent =
+          dashboardData.totalProjects;
+        document.getElementById("hours-this-month").textContent =
+          dashboardData.hoursThisMonth;
+        document.getElementById("current-streak").textContent =
+          dashboardData.currentStreak;
+        document.getElementById("completion-rate").textContent =
+          dashboardData.completionRate + "%";
+      }
+
+      function addActivity() {
+        const feed = document.getElementById("activity-feed");
+        const newActivity = {
+          time: "just now",
+          action: "Simulated live update from API",
+          icon: "📡",
+        };
+
+        activities.unshift(newActivity);
+        if (activities.length > 6) activities.pop();
+
+        let html = "";
+        activities.forEach((act) => {
+          html += `
+          <div class="flex gap-4 items-start">
+            <div class="w-9 h-9 flex-shrink-0 bg-zinc-100 dark:bg-zinc-800 rounded-2xl flex items-center justify-center text-xl">
+              ${act.icon}
+            </div>
+            <div class="flex-1">
+              <p class="font-medium">${act.action}</p>
+              <p class="text-xs text-zinc-500">${act.time}</p>
+            </div>
+          </div>
+        `;
+        });
+        feed.innerHTML = html;
+      }
+
+      // Simulate live updates
+      function simulateLiveUpdates() {
+        setInterval(() => {
+          dashboardData.hoursThisMonth += Math.floor(Math.random() * 3) + 1;
+          dashboardData.completionRate = Math.min(
+            99,
+            dashboardData.completionRate + 1,
+          );
+          renderDashboard();
+          addActivity();
+        }, 4500);
+      }
+
+      // Initialize
+      window.onload = function () {
+        renderDashboard();
+        addActivity();
+        simulateLiveUpdates();
+      };
+      function switchTheme(mode) {
+        if (mode === 0) {
+          document.documentElement.classList.remove("dark");
+        } else {
+          document.documentElement.classList.add("dark");
+        }
+      }
+    </script>
+  </body>
+</html>
