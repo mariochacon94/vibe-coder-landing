@@ -94,7 +94,7 @@
       <!-- Week Cards -->
       <div
         id="week-view"
-        class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto"
+        class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto"
       >
         <!-- Week 1 -->
         <div
@@ -106,7 +106,7 @@
           </div>
           <h3 class="text-4xl font-bold mb-6">Foundation</h3>
           <p class="text-zinc-400">
-            Layouts, components, and first interactive builds.
+            Layouts, components, and core interactivity.
           </p>
         </div>
 
@@ -120,13 +120,27 @@
           </div>
           <h3 class="text-4xl font-bold mb-6">Interactivity & Polish</h3>
           <p class="text-zinc-400">
-            Forms, animations, auth, and professional dashboards.
+            Forms, auth, animations, and professional UI.
+          </p>
+        </div>
+
+        <!-- Week 3 (New) -->
+        <div
+          onclick="showWeek(3)"
+          class="group cursor-pointer bg-zinc-900 border border-white/10 rounded-3xl p-10 hover:border-amber-400/50 hover:-translate-y-3 transition-all"
+        >
+          <div class="uppercase text-xs tracking-widest text-amber-400 mb-4">
+            Week 3
+          </div>
+          <h3 class="text-4xl font-bold mb-6">Advanced Systems</h3>
+          <p class="text-zinc-400">
+            Dashboards, real-time features & sellable templates.
           </p>
         </div>
       </div>
 
       <!-- Project View -->
-      <div id="project-view" class="hidden max-w-5xl mx-auto">
+      <div id="project-view" class="hidden max-w-6xl mx-auto">
         <button
           onclick="backToWeeks()"
           class="mb-10 flex items-center gap-3 text-zinc-400 hover:text-white"
@@ -176,6 +190,11 @@
             { name: "Day 12 - State Management", link: "day12.html" },
             { name: "Day 13 - Real API Integration", link: "day13.html" },
             { name: "Day 14 - Authentication & Sessions", link: "day14.html" },
+          ],
+        },
+        3: {
+          title: "Week 3 - Advanced Systems",
+          projects: [
             { name: "Day 15 - Advanced Dashboard Systems", link: "day15.html" },
           ],
         },
