@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day 14 – Authentication & User Sessions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+    <script>
+      tailwind.config = { darkMode: "class" };
+    </script>
+  </head>
+  <body
+    class="bg-white text-black dark:bg-zinc-950 dark:text-white font-sans min-h-screen"
+  >
+    <div class="max-w-screen-2xl mx-auto px-6 py-12">
+      <h1
+        class="text-5xl font-bold text-center mb-8 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
+      >
+        Day 14: Authentication & User Sessions
+      </h1>
+
+      <!-- Minimal Back Button -->
+      <a
+        href="index.html"
+        class="inline-flex items-center gap-2.5 px-5 py-2.5 mb-12 text-sm font-medium text-zinc-400 hover:text-white transition-all group mx-auto block w-fit"
+      >
+        <i
+          class="fa-solid fa-arrow-left text-base transition-transform group-hover:-translate-x-0.5"
+        ></i>
+        <span>Back to Portfolio</span>
+      </a>
+
+      <!-- 2.1 Authentication System -->
+      <section class="mb-24">
+        <h2 class="text-3xl font-semibold mb-12 text-center">
+          1. Login / Logout System
+        </h2>
+
+        <div
+          class="max-w-md mx-auto bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl p-10"
+        >
+          <div id="auth-status" class="text-center mb-8">
+            <p id="status-text" class="text-lg font-medium">
+              You are not logged in
+            </p>
+          </div>
+
+          <button
+            onclick="toggleLoginModal()"
+            id="login-btn"
+            class="w-full py-5 bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl text-white font-semibold text-lg hover:scale-105 active:scale-95 transition-all"
+          >
+            Login to Your Account
+          </button>
+
+          <button
+            onclick="logout()"
+            id="logout-btn"
+            class="hidden w-full py-5 mt-4 border border-red-400 text-red-600 dark:text-red-400 rounded-3xl font-semibold hover:bg-red-50 dark:hover:bg-red-950 transition-all"
+          >
+            Logout
+          </button>
+        </div>
+      </section>
+
+      <!-- 2.2 Protected Dashboard -->
+      <section class="mb-24">
+        <h2 class="text-3xl font-semibold mb-12 text-center">
+          2. Protected Dashboard
+        </h2>
+
+        <div
+          id="protected-content"
+          class="hidden max-w-4xl mx-auto bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl p-12"
+        >
+          <h3 class="text-2xl font-semibold mb-8">
+            Welcome to Your Private Dashboard, Mario
+          </h3>
+          <p class="text-zinc-600 dark:text-zinc-400 mb-10">
+            Only logged-in users can see this content.
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div
+              class="bg-zinc-100 dark:bg-zinc-800 p-8 rounded-3xl text-center"
+            >
+              <div class="text-4xl mb-4">📊</div>
+              <p class="font-medium">Progress Overview</p>
+            </div>
+            <div
+              class="bg-zinc-100 dark:bg-zinc-800 p-8 rounded-3xl text-center"
+            >
+              <div class="text-4xl mb-4">🏆</div>
+              <p class="font-medium">Achievements</p>
+            </div>
+            <div
+              class="bg-zinc-100 dark:bg-zinc-800 p-8 rounded-3xl text-center"
+            >
+              <div class="text-4xl mb-4">🎯</div>
+              <p class="font-medium">Goals</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="login-prompt" class="max-w-md mx-auto text-center py-20">
+          <p class="text-xl text-zinc-500">
+            Please log in to access the protected dashboard.
+          </p>
+        </div>
+      </section>
+
+      <!-- Login Modal -->
+      <div
+        id="login-modal"
+        class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50"
+      >
+        <div
+          class="bg-white dark:bg-zinc-900 rounded-3xl p-10 w-full max-w-md mx-4"
+        >
+          <h3 class="text-2xl font-bold mb-8 text-center">Welcome Back</h3>
+
+          <input
+            id="username"
+            type="text"
+            placeholder="Username"
+            class="w-full mb-4 px-6 py-4 rounded-2xl border border-zinc-300 dark:border-white/20 focus:outline-none focus:border-blue-500 bg-white dark:bg-zinc-800 text-black dark:text-white"
+          />
+
+          <input
+            id="password"
+            type="password"
+            placeholder="Password"
+            class="w-full mb-8 px-6 py-4 rounded-2xl border border-zinc-300 dark:border-white/20 focus:outline-none focus:border-blue-500 bg-white dark:bg-zinc-800 text-black dark:text-white"
+          />
+
+          <button
+            onclick="attemptLogin()"
+            class="w-full py-5 bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl text-white font-semibold text-lg hover:scale-105 active:scale-95 transition-all"
+          >
+            Sign In
+          </button>
+
+          <button
+            onclick="toggleLoginModal()"
+            class="w-full py-5 mt-4 text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 transition"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+
+      function updateAuthUI() {
+        const loginBtn = document.getElementById("login-btn");
+        const logoutBtn = document.getElementById("logout-btn");
+        const statusText = document.getElementById("status-text");
+        const protectedContent = document.getElementById("protected-content");
+        const loginPrompt = document.getElementById("login-prompt");
+
+        if (isLoggedIn) {
+          loginBtn.classList.add("hidden");
+          logoutBtn.classList.remove("hidden");
+          statusText.textContent = "Welcome back, Mario!";
+          statusText.classList.add("text-emerald-600");
+          protectedContent.classList.remove("hidden");
+          loginPrompt.classList.add("hidden");
+        } else {
+          loginBtn.classList.remove("hidden");
+          logoutBtn.classList.add("hidden");
+          statusText.textContent = "You are not logged in";
+          statusText.classList.remove("text-emerald-600");
+          protectedContent.classList.add("hidden");
+          loginPrompt.classList.remove("hidden");
+        }
+      }
+
+      function toggleLoginModal() {
+        document.getElementById("login-modal").classList.toggle("hidden");
+      }
+
+      function attemptLogin() {
+        const username = document.getElementById("username").value.trim();
+        const password = document.getElementById("password").value.trim();
+
+        if (username && password) {
+          isLoggedIn = true;
+          localStorage.setItem("isLoggedIn", "true");
+          toggleLoginModal();
+          updateAuthUI();
+        } else {
+          alert("Please enter both username and password.");
+        }
+      }
+
+      function logout() {
+        if (confirm("Logout from your account?")) {
+          isLoggedIn = false;
+          localStorage.removeItem("isLoggedIn");
+          updateAuthUI();
+        }
+      }
+
+      // Initialize on load
+      window.onload = updateAuthUI;
+    </script>
+  </body>
+</html>
