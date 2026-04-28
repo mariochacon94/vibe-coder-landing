@@ -94,7 +94,7 @@
               </div>
             </div>
             <div id="hours-count" class="text-5xl font-bold tabular-nums">
-              42
+              72
             </div>
             <div class="text-xs tracking-widest text-zinc-400">
               HOURS ENGAGED
@@ -173,16 +173,14 @@
           if (start >= target) {
             el.textContent = target;
             clearInterval(timer);
-          } else {
-            el.textContent = Math.floor(start);
-          }
+          } else el.textContent = Math.floor(start);
         }, 16);
       }
 
       window.onload = () => {
         animateCounter("days-count", 16);
         animateCounter("projects-count", 15);
-        animateCounter("hours-count", 42);
+        animateCounter("hours-count", 72);
       };
 
       const projectsData = {
