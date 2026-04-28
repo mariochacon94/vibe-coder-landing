@@ -3,320 +3,245 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Day 16 – Advanced Data Visualization & Client-Ready Analytics</title>
+    <title>Mario • Vibe Coder Journey</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
     />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <script>
       tailwind.config = { darkMode: "class" };
     </script>
+    <style>
+      .glass-counter {
+        background: rgba(255, 255, 255, 0.06);
+        backdrop-filter: blur(24px);
+        box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4);
+      }
+      .stat-glow {
+        animation: statPulse 4s ease-in-out infinite;
+      }
+      @keyframes statPulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.85;
+        }
+      }
+    </style>
   </head>
-  <body
-    class="bg-white text-black dark:bg-zinc-950 dark:text-white font-sans min-h-screen"
-  >
-    <div class="max-w-screen-2xl mx-auto px-6 py-12">
-      <h1
-        class="text-5xl font-bold text-center mb-8 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
-      >
-        Day 16: Advanced Data Visualization & Client-Ready Analytics
-      </h1>
-
-      <!-- Minimal Back Button -->
-      <a
-        href="index.html"
-        class="inline-flex items-center gap-2.5 px-5 py-2.5 mb-12 text-sm font-medium text-zinc-400 hover:text-white transition-all group mx-auto block w-fit"
-      >
-        <i
-          class="fa-solid fa-arrow-left text-base transition-transform group-hover:-translate-x-0.5"
-        ></i>
-        <span>Back to Portfolio</span>
-      </a>
-
-      <!-- 1. Marketing Channel Performance -->
-      <section class="mb-24">
-        <h2 class="text-3xl font-semibold mb-12 text-center">
-          1. Marketing Channel Performance
-        </h2>
-
-        <div class="max-w-7xl mx-auto">
-          <div class="flex flex-wrap gap-4 mb-10 justify-center">
-            <select
-              id="quarter-filter"
-              onchange="updateChart()"
-              class="bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-white/20 rounded-2xl px-6 py-3 focus:outline-none focus:border-blue-500"
-            >
-              <option value="all">All Quarters</option>
-              <option value="Q1">Q1 2026</option>
-              <option value="Q2">Q2 2026</option>
-              <option value="Q3">Q3 2026</option>
-            </select>
-
-            <button
-              onclick="exportReport()"
-              class="px-8 py-3 bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-white/20 rounded-2xl hover:bg-zinc-100 dark:hover:bg-zinc-800 transition flex items-center gap-3"
-            >
-              <i class="fa-solid fa-download"></i> Export Report
-            </button>
-          </div>
-
+  <body class="bg-zinc-950 text-white font-sans min-h-screen">
+    <div class="max-w-screen-2xl mx-auto px-6 py-20">
+      <div class="text-center mb-16">
+        <div class="inline-flex items-center gap-4 mb-6">
           <div
-            class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl p-10"
+            class="w-14 h-14 bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl flex items-center justify-center text-3xl font-bold"
           >
-            <canvas id="performanceChart" class="w-full h-96"></canvas>
+            MC
           </div>
-
-          <div
-            class="mt-8 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl overflow-hidden"
+          <h1
+            class="text-6xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
           >
-            <table class="w-full">
-              <thead>
-                <tr class="border-b border-zinc-200 dark:border-white/10">
-                  <th class="text-left p-6 font-medium">Channel</th>
-                  <th class="text-right p-6 font-medium">Q1</th>
-                  <th class="text-right p-6 font-medium">Q2</th>
-                  <th class="text-right p-6 font-medium">Q3</th>
-                  <th class="text-right p-6 font-medium">Total</th>
-                </tr>
-              </thead>
-              <tbody
-                id="data-table"
-                class="divide-y divide-zinc-200 dark:divide-white/10"
-              ></tbody>
-            </table>
-          </div>
+            Vibe Coder Journey
+          </h1>
         </div>
-      </section>
+        <p class="text-2xl text-zinc-400">
+          Building a Lucrative Career One Deliberate Day at a Time
+        </p>
+      </div>
 
-      <!-- 2. Multi-View Analytics Engine -->
-      <section class="mb-24">
-        <h2 class="text-3xl font-semibold mb-12 text-center">
-          2. Multi-View Analytics Engine
-        </h2>
-
-        <div class="max-w-7xl mx-auto">
-          <div class="flex justify-center mb-10">
-            <div
-              class="inline-flex bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl p-1"
-            >
-              <button
-                onclick="switchView(0)"
-                id="view-revenue"
-                class="px-8 py-3.5 rounded-3xl font-semibold transition-all"
+      <!-- Premium Glossy Counter -->
+      <div class="flex justify-center mb-20">
+        <div class="glass-counter inline-flex gap-16 rounded-3xl px-16 py-10">
+          <div class="text-center">
+            <div class="flex justify-center mb-3">
+              <div
+                class="w-12 h-12 bg-gradient-to-br from-blue-400 to-cyan-400 rounded-2xl flex items-center justify-center text-2xl stat-glow"
               >
-                Revenue View
-              </button>
-              <button
-                onclick="switchView(1)"
-                id="view-efficiency"
-                class="px-8 py-3.5 rounded-3xl font-semibold transition-all"
-              >
-                Efficiency View
-              </button>
-              <button
-                onclick="switchView(2)"
-                id="view-insight"
-                class="px-8 py-3.5 rounded-3xl font-semibold transition-all"
-              >
-                Insight View (ROI vs Volume)
-              </button>
+                📅
+              </div>
+            </div>
+            <div id="days-count" class="text-5xl font-bold tabular-nums">
+              16
+            </div>
+            <div class="text-xs tracking-widest text-zinc-400">
+              DAYS COMPLETED
             </div>
           </div>
-
-          <div
-            class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl p-10"
-          >
-            <canvas id="advancedChart" class="w-full h-96"></canvas>
+          <div class="text-center">
+            <div class="flex justify-center mb-3">
+              <div
+                class="w-12 h-12 bg-gradient-to-br from-purple-400 to-violet-400 rounded-2xl flex items-center justify-center text-2xl stat-glow"
+              >
+                🚀
+              </div>
+            </div>
+            <div id="projects-count" class="text-5xl font-bold tabular-nums">
+              15
+            </div>
+            <div class="text-xs tracking-widest text-zinc-400">
+              PROJECTS BUILT
+            </div>
+          </div>
+          <div class="text-center">
+            <div class="flex justify-center mb-3">
+              <div
+                class="w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-400 rounded-2xl flex items-center justify-center text-2xl stat-glow"
+              >
+                ⏱️
+              </div>
+            </div>
+            <div id="hours-count" class="text-5xl font-bold tabular-nums">
+              42
+            </div>
+            <div class="text-xs tracking-widest text-zinc-400">
+              HOURS ENGAGED
+            </div>
           </div>
         </div>
-      </section>
+      </div>
+
+      <!-- Week Cards -->
+      <div
+        id="week-view"
+        class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto"
+      >
+        <!-- Week 1 -->
+        <div
+          onclick="showWeek(1)"
+          class="group cursor-pointer bg-zinc-900 border border-white/10 rounded-3xl p-10 hover:border-blue-400/50 hover:-translate-y-3 transition-all"
+        >
+          <div class="uppercase text-xs tracking-widest text-blue-400 mb-4">
+            Week 1
+          </div>
+          <h3 class="text-4xl font-bold mb-6">Foundation</h3>
+          <p class="text-zinc-400">
+            Layouts, components, and core interactivity.
+          </p>
+        </div>
+
+        <!-- Week 2 -->
+        <div
+          onclick="showWeek(2)"
+          class="group cursor-pointer bg-zinc-900 border border-white/10 rounded-3xl p-10 hover:border-purple-400/50 hover:-translate-y-3 transition-all"
+        >
+          <div class="uppercase text-xs tracking-widest text-purple-400 mb-4">
+            Week 2
+          </div>
+          <h3 class="text-4xl font-bold mb-6">Interactivity & Polish</h3>
+          <p class="text-zinc-400">
+            Forms, auth, animations, and professional UI.
+          </p>
+        </div>
+
+        <!-- Week 3 -->
+        <div
+          onclick="showWeek(3)"
+          class="group cursor-pointer bg-zinc-900 border border-white/10 rounded-3xl p-10 hover:border-amber-400/50 hover:-translate-y-3 transition-all"
+        >
+          <div class="uppercase text-xs tracking-widest text-amber-400 mb-4">
+            Week 3
+          </div>
+          <h3 class="text-4xl font-bold mb-6">Advanced Systems</h3>
+          <p class="text-zinc-400">
+            Dashboards, real-time data, and sellable analytics tools.
+          </p>
+        </div>
+      </div>
+
+      <!-- Project List View -->
+      <div id="project-view" class="hidden max-w-6xl mx-auto">
+        <button
+          onclick="backToWeeks()"
+          class="mb-10 flex items-center gap-3 text-zinc-400 hover:text-white transition"
+        >
+          ← Back to Weeks
+        </button>
+        <div id="project-list" class="space-y-6"></div>
+      </div>
     </div>
 
     <script>
-      let performanceChart, mainChart;
-      let currentView = 0;
+      function animateCounter(id, target) {
+        const el = document.getElementById(id);
+        let start = 0;
+        const inc = target / 60;
+        const timer = setInterval(() => {
+          start += inc;
+          if (start >= target) {
+            el.textContent = target;
+            clearInterval(timer);
+          } else {
+            el.textContent = Math.floor(start);
+          }
+        }, 16);
+      }
 
-      const fullData = {
-        channels: [
-          "Google Ads",
-          "Facebook",
-          "Instagram",
-          "LinkedIn",
-          "Email",
-          "TikTok",
-        ],
-        revenue: {
-          Q1: [12400, 9800, 15600, 6700, 8900, 4500],
-          Q2: [18700, 14200, 21300, 9800, 12400, 7800],
-          Q3: [23100, 18900, 26700, 13400, 15600, 11200],
+      window.onload = () => {
+        animateCounter("days-count", 16);
+        animateCounter("projects-count", 15);
+        animateCounter("hours-count", 42);
+      };
+
+      const projectsData = {
+        1: {
+          title: "Week 1 - Foundation",
+          projects: [
+            { name: "Day 4 - Forms & Animations", link: "day4.html" },
+            { name: "Day 5 - Navigation & Tabs", link: "day5.html" },
+            { name: "Day 6 - Advanced Animations", link: "day6.html" },
+          ],
         },
-        roi: [280, 190, 340, 410, 520, 230],
-        cpa: [42, 68, 31, 27, 19, 55],
+        2: {
+          title: "Week 2 - Interactivity & Polish",
+          projects: [
+            { name: "Day 8 - FocusFlow SaaS Landing", link: "day8.html" },
+            { name: "Day 9 - Real Forms & Mode Toggle", link: "day9.html" },
+            { name: "Day 10 - 3D Interactions", link: "day10.html" },
+            { name: "Day 11 - Accessibility & Components", link: "day11.html" },
+            { name: "Day 12 - State Management", link: "day12.html" },
+            { name: "Day 13 - Real API Integration", link: "day13.html" },
+            { name: "Day 14 - Authentication & Sessions", link: "day14.html" },
+          ],
+        },
+        3: {
+          title: "Week 3 - Advanced Systems",
+          projects: [
+            { name: "Day 15 - Advanced Dashboard Systems", link: "day15.html" },
+            {
+              name: "Day 16 - Advanced Data Visualization",
+              link: "day16.html",
+            },
+          ],
+        },
       };
 
-      // ==================== PERFORMANCE CHART ====================
-      const channelData = {
-        labels: fullData.channels,
-        datasets: [
-          {
-            label: "Q1 2026",
-            data: fullData.revenue.Q1,
-            backgroundColor: "#3b82f6",
-          },
-          {
-            label: "Q2 2026",
-            data: fullData.revenue.Q2,
-            backgroundColor: "#8b5cf6",
-          },
-          {
-            label: "Q3 2026",
-            data: fullData.revenue.Q3,
-            backgroundColor: "#ec4899",
-          },
-        ],
-      };
+      function showWeek(week) {
+        document.getElementById("week-view").classList.add("hidden");
+        const pv = document.getElementById("project-view");
+        pv.classList.remove("hidden");
 
-      function createPerformanceChart() {
-        const ctx = document.getElementById("performanceChart");
-        if (performanceChart) performanceChart.destroy();
-        performanceChart = new Chart(ctx, {
-          type: "bar",
-          data: channelData,
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: { legend: { position: "top" } },
-            scales: {
-              y: {
-                beginAtZero: true,
-                ticks: { callback: (v) => "$" + v.toLocaleString() },
-              },
-            },
-          },
+        const data = projectsData[week];
+        let html = `<h2 class="text-4xl font-bold mb-10">${data.title}</h2>`;
+
+        data.projects.forEach((p) => {
+          html += `<a href="${p.link}" class="block bg-zinc-900 border border-white/10 rounded-3xl p-8 hover:border-white/30 transition-all group">
+          <div class="flex justify-between items-center">
+            <h3 class="text-2xl font-semibold group-hover:text-blue-400">${p.name}</h3>
+            <i class="fa-solid fa-arrow-right text-zinc-400 group-hover:text-white"></i>
+          </div>
+        </a>`;
         });
+
+        document.getElementById("project-list").innerHTML = html;
       }
 
-      function updateTable() {
-        const tbody = document.getElementById("data-table");
-        let html = "";
-        fullData.channels.forEach((channel, i) => {
-          const q1 = fullData.revenue.Q1[i];
-          const q2 = fullData.revenue.Q2[i];
-          const q3 = fullData.revenue.Q3[i];
-          const total = q1 + q2 + q3;
-          html += `<tr class="hover:bg-zinc-50 dark:hover:bg-zinc-800 transition">
-          <td class="p-6 font-medium">${channel}</td>
-          <td class="p-6 text-right">$${q1.toLocaleString()}</td>
-          <td class="p-6 text-right">$${q2.toLocaleString()}</td>
-          <td class="p-6 text-right">$${q3.toLocaleString()}</td>
-          <td class="p-6 text-right font-semibold">$${total.toLocaleString()}</td>
-        </tr>`;
-        });
-        tbody.innerHTML = html;
+      function backToWeeks() {
+        document.getElementById("project-view").classList.add("hidden");
+        document.getElementById("week-view").classList.remove("hidden");
       }
-
-      function updateChart() {
-        createPerformanceChart();
-      }
-      function exportReport() {
-        alert("✅ Report exported as PDF (Production version would use jsPDF)");
-      }
-
-      // ==================== ADVANCED MULTI-VIEW CHART ====================
-      function createAdvancedChart() {
-        const ctx = document.getElementById("advancedChart");
-        if (mainChart) mainChart.destroy();
-
-        if (currentView === 0) {
-          // Revenue View
-          mainChart = new Chart(ctx, {
-            type: "bar",
-            data: channelData,
-            options: { responsive: true, maintainAspectRatio: false },
-          });
-        } else if (currentView === 1) {
-          // Efficiency View - ROI Line
-          mainChart = new Chart(ctx, {
-            type: "line",
-            data: {
-              labels: fullData.channels,
-              datasets: [
-                {
-                  label: "ROI %",
-                  data: fullData.roi,
-                  borderColor: "#10b981",
-                  borderWidth: 5,
-                  tension: 0.4,
-                  pointRadius: 6,
-                },
-              ],
-            },
-            options: {
-              responsive: true,
-              maintainAspectRatio: false,
-              scales: {
-                y: { beginAtZero: true, ticks: { callback: (v) => v + "%" } },
-              },
-            },
-          });
-        } else {
-          // Insight View - Scatter Plot (ROI vs Volume)
-          const totalRevenue = fullData.channels.map(
-            (_, i) =>
-              fullData.revenue.Q1[i] +
-              fullData.revenue.Q2[i] +
-              fullData.revenue.Q3[i],
-          );
-          mainChart = new Chart(ctx, {
-            type: "bubble",
-            data: {
-              datasets: [
-                {
-                  label: "Channels",
-                  data: fullData.channels.map((channel, i) => ({
-                    x: totalRevenue[i] / 1000,
-                    y: fullData.roi[i],
-                    r: Math.sqrt(totalRevenue[i] / 800),
-                  })),
-                  backgroundColor: "#a855f7",
-                  borderColor: "#fff",
-                  borderWidth: 3,
-                },
-              ],
-            },
-            options: {
-              responsive: true,
-              maintainAspectRatio: false,
-              plugins: { legend: { display: false } },
-              scales: {
-                x: {
-                  title: { display: true, text: "Total Revenue Volume ($K)" },
-                },
-                y: { title: { display: true, text: "ROI %" } },
-              },
-            },
-          });
-        }
-      }
-
-      function switchView(view) {
-        currentView = view;
-        ["view-revenue", "view-efficiency", "view-insight"].forEach((id, i) => {
-          const el = document.getElementById(id);
-          el.classList.toggle("bg-zinc-900", i === view);
-          el.classList.toggle("text-white", i === view);
-        });
-        createAdvancedChart();
-      }
-
-      // Initialize everything
-      window.onload = function () {
-        createPerformanceChart();
-        updateTable();
-        createAdvancedChart();
-      };
     </script>
   </body>
 </html>
