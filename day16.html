@@ -24,7 +24,7 @@
         Day 16: Advanced Data Visualization & Client-Ready Analytics
       </h1>
 
-      <!-- Minimal Back Button -->
+      <!-- Back Button -->
       <a
         href="index.html"
         class="inline-flex items-center gap-2.5 px-5 py-2.5 mb-12 text-sm font-medium text-zinc-400 hover:text-white transition-all group mx-auto block w-fit"
@@ -42,10 +42,11 @@
         </h2>
 
         <div class="max-w-7xl mx-auto">
+          <!-- Filter Controls -->
           <div class="flex flex-wrap gap-4 mb-10 justify-center">
             <select
               id="quarter-filter"
-              onchange="updateChart()"
+              onchange="filterAndUpdateChart()"
               class="bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-white/20 rounded-2xl px-6 py-3 focus:outline-none focus:border-blue-500"
             >
               <option value="all">All Quarters</option>
@@ -137,6 +138,7 @@
     <script>
       let performanceChart, mainChart;
       let currentView = 0;
+      let currentFilter = "all";
 
       const fullData = {
         channels: [
@@ -156,34 +158,43 @@
         cpa: [42, 68, 31, 27, 19, 55],
       };
 
-      // ==================== PERFORMANCE CHART ====================
-      const channelData = {
-        labels: fullData.channels,
-        datasets: [
+      function getFilteredDatasets() {
+        if (currentFilter === "all")
+          return [
+            {
+              label: "Q1 2026",
+              data: fullData.revenue.Q1,
+              backgroundColor: "#3b82f6",
+            },
+            {
+              label: "Q2 2026",
+              data: fullData.revenue.Q2,
+              backgroundColor: "#8b5cf6",
+            },
+            {
+              label: "Q3 2026",
+              data: fullData.revenue.Q3,
+              backgroundColor: "#ec4899",
+            },
+          ];
+
+        const quarter = currentFilter;
+        return [
           {
-            label: "Q1 2026",
-            data: fullData.revenue.Q1,
+            label: quarter + " 2026",
+            data: fullData.revenue[quarter],
             backgroundColor: "#3b82f6",
           },
-          {
-            label: "Q2 2026",
-            data: fullData.revenue.Q2,
-            backgroundColor: "#8b5cf6",
-          },
-          {
-            label: "Q3 2026",
-            data: fullData.revenue.Q3,
-            backgroundColor: "#ec4899",
-          },
-        ],
-      };
+        ];
+      }
 
       function createPerformanceChart() {
         const ctx = document.getElementById("performanceChart");
         if (performanceChart) performanceChart.destroy();
+
         performanceChart = new Chart(ctx, {
           type: "bar",
-          data: channelData,
+          data: { labels: fullData.channels, datasets: getFilteredDatasets() },
           options: {
             responsive: true,
             maintainAspectRatio: false,
@@ -217,27 +228,30 @@
         tbody.innerHTML = html;
       }
 
-      function updateChart() {
+      function filterAndUpdateChart() {
+        currentFilter = document.getElementById("quarter-filter").value;
         createPerformanceChart();
       }
+
       function exportReport() {
         alert("✅ Report exported as PDF (Production version would use jsPDF)");
       }
 
-      // ==================== ADVANCED MULTI-VIEW CHART ====================
+      // Multi-View Advanced Chart (same as before)
       function createAdvancedChart() {
         const ctx = document.getElementById("advancedChart");
         if (mainChart) mainChart.destroy();
 
         if (currentView === 0) {
-          // Revenue View
           mainChart = new Chart(ctx, {
             type: "bar",
-            data: channelData,
+            data: {
+              labels: fullData.channels,
+              datasets: getFilteredDatasets(),
+            },
             options: { responsive: true, maintainAspectRatio: false },
           });
         } else if (currentView === 1) {
-          // Efficiency View - ROI Line
           mainChart = new Chart(ctx, {
             type: "line",
             data: {
@@ -249,7 +263,6 @@
                   borderColor: "#10b981",
                   borderWidth: 5,
                   tension: 0.4,
-                  pointRadius: 6,
                 },
               ],
             },
@@ -262,7 +275,6 @@
             },
           });
         } else {
-          // Insight View - Scatter Plot (ROI vs Volume)
           const totalRevenue = fullData.channels.map(
             (_, i) =>
               fullData.revenue.Q1[i] +
@@ -275,7 +287,7 @@
               datasets: [
                 {
                   label: "Channels",
-                  data: fullData.channels.map((channel, i) => ({
+                  data: fullData.channels.map((_, i) => ({
                     x: totalRevenue[i] / 1000,
                     y: fullData.roi[i],
                     r: Math.sqrt(totalRevenue[i] / 800),
@@ -289,7 +301,6 @@
             options: {
               responsive: true,
               maintainAspectRatio: false,
-              plugins: { legend: { display: false } },
               scales: {
                 x: {
                   title: { display: true, text: "Total Revenue Volume ($K)" },
@@ -311,7 +322,7 @@
         createAdvancedChart();
       }
 
-      // Initialize everything
+      // Initialize
       window.onload = function () {
         createPerformanceChart();
         updateTable();
