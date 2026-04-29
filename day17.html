@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day 17 – Advanced State Management & Real-time Systems</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+    <script>
+      tailwind.config = { darkMode: "class" };
+    </script>
+  </head>
+  <body
+    class="bg-white text-black dark:bg-zinc-950 dark:text-white font-sans min-h-screen"
+  >
+    <div class="max-w-screen-2xl mx-auto px-6 py-12">
+      <h1
+        class="text-5xl font-bold text-center mb-8 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
+      >
+        Day 17: Advanced State Management & Real-time Systems
+      </h1>
+
+      <!-- Minimal Back Button -->
+      <a
+        href="index.html"
+        class="inline-flex items-center gap-2.5 px-5 py-2.5 mb-12 text-sm font-medium text-zinc-400 hover:text-white transition-all group mx-auto block w-fit"
+      >
+        <i
+          class="fa-solid fa-arrow-left text-base transition-transform group-hover:-translate-x-0.5"
+        ></i>
+        <span>Back to Portfolio</span>
+      </a>
+      <!-- 2.1 Centralized State Management -->
+      <section class="mb-24">
+        <h2 class="text-3xl font-semibold mb-12 text-center">
+          1. Global State Engine
+        </h2>
+
+        <div
+          class="max-w-4xl mx-auto bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl p-10"
+        >
+          <div class="flex justify-between items-center mb-8">
+            <h3 class="text-2xl font-semibold">Project Status</h3>
+            <div
+              id="sync-status"
+              class="text-sm flex items-center gap-2 text-emerald-500"
+            >
+              <div
+                class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"
+              ></div>
+              LIVE SYNC
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+            <div class="bg-zinc-50 dark:bg-zinc-800 p-6 rounded-3xl">
+              <div class="text-sm text-zinc-500">Active Tasks</div>
+              <div id="active-tasks" class="text-4xl font-bold mt-2">14</div>
+            </div>
+            <div class="bg-zinc-50 dark:bg-zinc-800 p-6 rounded-3xl">
+              <div class="text-sm text-zinc-500">Completion</div>
+              <div id="completion-rate" class="text-4xl font-bold mt-2">
+                68%
+              </div>
+            </div>
+            <div class="bg-zinc-50 dark:bg-zinc-800 p-6 rounded-3xl">
+              <div class="text-sm text-zinc-500">Team Online</div>
+              <div id="team-online" class="text-4xl font-bold mt-2">7</div>
+            </div>
+          </div>
+
+          <button
+            onclick="addTask()"
+            class="w-full py-5 bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl text-white font-semibold text-lg hover:scale-105 transition-all"
+          >
+            + Add New Task
+          </button>
+        </div>
+      </section>
+      <!-- 2.2 Scalable Component Library + Conflict Handling -->
+      <section class="mb-24">
+        <h2 class="text-3xl font-semibold mb-12 text-center">
+          2. Reusable Task Component + Conflict Resolution
+        </h2>
+
+        <div class="max-w-4xl mx-auto space-y-6" id="task-list">
+          <!-- Populated by JS -->
+        </div>
+
+        <button
+          onclick="addTask()"
+          class="mt-8 w-full py-5 bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl text-white font-semibold text-lg hover:scale-105 transition-all"
+        >
+          + Add New Task
+        </button>
+      </section>
+    </div>
+
+    <script>
+      // ==================== CENTRALIZED STATE (SSOT + CRDT-style) ====================
+      let appState = {
+        tasks: [
+          {
+            id: "1",
+            title: "Design new landing page",
+            status: "in-progress",
+            assignee: "Mario",
+            version: Date.now(),
+          },
+          {
+            id: "2",
+            title: "Integrate payment API",
+            status: "done",
+            assignee: "Sarah",
+            version: Date.now(),
+          },
+          {
+            id: "3",
+            title: "User testing round 2",
+            status: "todo",
+            assignee: "Alex",
+            version: Date.now(),
+          },
+        ],
+        teamOnline: 7,
+        completionRate: 68,
+      };
+
+      function renderTasks() {
+        const container = document.getElementById("task-list");
+        let html = "";
+
+        appState.tasks.forEach((task) => {
+          html += `
+          <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl p-8 group">
+            <div class="flex justify-between items-start">
+              <div class="flex-1">
+                <h4 class="font-semibold text-lg">${task.title}</h4>
+                <p class="text-sm text-zinc-500 mt-1">Assigned to ${task.assignee}</p>
+              </div>
+              <button onclick="removeTask('${task.id}')" 
+                class="opacity-0 group-hover:opacity-100 text-red-500 hover:text-red-600 transition p-2">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </div>
+            
+            <div class="mt-6 flex gap-3">
+              <button onclick="updateTaskStatus('${task.id}', 'todo')" 
+                class="flex-1 py-3 rounded-2xl text-sm font-medium ${task.status === "todo" ? "bg-blue-100 dark:bg-blue-950 text-blue-700" : "hover:bg-zinc-100 dark:hover:bg-zinc-800"}">
+                To Do
+              </button>
+              <button onclick="updateTaskStatus('${task.id}', 'in-progress')" 
+                class="flex-1 py-3 rounded-2xl text-sm font-medium ${task.status === "in-progress" ? "bg-amber-100 dark:bg-amber-950 text-amber-700" : "hover:bg-zinc-100 dark:hover:bg-zinc-800"}">
+                In Progress
+              </button>
+              <button onclick="updateTaskStatus('${task.id}', 'done')" 
+                class="flex-1 py-3 rounded-2xl text-sm font-medium ${task.status === "done" ? "bg-emerald-100 dark:bg-emerald-950 text-emerald-700" : "hover:bg-zinc-100 dark:hover:bg-zinc-800"}">
+                Done
+              </button>
+            </div>
+          </div>`;
+        });
+        container.innerHTML =
+          html ||
+          '<p class="text-center text-zinc-500 py-12">No tasks yet. Add one below.</p>';
+      }
+
+      function addTask() {
+        const title = prompt("Enter task name:", "New Marketing Campaign");
+        if (!title || title.trim() === "") return;
+
+        const newTask = {
+          id: Date.now().toString(),
+          title: title.trim(),
+          status: "todo",
+          assignee: "Mario",
+          version: Date.now(),
+        };
+        appState.tasks.unshift(newTask);
+        renderTasks();
+        renderState();
+      }
+
+      function removeTask(id) {
+        if (confirm("Delete this task?")) {
+          appState.tasks = appState.tasks.filter((t) => t.id !== id);
+          renderTasks();
+          renderState();
+        }
+      }
+
+      function updateTaskStatus(id, newStatus) {
+        const task = appState.tasks.find((t) => t.id === id);
+        if (task) {
+          task.status = newStatus;
+          task.version = Date.now();
+          renderTasks();
+          renderState();
+        }
+      }
+
+      function renderState() {
+        document.getElementById("active-tasks").textContent =
+          appState.tasks.length;
+        document.getElementById("completion-rate").textContent =
+          appState.completionRate + "%";
+        document.getElementById("team-online").textContent =
+          appState.teamOnline;
+      }
+
+      // Simulate real-time collaboration
+      function simulateRealTime() {
+        setInterval(() => {
+          if (Math.random() > 0.6 && appState.tasks.length > 0) {
+            const randomIndex = Math.floor(
+              Math.random() * appState.tasks.length,
+            );
+            const statuses = ["todo", "in-progress", "done"];
+            appState.tasks[randomIndex].status =
+              statuses[Math.floor(Math.random() * 3)];
+            appState.tasks[randomIndex].version = Date.now();
+            renderTasks();
+            renderState();
+          }
+        }, 4500);
+      }
+
+      // Initialize
+      window.onload = function () {
+        renderTasks();
+        renderState();
+        simulateRealTime();
+      };
+    </script>
+  </body>
+</html>
