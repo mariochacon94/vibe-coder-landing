@@ -69,23 +69,20 @@
             <canvas id="performanceChart" class="w-full h-96"></canvas>
           </div>
 
-          <div
-            class="mt-8 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl overflow-hidden"
-          >
-            <table class="w-full">
+                 <!-- Data Table - Mobile Friendly -->
+        <div class="mt-8 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full min-w-[640px]">
               <thead>
                 <tr class="border-b border-zinc-200 dark:border-white/10">
-                  <th class="text-left p-6 font-medium">Channel</th>
-                  <th class="text-right p-6 font-medium">Q1</th>
-                  <th class="text-right p-6 font-medium">Q2</th>
-                  <th class="text-right p-6 font-medium">Q3</th>
-                  <th class="text-right p-6 font-medium">Total</th>
+                  <th class="text-left p-6 font-medium whitespace-nowrap">Channel</th>
+                  <th class="text-right p-6 font-medium whitespace-nowrap">Q1</th>
+                  <th class="text-right p-6 font-medium whitespace-nowrap">Q2</th>
+                  <th class="text-right p-6 font-medium whitespace-nowrap">Q3</th>
+                  <th class="text-right p-6 font-medium whitespace-nowrap">Total</th>
                 </tr>
               </thead>
-              <tbody
-                id="data-table"
-                class="divide-y divide-zinc-200 dark:divide-white/10"
-              ></tbody>
+              <tbody id="data-table" class="divide-y divide-zinc-200 dark:divide-white/10"></tbody>
             </table>
           </div>
         </div>
