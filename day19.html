@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day 19 – Advanced Forms & Multi-Step Wizards</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+    <script>
+      tailwind.config = { darkMode: "class" };
+    </script>
+  </head>
+  <body
+    class="bg-white text-black dark:bg-zinc-950 dark:text-white font-sans min-h-screen"
+  >
+    <div class="max-w-screen-2xl mx-auto px-6 py-12">
+      <h1
+        class="text-5xl font-bold text-center mb-8 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
+      >
+        Day 19: Advanced Forms & Multi-Step Wizards
+      </h1>
+
+      <!-- Back Button + Theme Toggle -->
+      <div class="flex justify-between items-center mb-12">
+        <a
+          href="index.html"
+          class="inline-flex items-center gap-2.5 px-5 py-2.5 text-sm font-medium text-zinc-400 hover:text-white transition-all group"
+        >
+          <i
+            class="fa-solid fa-arrow-left text-base transition-transform group-hover:-translate-x-0.5"
+          ></i>
+          <span>Back to Portfolio</span>
+        </a>
+
+        <button
+          onclick="toggleTheme()"
+          class="w-11 h-11 flex items-center justify-center rounded-2xl hover:bg-zinc-100 dark:hover:bg-zinc-800 transition"
+        >
+          <i id="theme-icon" class="fa-solid fa-moon text-xl"></i>
+        </button>
+      </div>
+
+      <div class="max-w-2xl mx-auto">
+        <!-- Progress Bar -->
+        <div class="mb-10">
+          <div
+            class="flex justify-between text-xs font-medium text-zinc-500 mb-3"
+          >
+            <div>Step <span id="current-step">1</span>/4</div>
+            <div id="progress-text">25% Complete</div>
+          </div>
+          <div
+            class="h-2 bg-zinc-200 dark:bg-zinc-800 rounded-full overflow-hidden"
+          >
+            <div
+              id="progress-bar"
+              class="h-2 bg-gradient-to-r from-blue-500 to-purple-600 w-1/4 transition-all duration-500"
+            ></div>
+          </div>
+        </div>
+
+        <!-- Form Content -->
+        <div
+          id="wizard-content"
+          class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl p-10 min-h-[420px]"
+        >
+          <!-- Dynamic content loaded here -->
+        </div>
+
+        <!-- Navigation -->
+        <div class="flex justify-between mt-8">
+          <button
+            onclick="prevStep()"
+            id="btn-prev"
+            class="px-8 py-4 border border-zinc-300 dark:border-white/20 rounded-3xl font-medium hover:bg-zinc-100 dark:hover:bg-zinc-800 transition"
+          >
+            Previous
+          </button>
+          <button
+            onclick="nextStep()"
+            id="btn-next"
+            class="px-10 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-3xl font-semibold hover:scale-105 transition"
+          >
+            Continue
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let currentStep = 1;
+      const totalSteps = 4;
+
+      let formData = JSON.parse(localStorage.getItem("onboardingForm")) || {
+        name: "",
+        email: "",
+        role: "",
+        goals: "",
+      };
+
+      function saveProgress() {
+        localStorage.setItem("onboardingForm", JSON.stringify(formData));
+      }
+
+      function renderStep() {
+        const content = document.getElementById("wizard-content");
+        let html = "";
+
+        if (currentStep === 1) {
+          html = `
+          <h3 class="text-2xl font-semibold mb-8">Let's get to know you</h3>
+          <div class="space-y-6">
+            <div>
+              <label class="block text-sm font-medium mb-2">Full Name</label>
+              <input type="text" id="name" value="${formData.name}" 
+                class="w-full px-6 py-4 rounded-2xl border border-zinc-300 dark:border-white/20 focus:outline-none focus:border-blue-500 bg-white dark:bg-zinc-800 text-black dark:text-white" 
+                oninput="formData.name = this.value; saveProgress()">
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-2">Email Address</label>
+              <input type="email" id="email" value="${formData.email}" 
+                class="w-full px-6 py-4 rounded-2xl border border-zinc-300 dark:border-white/20 focus:outline-none focus:border-blue-500 bg-white dark:bg-zinc-800 text-black dark:text-white" 
+                oninput="formData.email = this.value; saveProgress()">
+            </div>
+          </div>`;
+        } else if (currentStep === 2) {
+          html = `
+          <h3 class="text-2xl font-semibold mb-8">What's your role?</h3>
+          <div class="grid grid-cols-2 gap-4">
+            <button onclick="selectRole('Developer')" class="p-6 border rounded-3xl text-left hover:border-blue-500 transition ${formData.role === "Developer" ? "border-blue-500 bg-blue-50 dark:bg-blue-950" : ""}">Developer</button>
+            <button onclick="selectRole('Designer')" class="p-6 border rounded-3xl text-left hover:border-blue-500 transition ${formData.role === "Designer" ? "border-blue-500 bg-blue-50 dark:bg-blue-950" : ""}">Designer</button>
+            <button onclick="selectRole('Product Manager')" class="p-6 border rounded-3xl text-left hover:border-blue-500 transition ${formData.role === "Product Manager" ? "border-blue-500 bg-blue-50 dark:bg-blue-950" : ""}">Product Manager</button>
+            <button onclick="selectRole('Other')" class="p-6 border rounded-3xl text-left hover:border-blue-500 transition ${formData.role === "Other" ? "border-blue-500 bg-blue-50 dark:bg-blue-950" : ""}">Other</button>
+          </div>`;
+        } else if (currentStep === 3) {
+          html = `
+          <h3 class="text-2xl font-semibold mb-8">What are your main goals?</h3>
+          <textarea id="goals" rows="8" 
+            class="w-full px-6 py-4 rounded-3xl border border-zinc-300 dark:border-white/20 focus:outline-none focus:border-blue-500 bg-white dark:bg-zinc-800 text-black dark:text-white resize-y" 
+            oninput="formData.goals = this.value; saveProgress()">${formData.goals}</textarea>`;
+        } else if (currentStep === 4) {
+          html = `
+          <div class="text-center py-12">
+            <div class="w-24 h-24 mx-auto mb-6 bg-emerald-100 dark:bg-emerald-900 rounded-full flex items-center justify-center text-6xl">🎉</div>
+            <h3 class="text-3xl font-semibold mb-4">Almost done!</h3>
+            <p class="text-zinc-500">Review your information and submit.</p>
+          </div>`;
+        }
+
+        content.innerHTML = html;
+        updateProgress();
+      }
+
+      function selectRole(role) {
+        formData.role = role;
+        saveProgress();
+        renderStep();
+      }
+
+      function updateProgress() {
+        document.getElementById("current-step").textContent = currentStep;
+        const progress = Math.round((currentStep / totalSteps) * 100);
+        document.getElementById("progress-bar").style.width = progress + "%";
+        document.getElementById("progress-text").textContent =
+          progress + "% Complete";
+      }
+
+      function nextStep() {
+        if (currentStep < totalSteps) {
+          currentStep++;
+          renderStep();
+        } else {
+          alert(
+            "🎉 Form submitted successfully! (In production this would send to backend)",
+          );
+        }
+      }
+
+      function prevStep() {
+        if (currentStep > 1) {
+          currentStep--;
+          renderStep();
+        }
+      }
+
+      function toggleTheme() {
+        document.documentElement.classList.toggle("dark");
+        const icon = document.getElementById("theme-icon");
+        icon.classList.toggle("fa-moon");
+        icon.classList.toggle("fa-sun");
+      }
+
+      // Initialize
+      window.onload = () => renderStep();
+    </script>
+  </body>
+</html>
