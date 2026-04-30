@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day 18 – Advanced Routing & Application Shell</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+    <script>
+      tailwind.config = { darkMode: "class" };
+    </script>
+  </head>
+  <body
+    class="bg-white text-black dark:bg-zinc-950 dark:text-white font-sans min-h-screen"
+  >
+    <!-- Top Navigation -->
+    <nav
+      class="bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-white/10 sticky top-0 z-50"
+    >
+      <div
+        class="max-w-screen-2xl mx-auto px-6 py-5 flex items-center justify-between"
+      >
+        <div class="flex items-center gap-4">
+          <div
+            class="w-9 h-9 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center text-white font-bold text-xl"
+          >
+            VC
+          </div>
+          <h1 class="font-semibold text-2xl">VibeProject</h1>
+        </div>
+
+        <div class="flex items-center gap-8 text-sm">
+          <a
+            href="#"
+            onclick="navigateTo('dashboard')"
+            class="nav-link hover:text-blue-600 transition"
+            >Dashboard</a
+          >
+          <a
+            href="#"
+            onclick="navigateTo('projects')"
+            class="nav-link hover:text-blue-600 transition"
+            >Projects</a
+          >
+          <a
+            href="#"
+            onclick="navigateTo('team')"
+            class="nav-link hover:text-blue-600 transition"
+            >Team</a
+          >
+          <a
+            href="#"
+            onclick="navigateTo('billing')"
+            class="nav-link hover:text-blue-600 transition"
+            >Billing</a
+          >
+
+          <div class="flex items-center gap-4">
+            <button
+              onclick="toggleTheme()"
+              class="w-10 h-10 flex items-center justify-center rounded-2xl hover:bg-zinc-100 dark:hover:bg-zinc-800 transition"
+            >
+              <i id="theme-icon" class="fa-solid fa-moon"></i>
+            </button>
+            <button
+              onclick="logout()"
+              class="px-6 py-2.5 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950 rounded-2xl font-medium transition"
+            >
+              Logout
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="flex max-w-screen-2xl mx-auto min-h-[calc(100vh-73px)]">
+      <!-- Sidebar -->
+      <div
+        class="w-72 border-r border-zinc-200 dark:border-white/10 p-6 hidden lg:block"
+      >
+        <div class="space-y-1">
+          <div
+            onclick="navigateTo('dashboard')"
+            data-page="dashboard"
+            class="nav-item flex items-center gap-3 px-6 py-4 rounded-3xl cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-800 transition"
+          >
+            <i class="fa-solid fa-house w-5"></i>
+            <span class="font-medium">Dashboard</span>
+          </div>
+          <div
+            onclick="navigateTo('projects')"
+            data-page="projects"
+            class="nav-item flex items-center gap-3 px-6 py-4 rounded-3xl cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-800 transition"
+          >
+            <i class="fa-solid fa-folder w-5"></i>
+            <span class="font-medium">Projects</span>
+          </div>
+          <div
+            onclick="navigateTo('team')"
+            data-page="team"
+            class="nav-item flex items-center gap-3 px-6 py-4 rounded-3xl cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-800 transition"
+          >
+            <i class="fa-solid fa-users w-5"></i>
+            <span class="font-medium">Team</span>
+          </div>
+          <div
+            onclick="navigateTo('billing')"
+            data-page="billing"
+            class="nav-item flex items-center gap-3 px-6 py-4 rounded-3xl cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-800 transition"
+          >
+            <i class="fa-solid fa-credit-card w-5"></i>
+            <span class="font-medium">Billing</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="flex-1 p-8 lg:p-12">
+        <div id="page-content" class="max-w-4xl"></div>
+      </div>
+    </div>
+
+    <script>
+      // ==================== HIERARCHICAL RBAC ====================
+      const roleHierarchy = {
+        admin: ["admin", "member", "viewer", "guest"],
+        member: ["member", "viewer", "guest"],
+        viewer: ["viewer", "guest"],
+        guest: ["guest"],
+      };
+
+      const rolePermissions = {
+        admin: ["dashboard", "projects", "team", "billing", "settings"],
+        member: ["dashboard", "projects", "team", "billing"],
+        viewer: ["dashboard", "projects"],
+        guest: ["dashboard"],
+      };
+
+      let currentUser = {
+        id: "mario",
+        name: "Mario",
+        role: "viewer", // Change this to test: "member", "viewer", "guest"
+        loggedIn: true,
+      };
+      SVGAngle;
+      function hasAccess(page) {
+        if (!currentUser.loggedIn) return false;
+        const allowed = rolePermissions[currentUser.role] || [];
+        return allowed.includes(page);
+      }
+
+      function navigateTo(page) {
+        if (!currentUser.loggedIn) {
+          document.getElementById("page-content").innerHTML =
+            `<div class="text-center py-32"><p class="text-xl">Please log in to continue.</p></div>`;
+          return;
+        }
+
+        if (!hasAccess(page)) {
+          document.getElementById("page-content").innerHTML = `
+          <div class="text-center py-32">
+            <i class="fa-solid fa-lock text-6xl text-amber-500 mb-6"></i>
+            <h3 class="text-2xl font-semibold mb-3">Access Denied</h3>
+            <p class="text-zinc-500">Your role (${currentUser.role}) does not have permission for this page.</p>
+          </div>`;
+          return;
+        }
+
+        const content = document.getElementById("page-content");
+        let html = "";
+
+        if (page === "dashboard") {
+          html = `<h2 class="text-4xl font-bold mb-8">Welcome back, ${currentUser.name} 👋</h2><p class="text-zinc-500">This is your secure dashboard.</p>`;
+        } else if (page === "projects") {
+          html = `<h2 class="text-4xl font-bold mb-8">Projects</h2><p class="text-zinc-500">Manage your active projects.</p>`;
+        } else if (page === "team") {
+          html = `<h2 class="text-4xl font-bold mb-8">Team Management</h2><p class="text-emerald-600">Full team controls available.</p>`;
+        } else if (page === "billing") {
+          html = `<h2 class="text-4xl font-bold mb-8">Billing</h2><p class="text-zinc-500">Subscription and invoice management.</p>`;
+        }
+
+        content.innerHTML = html;
+        updateActiveNav(page);
+      }
+
+      function updateActiveNav(active) {
+        document.querySelectorAll(".nav-item").forEach((item) => {
+          item.classList.remove(
+            "bg-blue-50",
+            "dark:bg-blue-950",
+            "text-blue-700",
+            "dark:text-blue-400",
+          );
+          if (item.getAttribute("data-page") === active) {
+            item.classList.add(
+              "bg-blue-50",
+              "dark:bg-blue-950",
+              "text-blue-700",
+              "dark:text-blue-400",
+            );
+          }
+        });
+      }
+
+      function toggleTheme() {
+        document.documentElement.classList.toggle("dark");
+      }
+
+      function logout() {
+        if (confirm("Logout from your account?")) {
+          currentUser.loggedIn = false;
+          navigateTo("dashboard");
+        }
+      }
+
+      // Initialize
+      window.onload = () => navigateTo("dashboard");
+    </script>
+  </body>
+</html>
