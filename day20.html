@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day 20 – Advanced Notifications & Toast Systems</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+    <script>
+      tailwind.config = { darkMode: "class" };
+    </script>
+  </head>
+  <body
+    class="bg-white text-black dark:bg-zinc-950 dark:text-white font-sans min-h-screen"
+  >
+    <div class="max-w-screen-2xl mx-auto px-6 py-12">
+      <h1
+        class="text-5xl font-bold text-center mb-8 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
+      >
+        Day 20: Advanced Notifications & Toast Systems
+      </h1>
+
+      <!-- Back Button + Theme Toggle -->
+      <div class="flex justify-between items-center mb-12">
+        <a
+          href="index.html"
+          class="inline-flex items-center gap-2.5 px-5 py-2.5 text-sm font-medium text-zinc-400 hover:text-white transition-all group"
+        >
+          <i
+            class="fa-solid fa-arrow-left text-base transition-transform group-hover:-translate-x-0.5"
+          ></i>
+          <span>Back to Portfolio</span>
+        </a>
+
+        <button
+          onclick="toggleTheme()"
+          class="w-11 h-11 flex items-center justify-center rounded-2xl hover:bg-zinc-100 dark:hover:bg-zinc-800 transition"
+        >
+          <i id="theme-icon" class="fa-solid fa-moon text-xl"></i>
+        </button>
+      </div>
+
+      <!-- Demo Controls -->
+      <div
+        class="max-w-2xl mx-auto bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl p-10"
+      >
+        <h3 class="text-2xl font-semibold mb-8 text-center">
+          Notification Demo
+        </h3>
+        <div class="grid grid-cols-2 gap-4">
+          <button
+            onclick="showToast('success', 'Task completed successfully!')"
+            class="py-4 bg-emerald-600 text-white rounded-3xl font-medium hover:bg-emerald-700 transition"
+          >
+            Success Toast
+          </button>
+          <button
+            onclick="
+              showToast('error', 'Failed to save changes. Please try again.')
+            "
+            class="py-4 bg-red-600 text-white rounded-3xl font-medium hover:bg-red-700 transition"
+          >
+            Error Toast
+          </button>
+          <button
+            onclick="showToast('info', 'New update available.')"
+            class="py-4 bg-blue-600 text-white rounded-3xl font-medium hover:bg-blue-700 transition"
+          >
+            Info Toast
+          </button>
+          <button
+            onclick="showToast('warning', 'Your session will expire soon.')"
+            class="py-4 bg-amber-600 text-white rounded-3xl font-medium hover:bg-amber-700 transition"
+          >
+            Warning Toast
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div
+      id="toast-container"
+      class="fixed bottom-6 right-6 flex flex-col gap-3 z-[100]"
+    ></div>
+
+    <script>
+      function showToast(type, message) {
+        const container = document.getElementById("toast-container");
+
+        const toast = document.createElement("div");
+        toast.className = `flex items-center gap-4 px-6 py-4 rounded-3xl shadow-2xl min-w-[320px] transform transition-all duration-300 translate-y-8 opacity-0`;
+
+        if (type === "success") {
+          toast.classList.add("bg-emerald-600", "text-white");
+          toast.innerHTML = `<i class="fa-solid fa-check-circle text-2xl"></i><span class="font-medium">${message}</span>`;
+        } else if (type === "error") {
+          toast.classList.add("bg-red-600", "text-white");
+          toast.innerHTML = `<i class="fa-solid fa-xmark-circle text-2xl"></i><span class="font-medium">${message}</span>`;
+        } else if (type === "info") {
+          toast.classList.add("bg-blue-600", "text-white");
+          toast.innerHTML = `<i class="fa-solid fa-info-circle text-2xl"></i><span class="font-medium">${message}</span>`;
+        } else if (type === "warning") {
+          toast.classList.add("bg-amber-600", "text-white");
+          toast.innerHTML = `<i class="fa-solid fa-exclamation-triangle text-2xl"></i><span class="font-medium">${message}</span>`;
+        }
+
+        container.appendChild(toast);
+
+        // Animate in
+        setTimeout(() => {
+          toast.classList.remove("translate-y-8", "opacity-0");
+        }, 10);
+
+        // Auto dismiss after 4 seconds
+        setTimeout(() => {
+          toast.classList.add("translate-y-8", "opacity-0");
+          setTimeout(() => toast.remove(), 300);
+        }, 4000);
+
+        // Click to dismiss
+        toast.addEventListener("click", () => {
+          toast.classList.add("translate-y-8", "opacity-0");
+          setTimeout(() => toast.remove(), 300);
+        });
+      }
+
+      function toggleTheme() {
+        document.documentElement.classList.toggle("dark");
+      }
+
+      // Initialize
+      window.onload = () => {
+        setTimeout(
+          () => showToast("info", "Welcome back! Your progress is saved."),
+          800,
+        );
+      };
+    </script>
+  </body>
+</html>
