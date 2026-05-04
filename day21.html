@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day 21 – Advanced Search, Filtering & Data Tables</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+    <script>
+      tailwind.config = { darkMode: "class" };
+    </script>
+  </head>
+  <body
+    class="bg-white text-black dark:bg-zinc-950 dark:text-white font-sans min-h-screen"
+  >
+    <div class="max-w-screen-2xl mx-auto px-6 py-12">
+      <h1
+        class="text-5xl font-bold text-center mb-8 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
+      >
+        Day 21: Advanced Search, Filtering & Data Tables
+      </h1>
+
+      <div class="flex justify-between items-center mb-12">
+        <a
+          href="index.html"
+          class="inline-flex items-center gap-2.5 px-5 py-2.5 text-sm font-medium text-zinc-400 hover:text-white transition-all group"
+        >
+          <i
+            class="fa-solid fa-arrow-left text-base transition-transform group-hover:-translate-x-0.5"
+          ></i>
+          <span>Back to Portfolio</span>
+        </a>
+
+        <button
+          onclick="toggleTheme()"
+          class="w-11 h-11 flex items-center justify-center rounded-2xl hover:bg-zinc-100 dark:hover:bg-zinc-800 transition"
+        >
+          <i id="theme-icon" class="fa-solid fa-moon text-xl"></i>
+        </button>
+      </div>
+
+      <div
+        class="max-w-6xl mx-auto bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl p-8"
+      >
+        <!-- Controls -->
+        <div class="flex flex-col md:flex-row gap-4 mb-8">
+          <div class="flex-1">
+            <input
+              id="search-input"
+              type="text"
+              placeholder="Search tasks..."
+              class="w-full px-6 py-4 bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-white/20 rounded-3xl focus:outline-none focus:border-blue-500"
+              onkeyup="debouncedFilter()"
+            />
+          </div>
+          <select
+            id="status-filter"
+            onchange="filterTable()"
+            class="px-6 py-4 bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-white/20 rounded-3xl focus:outline-none"
+          >
+            <option value="all">All Status</option>
+            <option value="todo">To Do</option>
+            <option value="inprogress">In Progress</option>
+            <option value="done">Done</option>
+          </select>
+        </div>
+
+        <!-- Data Table -->
+        <div class="overflow-x-auto">
+          <table class="w-full min-w-[800px]">
+            <thead>
+              <tr class="border-b border-zinc-200 dark:border-white/10">
+                <th
+                  onclick="sortTable(0)"
+                  class="text-left py-5 px-6 font-medium cursor-pointer hover:text-blue-500 transition"
+                >
+                  Task
+                </th>
+                <th
+                  onclick="sortTable(1)"
+                  class="text-left py-5 px-6 font-medium cursor-pointer hover:text-blue-500 transition"
+                >
+                  Assignee
+                </th>
+                <th
+                  onclick="sortTable(2)"
+                  class="text-left py-5 px-6 font-medium cursor-pointer hover:text-blue-500 transition"
+                >
+                  Status
+                </th>
+                <th
+                  onclick="sortTable(3)"
+                  class="text-left py-5 px-6 font-medium cursor-pointer hover:text-blue-500 transition"
+                >
+                  Due Date
+                </th>
+              </tr>
+            </thead>
+            <tbody
+              id="table-body"
+              class="divide-y divide-zinc-200 dark:divide-white/10"
+            ></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let tasks = [
+        {
+          id: 1,
+          title: "Design new landing page",
+          assignee: "Sarah Chen",
+          status: "inprogress",
+          due: "2026-05-10",
+        },
+        {
+          id: 2,
+          title: "Implement payment integration",
+          assignee: "Mario Chacon",
+          status: "todo",
+          due: "2026-05-15",
+        },
+        {
+          id: 3,
+          title: "Write API documentation",
+          assignee: "Alex Rivera",
+          status: "done",
+          due: "2026-05-05",
+        },
+        {
+          id: 4,
+          title: "User testing session",
+          assignee: "Maria Lopez",
+          status: "todo",
+          due: "2026-05-12",
+        },
+        {
+          id: 5,
+          title: "Optimize database queries",
+          assignee: "Mario Chacon",
+          status: "inprogress",
+          due: "2026-05-08",
+        },
+        {
+          id: 6,
+          title: "Create marketing campaign",
+          assignee: "Sarah Chen",
+          status: "done",
+          due: "2026-05-07",
+        },
+      ];
+
+      let sortColumn = 0;
+      let sortDirection = 1; // 1 = asc, -1 = desc
+
+      // ==================== DEBOUNCE UTILITY ====================
+      function debounce(func, delay = 280) {
+        let timeout;
+        return function (...args) {
+          clearTimeout(timeout);
+          timeout = setTimeout(() => {
+            func.apply(this, args);
+          }, delay);
+        };
+      }
+
+      const debouncedFilter = debounce(filterTable, 280);
+
+      function renderTable(filteredTasks) {
+        const tbody = document.getElementById("table-body");
+        let html = "";
+
+        filteredTasks.forEach((task) => {
+          const statusColor =
+            task.status === "done"
+              ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300"
+              : task.status === "inprogress"
+                ? "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300"
+                : "bg-zinc-100 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300";
+
+          html += `
+          <tr class="hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition">
+            <td class="py-5 px-6 font-medium">${task.title}</td>
+            <td class="py-5 px-6 text-zinc-500">${task.assignee}</td>
+            <td class="py-5 px-6"><span class="px-4 py-1.5 text-xs font-medium rounded-2xl ${statusColor}">${task.status}</span></td>
+            <td class="py-5 px-6 text-zinc-500">${task.due}</td>
+          </tr>`;
+        });
+
+        tbody.innerHTML =
+          html ||
+          `<tr><td colspan="4" class="text-center py-12 text-zinc-500">No matching tasks found</td></tr>`;
+      }
+
+      function filterTable() {
+        const searchTerm = document
+          .getElementById("search-input")
+          .value.toLowerCase()
+          .trim();
+        const statusFilter = document.getElementById("status-filter").value;
+
+        let filtered = tasks.filter((task) => {
+          const matchesSearch =
+            task.title.toLowerCase().includes(searchTerm) ||
+            task.assignee.toLowerCase().includes(searchTerm);
+          const matchesStatus =
+            statusFilter === "all" || task.status === statusFilter;
+          return matchesSearch && matchesStatus;
+        });
+
+        // Apply current sort
+        filtered.sort((a, b) => {
+          const valA = Object.values(a)[sortColumn];
+          const valB = Object.values(b)[sortColumn];
+          if (valA < valB) return -sortDirection;
+          if (valA > valB) return sortDirection;
+          return 0;
+        });
+
+        renderTable(filtered);
+      }
+
+      function sortTable(column) {
+        if (sortColumn === column) {
+          sortDirection *= -1;
+        } else {
+          sortColumn = column;
+          sortDirection = 1;
+        }
+        filterTable();
+      }
+
+      function toggleTheme() {
+        document.documentElement.classList.toggle("dark");
+      }
+
+      // Initialize
+      window.onload = () => {
+        renderTable(tasks);
+      };
+
+      // Throttle utility - reusable across projects
+      function throttle(func, limit = 200) {
+        let lastCall = 0;
+        return function (...args) {
+          const now = Date.now();
+          if (now - lastCall >= limit) {
+            lastCall = now;
+            func.apply(this, args);
+          }
+        };
+      }
+    </script>
+  </body>
+</html>
