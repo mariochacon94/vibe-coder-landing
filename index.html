@@ -64,7 +64,7 @@
               </div>
             </div>
             <div id="days-count" class="text-5xl font-bold tabular-nums">
-              21
+              22
             </div>
             <div class="text-xs tracking-widest text-zinc-400">
               DAYS COMPLETED
@@ -79,7 +79,7 @@
               </div>
             </div>
             <div id="projects-count" class="text-5xl font-bold tabular-nums">
-              20
+              21
             </div>
             <div class="text-xs tracking-widest text-zinc-400">
               PROJECTS BUILT
@@ -94,7 +94,7 @@
               </div>
             </div>
             <div id="hours-count" class="text-5xl font-bold tabular-nums">
-              76
+              78
             </div>
             <div class="text-xs tracking-widest text-zinc-400">
               HOURS ENGAGED
@@ -106,7 +106,7 @@
       <!-- Week Cards -->
       <div
         id="week-view"
-        class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto"
       >
         <!-- Week 1 -->
         <div
@@ -116,8 +116,8 @@
           <div class="uppercase text-xs tracking-widest text-blue-400 mb-4">
             Week 1
           </div>
-          <h3 class="text-4xl font-bold mb-6">Foundation</h3>
-          <p class="text-zinc-400">
+          <h3 class="text-3xl font-bold mb-4">Foundation</h3>
+          <p class="text-zinc-400 text-sm">
             Layouts, components, and core interactivity.
           </p>
         </div>
@@ -130,8 +130,8 @@
           <div class="uppercase text-xs tracking-widest text-purple-400 mb-4">
             Week 2
           </div>
-          <h3 class="text-4xl font-bold mb-6">Interactivity & Polish</h3>
-          <p class="text-zinc-400">
+          <h3 class="text-3xl font-bold mb-4">Interactivity & Polish</h3>
+          <p class="text-zinc-400 text-sm">
             Forms, auth, animations, and professional UI.
           </p>
         </div>
@@ -144,9 +144,23 @@
           <div class="uppercase text-xs tracking-widest text-amber-400 mb-4">
             Week 3
           </div>
-          <h3 class="text-4xl font-bold mb-6">Advanced Systems</h3>
-          <p class="text-zinc-400">
-            Dashboards, real-time data, and sellable analytics tools.
+          <h3 class="text-3xl font-bold mb-4">Advanced Systems</h3>
+          <p class="text-zinc-400 text-sm">
+            Dashboards, real-time data, and analytics tools.
+          </p>
+        </div>
+
+        <!-- Week 4 -->
+        <div
+          onclick="showWeek(4)"
+          class="group cursor-pointer bg-zinc-900 border border-white/10 rounded-3xl p-10 hover:border-emerald-400/50 hover:-translate-y-3 transition-all"
+        >
+          <div class="uppercase text-xs tracking-widest text-emerald-400 mb-4">
+            Week 4
+          </div>
+          <h3 class="text-3xl font-bold mb-4">Interactive Experiences</h3>
+          <p class="text-zinc-400 text-sm">
+            Drag & drop, real-time interfaces, and advanced UX.
           </p>
         </div>
       </div>
@@ -178,9 +192,9 @@
       }
 
       window.onload = () => {
-        animateCounter("days-count", 21);
-        animateCounter("projects-count", 20);
-        animateCounter("hours-count", 76);
+        animateCounter("days-count", 22);
+        animateCounter("projects-count", 21);
+        animateCounter("hours-count", 78);
       };
 
       const projectsData = {
@@ -223,6 +237,12 @@
               name: "Day 21 - Advanced Search, Filtering & Tables",
               link: "day21.html",
             },
+          ],
+        },
+        4: {
+          title: "Week 4 - Interactive Experiences",
+          projects: [
+            { name: "Day 22 - Drag & Drop Kanban Boards", link: "day22.html" },
           ],
         },
       };
