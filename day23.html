@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day 23 – Infinite Scroll & Virtualized Lists</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+    <script>
+      tailwind.config = { darkMode: "class" };
+    </script>
+  </head>
+  <body
+    class="bg-white text-black dark:bg-zinc-950 dark:text-white font-sans min-h-screen"
+  >
+    <div class="max-w-screen-2xl mx-auto px-6 py-12">
+      <h1
+        class="text-5xl font-bold text-center mb-8 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
+      >
+        Day 23: Infinite Scroll & Virtualized Lists
+      </h1>
+
+      <div class="flex justify-between items-center mb-12">
+        <a
+          href="index.html"
+          class="inline-flex items-center gap-2.5 px-5 py-2.5 text-sm font-medium text-zinc-400 hover:text-white transition-all group"
+        >
+          <i
+            class="fa-solid fa-arrow-left text-base transition-transform group-hover:-translate-x-0.5"
+          ></i>
+          <span>Back to Portfolio</span>
+        </a>
+
+        <button
+          onclick="toggleTheme()"
+          class="w-11 h-11 flex items-center justify-center rounded-2xl hover:bg-zinc-100 dark:hover:bg-zinc-800 transition"
+        >
+          <i id="theme-icon" class="fa-solid fa-moon text-xl"></i>
+        </button>
+      </div>
+
+      <!-- Feed Container -->
+      <div id="feed" class="max-w-2xl mx-auto space-y-8"></div>
+
+      <!-- Loading Indicator -->
+      <div id="loading" class="hidden text-center py-12">
+        <i class="fa-solid fa-spinner fa-spin text-3xl text-zinc-400"></i>
+        <p class="text-sm text-zinc-500 mt-4">Loading more posts...</p>
+      </div>
+    </div>
+
+    <script>
+      // ==================== 1. DATA - Single Source of Truth ====================
+      let allPosts = [];
+      let displayedCount = 0;
+      const postsPerLoad = 15;
+
+      function generatePosts() {
+        for (let i = 1; i <= 150; i++) {
+          allPosts.push({
+            id: i,
+            title: `Insightful Post #${i} – Exploring modern web development`,
+            excerpt:
+              "Virtualization and lazy loading keep this feed smooth even with hundreds of items.",
+            author: ["Sarah Chen", "Mario Chacon", "Alex Rivera"][
+              Math.floor(Math.random() * 3)
+            ],
+            time: `${Math.floor(Math.random() * 23) + 1}h ago`,
+            likes: Math.floor(Math.random() * 1200),
+          });
+        }
+      }
+
+      // ==================== 2. RENDER FUNCTION (Virtualization) ====================
+      function renderPosts(count) {
+        const container = document.getElementById("feed");
+        const newPosts = allPosts.slice(displayedCount, displayedCount + count);
+
+        newPosts.forEach((post) => {
+          const postEl = document.createElement("div");
+          postEl.className =
+            "bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl p-8 hover:shadow-xl transition-all";
+          postEl.innerHTML = `
+          <div class="flex justify-between items-start mb-6">
+            <div>
+              <div class="font-semibold">${post.author}</div>
+              <div class="text-xs text-zinc-500">${post.time}</div>
+            </div>
+            <div class="text-3xl">📝</div>
+          </div>
+          <h3 class="text-xl font-semibold mb-4">${post.title}</h3>
+          <p class="text-zinc-600 dark:text-zinc-400 leading-relaxed mb-6">${post.excerpt}</p>
+          <div class="flex items-center gap-6 text-sm text-zinc-500">
+            ❤️ ${post.likes}
+          </div>
+        `;
+          container.appendChild(postEl);
+        });
+
+        displayedCount += count;
+      }
+
+      // ==================== 3. INFINITE SCROLL ====================
+      function setupInfiniteScroll() {
+        const sentinel = document.createElement("div");
+        sentinel.id = "sentinel";
+        sentinel.className = "h-20";
+        document.getElementById("feed").appendChild(sentinel);
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            if (entries[0].isIntersecting && displayedCount < allPosts.length) {
+              document.getElementById("loading").classList.remove("hidden");
+
+              setTimeout(() => {
+                renderPosts(postsPerLoad);
+                document.getElementById("loading").classList.add("hidden");
+              }, 650);
+            }
+          },
+          { rootMargin: "400px" },
+        );
+
+        observer.observe(sentinel);
+      }
+
+      // ==================== 4. PULL-TO-REFRESH ====================
+      let startY = 0;
+      let isPulling = false;
+
+      function setupPullToRefresh() {
+        const feed = document.getElementById("feed");
+
+        feed.addEventListener("touchstart", (e) => {
+          startY = e.touches[0].clientY;
+          isPulling = true;
+        });
+
+        feed.addEventListener("touchend", (e) => {
+          if (!isPulling) return;
+          const pullDistance = e.changedTouches[0].clientY - startY;
+
+          if (pullDistance > 120 && window.scrollY === 0) {
+            refreshFeed();
+          }
+          isPulling = false;
+        });
+      }
+
+      function refreshFeed() {
+        document.getElementById("loading").classList.remove("hidden");
+
+        setTimeout(() => {
+          displayedCount = 0;
+          document.getElementById("feed").innerHTML = "";
+          renderPosts(12);
+          document.getElementById("loading").classList.add("hidden");
+          showToast("success", "Feed refreshed successfully");
+        }, 1100);
+      }
+
+      // ==================== 5. TOAST SYSTEM ====================
+      function showToast(type, message) {
+        const container = document.createElement("div");
+        container.className = `fixed bottom-6 right-6 px-6 py-4 rounded-3xl shadow-2xl text-white flex items-center gap-3 transition-all duration-300 translate-y-8 opacity-0 z-[100]`;
+
+        if (type === "success") container.classList.add("bg-emerald-600");
+
+        container.innerHTML = `<i class="fa-solid fa-check-circle"></i><span>${message}</span>`;
+        document.body.appendChild(container);
+
+        setTimeout(
+          () => container.classList.remove("translate-y-8", "opacity-0"),
+          10,
+        );
+        setTimeout(() => {
+          container.classList.add("translate-y-8", "opacity-0");
+          setTimeout(() => container.remove(), 400);
+        }, 3200);
+      }
+
+      function toggleTheme() {
+        document.documentElement.classList.toggle("dark");
+      }
+
+      // ==================== Initialize ====================
+      window.onload = () => {
+        generatePosts();
+        renderPosts(12);
+        setupInfiniteScroll();
+        setupPullToRefresh();
+      };
+    </script>
+  </body>
+</html>
