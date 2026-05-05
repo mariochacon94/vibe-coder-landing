@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day 24 – Real-time Collaboration & Live Updates</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+    <script>
+      tailwind.config = { darkMode: "class" };
+    </script>
+  </head>
+  <body
+    class="bg-white text-black dark:bg-zinc-950 dark:text-white font-sans min-h-screen"
+  >
+    <div class="max-w-screen-2xl mx-auto px-6 py-12">
+      <h1
+        class="text-5xl font-bold text-center mb-8 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
+      >
+        Day 24: Real-time Collaboration & Live Updates
+      </h1>
+
+      <div class="flex justify-between items-center mb-12">
+        <a
+          href="index.html"
+          class="inline-flex items-center gap-2.5 px-5 py-2.5 text-sm font-medium text-zinc-400 hover:text-white transition-all group"
+        >
+          <i
+            class="fa-solid fa-arrow-left text-base transition-transform group-hover:-translate-x-0.5"
+          ></i>
+          <span>Back to Portfolio</span>
+        </a>
+
+        <button
+          onclick="toggleTheme()"
+          class="w-11 h-11 flex items-center justify-center rounded-2xl hover:bg-zinc-100 dark:hover:bg-zinc-800 transition"
+        >
+          <i id="theme-icon" class="fa-solid fa-moon text-xl"></i>
+        </button>
+      </div>
+
+      <!-- Presence Bar -->
+      <div
+        class="flex items-center gap-3 mb-8 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl px-6 py-3"
+      >
+        <div class="text-sm font-medium text-zinc-500">Online now:</div>
+        <div id="presence" class="flex gap-2"></div>
+      </div>
+
+      <!-- Kanban Board -->
+      <div
+        class="grid grid-cols-1 md:grid-cols-3 gap-6"
+        id="kanban-board"
+      ></div>
+    </div>
+
+    <!-- Toast Container -->
+    <div
+      id="toast-container"
+      class="fixed bottom-6 right-6 flex flex-col gap-3 z-[100]"
+    ></div>
+
+    <script>
+      // ==================== 1. SINGLE SOURCE OF TRUTH ====================
+      let tasks = [
+        {
+          id: 1,
+          title: "Design new hero section",
+          column: "todo",
+          assignee: "Sarah",
+          lastEditedBy: "Sarah",
+        },
+        {
+          id: 2,
+          title: "Implement authentication",
+          column: "inprogress",
+          assignee: "Mario",
+          lastEditedBy: "Mario",
+        },
+        {
+          id: 3,
+          title: "Create API endpoints",
+          column: "done",
+          assignee: "Alex",
+          lastEditedBy: "Alex",
+        },
+        {
+          id: 4,
+          title: "Write documentation",
+          column: "todo",
+          assignee: "Maria",
+          lastEditedBy: "Maria",
+        },
+      ];
+
+      const columns = {
+        todo: "To Do",
+        inprogress: "In Progress",
+        done: "Done",
+      };
+      const simulatedUsers = ["Sarah", "Mario", "Alex", "Maria"];
+
+      // ==================== 2. RENDER KANBAN BOARD ====================
+      function renderBoard() {
+        const board = document.getElementById("kanban-board");
+        board.innerHTML = "";
+
+        Object.keys(columns).forEach((colKey) => {
+          const colTasks = tasks.filter((t) => t.column === colKey);
+
+          let html = `
+          <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl p-6 min-h-[500px]"
+               ondrop="drop(event, '${colKey}')" ondragover="allowDrop(event)">
+            <div class="flex justify-between mb-6">
+              <h3 class="font-semibold">${columns[colKey]}</h3>
+              <span class="text-xs bg-zinc-100 dark:bg-zinc-800 px-3 py-1 rounded-full">${colTasks.length}</span>
+            </div>
+            <div class="space-y-4 min-h-[400px]" id="col-${colKey}">
+        `;
+
+          colTasks.forEach((task) => {
+            html += `
+            <div class="task-card bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-white/10 rounded-2xl p-5 cursor-grab active:cursor-grabbing shadow-sm hover:shadow transition-all"
+                 draggable="true" ondragstart="drag(event, ${task.id})" data-id="${task.id}">
+              <div class="font-medium mb-2">${task.title}</div>
+              <div class="text-xs text-zinc-500">Assigned to ${task.assignee}</div>
+              ${task.lastEditedBy ? `<div class="text-[10px] text-emerald-500 mt-2">Last edited by ${task.lastEditedBy}</div>` : ""}
+            </div>`;
+          });
+
+          html += `</div></div>`;
+          board.innerHTML += html;
+        });
+      }
+
+      // ==================== 3. DRAG & DROP ====================
+      function allowDrop(ev) {
+        ev.preventDefault();
+      }
+      function drag(ev, id) {
+        ev.dataTransfer.setData("text", id);
+      }
+
+      function drop(ev, targetColumn) {
+        ev.preventDefault();
+        const id = parseInt(ev.dataTransfer.getData("text"));
+        const task = tasks.find((t) => t.id === id);
+
+        if (task && task.column !== targetColumn) {
+          task.column = targetColumn;
+          task.lastEditedBy = "You";
+          renderBoard();
+          showToast("success", `Task moved to ${columns[targetColumn]}`);
+        }
+      }
+
+      // ==================== 4. SIMULATED REAL-TIME COLLABORATION ====================
+      function simulateCollaboration() {
+        setInterval(() => {
+          if (Math.random() > 0.65 && tasks.length > 0) {
+            const randomIndex = Math.floor(Math.random() * tasks.length);
+            const task = tasks[randomIndex];
+            const oldColumn = task.column;
+            const newColumnKeys = Object.keys(columns).filter(
+              (k) => k !== oldColumn,
+            );
+            const newColumn =
+              newColumnKeys[Math.floor(Math.random() * newColumnKeys.length)];
+
+            task.column = newColumn;
+            task.lastEditedBy =
+              simulatedUsers[Math.floor(Math.random() * simulatedUsers.length)];
+
+            renderBoard();
+            showToast("info", `${task.lastEditedBy} moved a task`);
+          }
+        }, 4200);
+      }
+
+      // ==================== 5. TOAST SYSTEM ====================
+      function showToast(type, message) {
+        const container = document.getElementById("toast-container");
+        const toast = document.createElement("div");
+        toast.className = `flex items-center gap-4 px-6 py-4 rounded-3xl shadow-2xl min-w-[320px] transform transition-all duration-300 translate-y-8 opacity-0`;
+
+        if (type === "success")
+          toast.classList.add("bg-emerald-600", "text-white");
+        else toast.classList.add("bg-blue-600", "text-white");
+
+        toast.innerHTML = `<i class="fa-solid fa-check-circle text-2xl"></i><span class="font-medium">${message}</span>`;
+        container.appendChild(toast);
+
+        setTimeout(
+          () => toast.classList.remove("translate-y-8", "opacity-0"),
+          10,
+        );
+        setTimeout(() => {
+          toast.classList.add("translate-y-8", "opacity-0");
+          setTimeout(() => toast.remove(), 300);
+        }, 3400);
+      }
+
+      function toggleTheme() {
+        document.documentElement.classList.toggle("dark");
+      }
+
+      // Initialize
+      window.onload = () => {
+        renderBoard();
+        simulateCollaboration();
+      };
+    </script>
+  </body>
+</html>
