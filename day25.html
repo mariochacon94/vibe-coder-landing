@@ -31,135 +31,166 @@
     </style>
   </head>
   <body class="bg-zinc-950 text-white min-h-screen">
-    <div class="max-w-screen-2xl mx-auto flex h-screen overflow-hidden">
-      <!-- Sidebar -->
-      <div class="w-72 bg-white/5 border-r border-white/10 flex flex-col">
-        <div class="p-6 flex items-center gap-3 border-b border-white/10">
-          <div
-            class="w-9 h-9 bg-gradient-to-br from-cyan-400 to-purple-500 rounded-2xl flex items-center justify-center text-white font-bold text-xl"
-          >
-            VC
-          </div>
-          <h1 class="text-2xl font-semibold">Vibe Analytics</h1>
-        </div>
-        <div class="flex-1 p-4 space-y-1 overflow-y-auto">
-          <a
-            href="#"
-            class="flex items-center gap-3 px-5 py-4 rounded-2xl bg-white/10 text-white"
-          >
-            <i class="fa-solid fa-house w-5"></i
-            ><span class="font-medium">Dashboard</span>
-          </a>
-          <a
-            href="#"
-            class="flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-white/10 transition-all"
-          >
-            <i class="fa-solid fa-chart-bar w-5"></i
-            ><span class="font-medium">Analytics</span>
-          </a>
-          <a
-            href="#"
-            class="flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-white/10 transition-all"
-          >
-            <i class="fa-solid fa-users w-5"></i
-            ><span class="font-medium">Team</span>
-          </a>
-        </div>
+    <div class="max-w-screen-2xl mx-auto px-6 py-12">
+      <!-- === BACK TO PORTFOLIO + THEME TOGGLE (exactly as requested) === -->
+      <div class="flex justify-between items-center mb-12">
+        <a
+          href="index.html"
+          class="inline-flex items-center gap-2.5 px-5 py-2.5 text-sm font-medium text-zinc-400 hover:text-white transition-all group"
+        >
+          <i
+            class="fa-solid fa-arrow-left text-base transition-transform group-hover:-translate-x-0.5"
+          ></i>
+          <span>Back to Portfolio</span>
+        </a>
+
+        <button
+          onclick="toggleTheme()"
+          class="w-11 h-11 flex items-center justify-center rounded-2xl hover:bg-zinc-100 dark:hover:bg-zinc-800 transition"
+        >
+          <i id="theme-icon" class="fa-solid fa-moon text-xl"></i>
+        </button>
       </div>
 
-      <!-- Main Content -->
-      <div class="flex-1 flex flex-col overflow-hidden">
-        <!-- Top Nav -->
-        <div
-          class="h-16 border-b border-white/10 bg-white/5 glass flex items-center px-8 justify-between z-30"
-        >
-          <input
-            id="search-input"
-            type="text"
-            placeholder="Search metrics or events..."
-            class="glass bg-white/10 border border-white/20 rounded-3xl px-6 py-3 w-96 focus:outline-none focus:border-cyan-400 transition text-sm"
-          />
-          <div class="flex bg-white/5 rounded-3xl p-1 text-sm font-medium">
-            <button
-              onclick="setPeriod(7)"
-              id="period-7"
-              class="period-btn px-6 py-2 rounded-3xl"
+      <h1
+        class="text-5xl font-bold text-center mb-8 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
+      >
+        Day 25: Premium Analytics Dashboard
+      </h1>
+
+      <!-- Dashboard content (unchanged from your approved version) -->
+      <div
+        class="max-w-screen-2xl mx-auto flex h-[calc(100vh-180px)] overflow-hidden"
+      >
+        <!-- Sidebar -->
+        <div class="w-72 bg-white/5 border-r border-white/10 flex flex-col">
+          <div class="p-6 flex items-center gap-3 border-b border-white/10">
+            <div
+              class="w-9 h-9 bg-gradient-to-br from-cyan-400 to-purple-500 rounded-2xl flex items-center justify-center text-white font-bold text-xl"
             >
-              7d
-            </button>
-            <button
-              onclick="setPeriod(30)"
-              id="period-30"
-              class="period-btn px-6 py-2 rounded-3xl active"
-            >
-              30d
-            </button>
-            <button
-              onclick="setPeriod(90)"
-              id="period-90"
-              class="period-btn px-6 py-2 rounded-3xl"
-            >
-              90d
-            </button>
+              VC
+            </div>
+            <h1 class="text-2xl font-semibold">Vibe Analytics</h1>
           </div>
-          <button
-            onclick="simulateLiveUpdate()"
-            class="flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition"
-          >
-            <i class="fa-solid fa-sync"></i>
-            <span class="text-sm font-medium">Live</span>
-          </button>
+          <div class="flex-1 p-4 space-y-1 overflow-y-auto">
+            <a
+              href="#"
+              class="flex items-center gap-3 px-5 py-4 rounded-2xl bg-white/10 text-white"
+            >
+              <i class="fa-solid fa-house w-5"></i
+              ><span class="font-medium">Dashboard</span>
+            </a>
+            <a
+              href="#"
+              class="flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-white/10 transition-all"
+            >
+              <i class="fa-solid fa-chart-bar w-5"></i
+              ><span class="font-medium">Analytics</span>
+            </a>
+            <a
+              href="#"
+              class="flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-white/10 transition-all"
+            >
+              <i class="fa-solid fa-users w-5"></i
+              ><span class="font-medium">Team</span>
+            </a>
+          </div>
         </div>
 
-        <!-- Scrollable Body - Natural smooth flow -->
-        <div class="flex-1 overflow-auto p-8 space-y-8">
-          <!-- KPI Grid -->
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+          <!-- Top Nav -->
           <div
-            class="grid grid-cols-2 lg:grid-cols-4 gap-6"
-            id="kpi-grid"
-          ></div>
-
-          <!-- Side-by-Side Charts - Natural flow, strict fixed heights -->
-          <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
-            <div
-              class="glass border border-white/10 rounded-3xl p-6 hover:-translate-y-1 transition-all"
-            >
-              <h3 class="font-semibold mb-4 text-cyan-300">Revenue Trend</h3>
-              <div class="h-[340px]">
-                <canvas id="lineChart" class="h-full w-full"></canvas>
-              </div>
+            class="h-16 border-b border-white/10 bg-white/5 glass flex items-center px-8 justify-between z-30"
+          >
+            <input
+              id="search-input"
+              type="text"
+              placeholder="Search metrics or events..."
+              class="glass bg-white/10 border border-white/20 rounded-3xl px-6 py-3 w-96 focus:outline-none focus:border-cyan-400 transition text-sm"
+            />
+            <div class="flex bg-white/5 rounded-3xl p-1 text-sm font-medium">
+              <button
+                onclick="setPeriod(7)"
+                id="period-7"
+                class="period-btn px-6 py-2 rounded-3xl"
+              >
+                7d
+              </button>
+              <button
+                onclick="setPeriod(30)"
+                id="period-30"
+                class="period-btn px-6 py-2 rounded-3xl active"
+              >
+                30d
+              </button>
+              <button
+                onclick="setPeriod(90)"
+                id="period-90"
+                class="period-btn px-6 py-2 rounded-3xl"
+              >
+                90d
+              </button>
             </div>
-            <div
-              class="glass border border-white/10 rounded-3xl p-6 hover:-translate-y-1 transition-all"
+            <button
+              onclick="simulateLiveUpdate()"
+              class="flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition"
             >
-              <h3 class="font-semibold mb-4 text-purple-300">
-                Channel Performance
-              </h3>
-              <div class="h-[340px]">
-                <canvas id="barChart" class="h-full w-full"></canvas>
-              </div>
-            </div>
+              <i class="fa-solid fa-sync"></i>
+              <span class="text-sm font-medium">Live</span>
+            </button>
           </div>
 
-          <!-- Bottom Row -->
-          <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
-            <div class="glass border border-white/10 rounded-3xl p-6">
-              <h3 class="font-semibold mb-6">Recent Activity Log</h3>
-              <table id="data-table" class="w-full text-sm"></table>
+          <!-- Scrollable Body -->
+          <div class="flex-1 overflow-auto p-8 space-y-8">
+            <!-- KPI Grid -->
+            <div
+              class="grid grid-cols-2 lg:grid-cols-4 gap-6"
+              id="kpi-grid"
+            ></div>
+
+            <!-- Side-by-Side Charts -->
+            <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+              <div
+                class="glass border border-white/10 rounded-3xl p-6 hover:-translate-y-1 transition-all"
+              >
+                <h3 class="font-semibold mb-4 text-cyan-300">Revenue Trend</h3>
+                <div class="h-[340px]">
+                  <canvas id="lineChart" class="h-full w-full"></canvas>
+                </div>
+              </div>
+              <div
+                class="glass border border-white/10 rounded-3xl p-6 hover:-translate-y-1 transition-all"
+              >
+                <h3 class="font-semibold mb-4 text-purple-300">
+                  Channel Performance
+                </h3>
+                <div class="h-[340px]">
+                  <canvas id="barChart" class="h-full w-full"></canvas>
+                </div>
+              </div>
             </div>
-            <div class="glass border border-white/10 rounded-3xl p-6">
-              <h3 class="font-semibold mb-6 flex items-center gap-2">
-                <span class="relative flex h-3 w-3"
-                  ><span
-                    class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"
-                  ></span
-                  ><span
-                    class="relative inline-flex rounded-full h-3 w-3 bg-cyan-400"
-                  ></span
-                ></span>
-                Live Feed
-              </h3>
-              <div id="feed" class="space-y-4"></div>
+
+            <!-- Bottom Row -->
+            <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+              <div class="glass border border-white/10 rounded-3xl p-6">
+                <h3 class="font-semibold mb-6">Recent Activity Log</h3>
+                <table id="data-table" class="w-full text-sm"></table>
+              </div>
+              <div class="glass border border-white/10 rounded-3xl p-6">
+                <h3 class="font-semibold mb-6 flex items-center gap-2">
+                  <span class="relative flex h-3 w-3"
+                    ><span
+                      class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"
+                    ></span
+                    ><span
+                      class="relative inline-flex rounded-full h-3 w-3 bg-cyan-400"
+                    ></span
+                  ></span>
+                  Live Feed
+                </h3>
+                <div id="feed" class="space-y-4"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -240,6 +271,13 @@
 
       let lineChart, barChart;
       let currentPeriod = 30;
+
+      function toggleTheme() {
+        document.documentElement.classList.toggle("dark");
+        const icon = document.getElementById("theme-icon");
+        icon.classList.toggle("fa-moon");
+        icon.classList.toggle("fa-sun");
+      }
 
       function showToast(type, message) {
         const container = document.getElementById("toast-container");
@@ -394,14 +432,12 @@
         const revenueKPI = appState.kpis[0];
         const increase = Math.floor(Math.random() * 1800) + 600;
         revenueKPI.value += increase;
-
         const percentIncrease = (
           ((revenueKPI.value - appState.originalRevenue) /
             appState.originalRevenue) *
           100
         ).toFixed(0);
         revenueKPI.delta = `+${percentIncrease}%`;
-
         renderKPIs();
         showToast(
           "success",
