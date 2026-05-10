@@ -3,456 +3,315 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Day 25 – Premium Analytics Dashboard</title>
+    <title>Day 25 – Advanced Multi-Step Wizards & Accessibility</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
     />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <script>
       tailwind.config = { darkMode: "class" };
     </script>
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
-      body {
-        font-family: "Inter", system_ui, sans-serif;
+      .hero-bg {
+        background: linear-gradient(135deg, #0f766e 0%, #164e63 100%);
       }
       .glass {
-        background: rgba(255, 255, 255, 0.06);
-        backdrop-filter: blur(24px);
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(16px);
       }
-      .kpi-value {
-        font-size: 34px;
-        font-weight: 700;
-        letter-spacing: -2px;
-        font-feature-settings: "tnum";
+
+      /* High-contrast dropdown styling */
+      select {
+        color: #ffffff !important;
+        font-weight: 500;
+      }
+      select option {
+        background: #164e63;
+        color: #ffffff;
+        padding: 12px 16px;
+      }
+      select:focus {
+        border-color: #ffffff;
+        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
       }
     </style>
   </head>
-  <body class="bg-zinc-950 text-white min-h-screen">
+  <body class="bg-zinc-950 text-white font-sans min-h-screen">
     <div class="max-w-screen-2xl mx-auto px-6 py-12">
-      <!-- === BACK TO PORTFOLIO + THEME TOGGLE (exactly as requested) === -->
-      <div class="flex justify-between items-center mb-12">
-        <a
-          href="index.html"
-          class="inline-flex items-center gap-2.5 px-5 py-2.5 text-sm font-medium text-zinc-400 hover:text-white transition-all group"
-        >
-          <i
-            class="fa-solid fa-arrow-left text-base transition-transform group-hover:-translate-x-0.5"
-          ></i>
-          <span>Back to Portfolio</span>
-        </a>
-
-        <button
-          onclick="toggleTheme()"
-          class="w-11 h-11 flex items-center justify-center rounded-2xl hover:bg-zinc-100 dark:hover:bg-zinc-800 transition"
-        >
-          <i id="theme-icon" class="fa-solid fa-moon text-xl"></i>
-        </button>
-      </div>
-
       <h1
-        class="text-5xl font-bold text-center mb-8 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
+        class="text-5xl font-bold text-center mb-16 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
       >
-        Day 25: Premium Analytics Dashboard
+        Day 25: Multi-Step Wizards + Progressive Saving + Accessibility
       </h1>
 
-      <!-- Dashboard content (unchanged from your approved version) -->
+      <!-- Progress Bar -->
       <div
-        class="max-w-screen-2xl mx-auto flex h-[calc(100vh-180px)] overflow-hidden"
+        class="max-w-2xl mx-auto mb-12"
+        role="progressbar"
+        aria-label="Wizard progress"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow="33"
       >
-        <!-- Sidebar -->
-        <div class="w-72 bg-white/5 border-r border-white/10 flex flex-col">
-          <div class="p-6 flex items-center gap-3 border-b border-white/10">
-            <div
-              class="w-9 h-9 bg-gradient-to-br from-cyan-400 to-purple-500 rounded-2xl flex items-center justify-center text-white font-bold text-xl"
-            >
-              VC
-            </div>
-            <h1 class="text-2xl font-semibold">Vibe Analytics</h1>
-          </div>
-          <div class="flex-1 p-4 space-y-1 overflow-y-auto">
-            <a
-              href="#"
-              class="flex items-center gap-3 px-5 py-4 rounded-2xl bg-white/10 text-white"
-            >
-              <i class="fa-solid fa-house w-5"></i
-              ><span class="font-medium">Dashboard</span>
-            </a>
-            <a
-              href="#"
-              class="flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-white/10 transition-all"
-            >
-              <i class="fa-solid fa-chart-bar w-5"></i
-              ><span class="font-medium">Analytics</span>
-            </a>
-            <a
-              href="#"
-              class="flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-white/10 transition-all"
-            >
-              <i class="fa-solid fa-users w-5"></i
-              ><span class="font-medium">Team</span>
-            </a>
-          </div>
-        </div>
-
-        <!-- Main Content -->
-        <div class="flex-1 flex flex-col overflow-hidden">
-          <!-- Top Nav -->
+        <div class="flex justify-between text-sm font-medium mb-3 px-1">
           <div
-            class="h-16 border-b border-white/10 bg-white/5 glass flex items-center px-8 justify-between z-30"
+            id="step-1-label"
+            class="step-label text-emerald-400"
+            aria-current="step"
           >
-            <input
-              id="search-input"
-              type="text"
-              placeholder="Search metrics or events..."
-              class="glass bg-white/10 border border-white/20 rounded-3xl px-6 py-3 w-96 focus:outline-none focus:border-cyan-400 transition text-sm"
-            />
-            <div class="flex bg-white/5 rounded-3xl p-1 text-sm font-medium">
-              <button
-                onclick="setPeriod(7)"
-                id="period-7"
-                class="period-btn px-6 py-2 rounded-3xl"
-              >
-                7d
-              </button>
-              <button
-                onclick="setPeriod(30)"
-                id="period-30"
-                class="period-btn px-6 py-2 rounded-3xl active"
-              >
-                30d
-              </button>
-              <button
-                onclick="setPeriod(90)"
-                id="period-90"
-                class="period-btn px-6 py-2 rounded-3xl"
-              >
-                90d
-              </button>
-            </div>
-            <button
-              onclick="simulateLiveUpdate()"
-              class="flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition"
-            >
-              <i class="fa-solid fa-sync"></i>
-              <span class="text-sm font-medium">Live</span>
-            </button>
+            Step 1: Personal Info
           </div>
-
-          <!-- Scrollable Body -->
-          <div class="flex-1 overflow-auto p-8 space-y-8">
-            <!-- KPI Grid -->
-            <div
-              class="grid grid-cols-2 lg:grid-cols-4 gap-6"
-              id="kpi-grid"
-            ></div>
-
-            <!-- Side-by-Side Charts -->
-            <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
-              <div
-                class="glass border border-white/10 rounded-3xl p-6 hover:-translate-y-1 transition-all"
-              >
-                <h3 class="font-semibold mb-4 text-cyan-300">Revenue Trend</h3>
-                <div class="h-[340px]">
-                  <canvas id="lineChart" class="h-full w-full"></canvas>
-                </div>
-              </div>
-              <div
-                class="glass border border-white/10 rounded-3xl p-6 hover:-translate-y-1 transition-all"
-              >
-                <h3 class="font-semibold mb-4 text-purple-300">
-                  Channel Performance
-                </h3>
-                <div class="h-[340px]">
-                  <canvas id="barChart" class="h-full w-full"></canvas>
-                </div>
-              </div>
-            </div>
-
-            <!-- Bottom Row -->
-            <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
-              <div class="glass border border-white/10 rounded-3xl p-6">
-                <h3 class="font-semibold mb-6">Recent Activity Log</h3>
-                <table id="data-table" class="w-full text-sm"></table>
-              </div>
-              <div class="glass border border-white/10 rounded-3xl p-6">
-                <h3 class="font-semibold mb-6 flex items-center gap-2">
-                  <span class="relative flex h-3 w-3"
-                    ><span
-                      class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"
-                    ></span
-                    ><span
-                      class="relative inline-flex rounded-full h-3 w-3 bg-cyan-400"
-                    ></span
-                  ></span>
-                  Live Feed
-                </h3>
-                <div id="feed" class="space-y-4"></div>
-              </div>
-            </div>
+          <div id="step-2-label" class="step-label">
+            Step 2: Project Details
           </div>
+          <div id="step-3-label" class="step-label">Step 3: Preferences</div>
+        </div>
+        <div class="h-3 bg-white/10 rounded-3xl overflow-hidden">
+          <div
+            id="progress-bar"
+            class="h-3 bg-gradient-to-r from-emerald-400 to-teal-400 w-1/3 transition-all duration-500"
+          ></div>
+        </div>
+      </div>
+
+      <!-- Wizard -->
+      <div
+        id="wizard-container"
+        class="max-w-2xl mx-auto bg-white/10 backdrop-blur-3xl rounded-3xl p-10"
+        role="region"
+        aria-labelledby="wizard-title"
+      >
+        <h2 id="wizard-title" class="sr-only">Multi-step wizard</h2>
+        <div id="wizard-content" class="min-h-[420px]"></div>
+
+        <div class="flex justify-between mt-10">
+          <button
+            onclick="prevStep()"
+            id="btn-back"
+            class="px-8 py-4 border border-white/30 rounded-3xl font-medium flex items-center gap-2 hover:bg-white/10 transition"
+            aria-label="Go to previous step"
+          >
+            <i class="fa-solid fa-arrow-left"></i> Back
+          </button>
+          <button
+            onclick="nextStep()"
+            id="btn-next"
+            class="px-10 py-4 bg-white text-zinc-900 rounded-3xl font-semibold flex items-center gap-3 hover:scale-105 transition disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Next <i class="fa-solid fa-arrow-right"></i>
+          </button>
         </div>
       </div>
     </div>
 
-    <!-- Toast Container -->
+    <!-- Success Modal -->
     <div
-      id="toast-container"
-      class="fixed bottom-6 right-6 flex flex-col gap-3 z-[100]"
-    ></div>
+      id="success-message"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="success-title"
+      class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50"
+    >
+      <div
+        class="bg-white/95 dark:bg-zinc-900/95 backdrop-blur-3xl rounded-3xl p-10 max-w-md text-center"
+      >
+        <div
+          class="w-20 h-20 bg-emerald-400 text-white rounded-3xl flex items-center justify-center mb-6 text-5xl mx-auto"
+        >
+          ✅
+        </div>
+        <h3 id="success-title" class="text-3xl font-bold mb-2">
+          Project Brief Submitted!
+        </h3>
+        <p class="text-teal-700 dark:text-teal-300 mb-8">
+          Thank you! Your information has been saved and we’ll get back to you
+          shortly.
+        </p>
+        <button
+          onclick="hideSuccess()"
+          class="px-8 py-3 border border-teal-700 rounded-3xl font-medium hover:bg-teal-700 hover:text-white transition"
+        >
+          Close
+        </button>
+      </div>
+    </div>
 
     <script>
-      // ==================== SINGLE SOURCE OF TRUTH ====================
-      let appState = {
-        kpis: [
-          {
-            label: "Revenue",
-            value: 124800,
-            prefix: "$",
-            delta: "+18%",
-            color: "#22d3ee",
-          },
-          {
-            label: "Active Users",
-            value: 8743,
-            delta: "+12%",
-            color: "#a78bfa",
-          },
-          {
-            label: "Conv. Rate",
-            value: 12.8,
-            suffix: "%",
-            delta: "+2.4%",
-            color: "#34d399",
-          },
-          { label: "Sessions", value: 45290, delta: "+31%", color: "#fbbf24" },
-        ],
-        labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-        revenue: [4200, 6800, 5900, 8100, 7200, 9400, 8800],
-        sessions: [820, 1340, 980, 1620, 1410, 1890, 1720],
-        table: [
-          {
-            event: "User signup",
-            user: "sarah.dev",
-            time: "2m ago",
-            status: "ok",
-          },
-          {
-            event: "Payment processed",
-            user: "mario.c",
-            time: "11m ago",
-            status: "ok",
-          },
-          {
-            event: "Failed login",
-            user: "guest123",
-            time: "27m ago",
-            status: "warn",
-          },
-        ],
-        feed: [
-          {
-            user: "sarah.dev",
-            detail: "signed up via email",
-            time: "just now",
-            type: "ok",
-          },
-          {
-            user: "mario.c",
-            detail: "processed $480 payment",
-            time: "11m ago",
-            type: "ok",
-          },
-        ],
-        originalRevenue: 124800,
+      let formData = JSON.parse(localStorage.getItem("day25WizardData")) || {
+        currentStep: 1,
+        name: "",
+        email: "",
+        projectType: "",
+        budget: "",
+        timeline: "",
+        notes: "",
       };
 
-      let lineChart, barChart;
-      let currentPeriod = 30;
-
-      function toggleTheme() {
-        document.documentElement.classList.toggle("dark");
-        const icon = document.getElementById("theme-icon");
-        icon.classList.toggle("fa-moon");
-        icon.classList.toggle("fa-sun");
+      function saveProgress() {
+        localStorage.setItem("day25WizardData", JSON.stringify(formData));
       }
 
-      function showToast(type, message) {
-        const container = document.getElementById("toast-container");
-        const toast = document.createElement("div");
-        toast.className = `flex items-center gap-4 px-6 py-4 rounded-3xl shadow-2xl min-w-[320px] transform transition-all duration-300 translate-y-8 opacity-0 ${type === "success" ? "bg-emerald-600" : "bg-cyan-600"} text-white`;
-        toast.innerHTML = `<i class="fa-solid fa-check-circle text-2xl"></i><span class="font-medium">${message}</span>`;
-        container.appendChild(toast);
-        setTimeout(
-          () => toast.classList.remove("translate-y-8", "opacity-0"),
-          10,
-        );
-        setTimeout(() => {
-          toast.classList.add("translate-y-8", "opacity-0");
-          setTimeout(() => toast.remove(), 300);
-        }, 3400);
-      }
-
-      function animateCounter(el, target) {
-        let start = 0;
-        const duration = 1400;
-        const startTime = performance.now();
-        function update(now) {
-          const elapsed = now - startTime;
-          const progress = Math.min(elapsed / duration, 1);
-          const eased = 1 - Math.pow(1 - progress, 3);
-          start = eased * target;
-          el.textContent =
-            target % 1 === 0
-              ? Math.floor(start).toLocaleString()
-              : start.toFixed(1);
-          if (progress < 1) requestAnimationFrame(update);
-        }
-        requestAnimationFrame(update);
-      }
-
-      function renderKPIs() {
-        const grid = document.getElementById("kpi-grid");
-        grid.innerHTML = appState.kpis
-          .map(
-            (k) => `
-        <div class="glass border border-white/10 rounded-3xl p-8 hover:-translate-y-1 transition-all">
-          <div class="flex justify-between"><span class="text-zinc-400 text-sm">${k.label}</span><span class="text-cyan-400 text-sm">${k.delta}</span></div>
-          <div class="kpi-value mt-2 flex items-baseline gap-1">
-            <span class="text-3xl">${k.prefix || ""}</span>
-            <span class="number">${k.value.toLocaleString()}</span>
-            <span>${k.suffix || ""}</span>
+      const steps = {
+        1: () => `
+        <h2 class="text-3xl font-semibold mb-8">Tell us about yourself</h2>
+        <div class="space-y-8">
+          <div>
+            <label for="name" class="block text-sm mb-2">Full Name <span class="text-red-400">*</span></label>
+            <input type="text" id="name" value="${formData.name}" required
+              class="w-full px-6 py-4 rounded-3xl bg-white/10 border border-white/30 focus:border-emerald-400 text-white"
+              oninput="formData.name = this.value; saveProgress(); validateStep()">
+            <div id="name-error" class="text-red-400 text-xs mt-1 hidden">Please enter your name</div>
           </div>
-        </div>
-      `,
-          )
-          .join("");
-        setTimeout(() => {
-          document
-            .querySelectorAll(".number")
-            .forEach((el, i) => animateCounter(el, appState.kpis[i].value));
-        }, 200);
+          <div>
+            <label for="email" class="block text-sm mb-2">Email Address <span class="text-red-400">*</span></label>
+            <input type="email" id="email" value="${formData.email}" required
+              class="w-full px-6 py-4 rounded-3xl bg-white/10 border border-white/30 focus:border-emerald-400 text-white"
+              oninput="formData.email = this.value; saveProgress(); validateStep()">
+            <div id="email-error" class="text-red-400 text-xs mt-1 hidden">Please enter a valid email</div>
+          </div>
+        </div>`,
+
+        2: () => `
+        <h2 class="text-3xl font-semibold mb-8">Project Details</h2>
+        <div class="space-y-8">
+          <div>
+            <label for="projectType" class="block text-sm mb-2">Project Type <span class="text-red-400">*</span></label>
+            <select id="projectType" required class="w-full px-6 py-4 rounded-3xl bg-white/10 border border-white/30 text-white focus:border-emerald-400"
+              onchange="formData.projectType = this.value; saveProgress(); validateStep()">
+              <option value="">Select one...</option>
+              <option value="Website" ${formData.projectType === "Website" ? "selected" : ""}>Website</option>
+              <option value="Dashboard" ${formData.projectType === "Dashboard" ? "selected" : ""}>Dashboard</option>
+              <option value="Mobile App" ${formData.projectType === "Mobile App" ? "selected" : ""}>Mobile App</option>
+            </select>
+            <div id="projectType-error" class="text-red-400 text-xs mt-1 hidden">Please select a project type</div>
+          </div>
+          <div>
+            <label for="budget" class="block text-sm mb-2">Budget Range</label>
+            <input type="text" id="budget" value="${formData.budget}"
+              class="w-full px-6 py-4 rounded-3xl bg-white/10 border border-white/30 focus:border-emerald-400 text-white"
+              oninput="formData.budget = this.value; saveProgress(); validateStep()">
+          </div>
+        </div>`,
+
+        3: () => `
+        <h2 class="text-3xl font-semibold mb-8">Final Preferences</h2>
+        <div class="space-y-8">
+          <div>
+            <label for="timeline" class="block text-sm mb-2">Timeline <span class="text-red-400">*</span></label>
+            <select id="timeline" required class="w-full px-6 py-4 rounded-3xl bg-white/10 border border-white/30 text-white focus:border-emerald-400"
+              onchange="formData.timeline = this.value; saveProgress(); validateStep()">
+              <option value="">Choose timeline...</option>
+              <option value="2 weeks" ${formData.timeline === "2 weeks" ? "selected" : ""}>Within 2 weeks</option>
+              <option value="1 month" ${formData.timeline === "1 month" ? "selected" : ""}>Within 1 month</option>
+              <option value="2 months" ${formData.timeline === "2 months" ? "selected" : ""}>Within 2 months</option>
+            </select>
+            <div id="timeline-error" class="text-red-400 text-xs mt-1 hidden">Please select a timeline</div>
+          </div>
+          <div>
+            <label for="notes" class="block text-sm mb-2">Additional Notes</label>
+            <textarea id="notes" rows="5" 
+              class="w-full px-6 py-4 rounded-3xl bg-white/10 border border-white/30 text-white resize-y"
+              oninput="formData.notes = this.value; saveProgress()">${formData.notes}</textarea>
+          </div>
+        </div>`,
+      };
+
+      function renderStep() {
+        document.getElementById("wizard-content").innerHTML =
+          steps[formData.currentStep]();
+        updateProgressBar();
+        updateNavButtons();
+        validateStep();
       }
 
-      function initCharts() {
-        lineChart = new Chart(document.getElementById("lineChart"), {
-          type: "line",
-          data: {
-            labels: appState.labels,
-            datasets: [
-              {
-                data: appState.revenue,
-                borderColor: "#22d3ee",
-                tension: 0.45,
-                borderWidth: 3,
-                pointRadius: 0,
-              },
-            ],
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: { legend: { display: false } },
-          },
-        });
-        barChart = new Chart(document.getElementById("barChart"), {
-          type: "bar",
-          data: {
-            labels: appState.labels,
-            datasets: [
-              {
-                data: appState.sessions,
-                backgroundColor: "#a78bfa",
-                borderRadius: 4,
-              },
-            ],
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: { legend: { display: false } },
-          },
-        });
-      }
-
-      function updateCharts() {
-        const m = currentPeriod / 30;
-        lineChart.data.datasets[0].data = appState.revenue.map((v) =>
-          Math.round(v * m),
-        );
-        barChart.data.datasets[0].data = appState.sessions.map((v) =>
-          Math.round(v * m),
-        );
-        lineChart.update();
-        barChart.update();
-      }
-
-      function setPeriod(d, btn) {
-        currentPeriod = d;
+      function updateProgressBar() {
+        const progress = ((formData.currentStep - 1) / 3) * 100;
+        document.getElementById("progress-bar").style.width = `${progress}%`;
         document
-          .querySelectorAll(".period-btn")
-          .forEach((b) => b.classList.remove("active"));
-        btn.classList.add("active");
-        updateCharts();
+          .getElementById("progress-bar")
+          .parentElement.setAttribute("aria-valuenow", Math.round(progress));
       }
 
-      function renderTable() {
-        const tbody = document.getElementById("data-table");
-        tbody.innerHTML = appState.table
-          .map(
-            (r) => `
-        <tr class="border-b border-white/10 hover:bg-white/5">
-          <td class="p-4">${r.event}</td>
-          <td class="p-4 text-zinc-400">${r.user}</td>
-          <td class="p-4 text-zinc-400">${r.time}</td>
-          <td class="p-4"><span class="px-3 py-1 text-xs rounded-2xl ${r.status === "ok" ? "bg-cyan-400/10 text-cyan-400" : "bg-amber-400/10 text-amber-400"}">${r.status}</span></td>
-        </tr>
-      `,
-          )
-          .join("");
+      function updateNavButtons() {
+        document.getElementById("btn-back").disabled =
+          formData.currentStep === 1;
       }
 
-      function renderFeed() {
-        const feed = document.getElementById("feed");
-        feed.innerHTML = appState.feed
-          .map(
-            (f) => `
-        <div class="flex gap-3 text-sm">
-          <span class="text-cyan-400">•</span>
-          <div><span class="font-medium">${f.user}</span> ${f.detail} <span class="text-zinc-400">${f.time}</span></div>
-        </div>
-      `,
-          )
-          .join("");
+      function validateStep() {
+        let valid = true;
+        if (formData.currentStep === 1) {
+          valid = formData.name.trim() !== "" && formData.email.trim() !== "";
+          document
+            .getElementById("name-error")
+            .classList.toggle("hidden", formData.name.trim() !== "");
+          document
+            .getElementById("email-error")
+            .classList.toggle("hidden", formData.email.trim() !== "");
+        } else if (formData.currentStep === 2) {
+          valid = formData.projectType !== "";
+          document
+            .getElementById("projectType-error")
+            .classList.toggle("hidden", formData.projectType !== "");
+        } else if (formData.currentStep === 3) {
+          valid = formData.timeline !== "";
+          document
+            .getElementById("timeline-error")
+            .classList.toggle("hidden", formData.timeline !== "");
+        }
+        document.getElementById("btn-next").disabled = !valid;
+        return valid;
       }
 
-      function simulateLiveUpdate() {
-        const revenueKPI = appState.kpis[0];
-        const increase = Math.floor(Math.random() * 1800) + 600;
-        revenueKPI.value += increase;
-        const percentIncrease = (
-          ((revenueKPI.value - appState.originalRevenue) /
-            appState.originalRevenue) *
-          100
-        ).toFixed(0);
-        revenueKPI.delta = `+${percentIncrease}%`;
-        renderKPIs();
-        showToast(
-          "success",
-          `Revenue +$${increase.toLocaleString()} • Live update`,
-        );
+      function nextStep() {
+        if (!validateStep()) return;
+        if (formData.currentStep < 3) {
+          formData.currentStep++;
+          renderStep();
+          saveProgress();
+        } else {
+          showSuccess();
+        }
       }
 
-      window.onload = function () {
-        renderKPIs();
-        initCharts();
-        renderTable();
-        renderFeed();
-        setInterval(() => {
-          if (Math.random() > 0.65) simulateLiveUpdate();
-        }, 4200);
+      function prevStep() {
+        if (formData.currentStep > 1) {
+          formData.currentStep--;
+          renderStep();
+          saveProgress();
+        }
+      }
+
+      function showSuccess() {
+        const modal = document.getElementById("success-message");
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+      }
+
+      function hideSuccess() {
+        const modal = document.getElementById("success-message");
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+        formData = {
+          currentStep: 1,
+          name: "",
+          email: "",
+          projectType: "",
+          budget: "",
+          timeline: "",
+          notes: "",
+        };
+        localStorage.removeItem("day25WizardData");
+        renderStep();
+      }
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowRight") nextStep();
+        if (e.key === "ArrowLeft") prevStep();
+      });
+
+      window.onload = () => {
+        renderStep();
       };
     </script>
   </body>
