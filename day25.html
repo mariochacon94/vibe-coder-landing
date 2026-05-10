@@ -13,15 +13,6 @@
       tailwind.config = { darkMode: "class" };
     </script>
     <style>
-      .hero-bg {
-        background: linear-gradient(135deg, #0f766e 0%, #164e63 100%);
-      }
-      .glass {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(16px);
-      }
-
-      /* High-contrast dropdown styling */
       select {
         color: #ffffff !important;
         font-weight: 500;
@@ -39,13 +30,24 @@
   </head>
   <body class="bg-zinc-950 text-white font-sans min-h-screen">
     <div class="max-w-screen-2xl mx-auto px-6 py-12">
+      <!-- Back to Portfolio Button -->
+      <a
+        href="index.html"
+        class="inline-flex items-center gap-2.5 px-5 py-2.5 mb-12 text-sm font-medium text-zinc-400 hover:text-white transition-all group mx-auto block w-fit"
+      >
+        <i
+          class="fa-solid fa-arrow-left text-base transition-transform group-hover:-translate-x-0.5"
+        ></i>
+        <span>Back to Portfolio</span>
+      </a>
+
       <h1
         class="text-5xl font-bold text-center mb-16 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
       >
         Day 25: Multi-Step Wizards + Progressive Saving + Accessibility
       </h1>
 
-      <!-- Progress Bar -->
+      <!-- Accessible Progress Bar -->
       <div
         class="max-w-2xl mx-auto mb-12"
         role="progressbar"
