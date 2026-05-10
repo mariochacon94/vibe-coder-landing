@@ -64,7 +64,7 @@
               </div>
             </div>
             <div id="days-count" class="text-5xl font-bold tabular-nums">
-              22
+              25
             </div>
             <div class="text-xs tracking-widest text-zinc-400">
               DAYS COMPLETED
@@ -79,7 +79,7 @@
               </div>
             </div>
             <div id="projects-count" class="text-5xl font-bold tabular-nums">
-              21
+              25
             </div>
             <div class="text-xs tracking-widest text-zinc-400">
               PROJECTS BUILT
@@ -94,7 +94,7 @@
               </div>
             </div>
             <div id="hours-count" class="text-5xl font-bold tabular-nums">
-              78
+              88
             </div>
             <div class="text-xs tracking-widest text-zinc-400">
               HOURS ENGAGED
@@ -108,7 +108,6 @@
         id="week-view"
         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto"
       >
-        <!-- Week 1 -->
         <div
           onclick="showWeek(1)"
           class="group cursor-pointer bg-zinc-900 border border-white/10 rounded-3xl p-10 hover:border-blue-400/50 hover:-translate-y-3 transition-all"
@@ -121,8 +120,6 @@
             Layouts, components, and core interactivity.
           </p>
         </div>
-
-        <!-- Week 2 -->
         <div
           onclick="showWeek(2)"
           class="group cursor-pointer bg-zinc-900 border border-white/10 rounded-3xl p-10 hover:border-purple-400/50 hover:-translate-y-3 transition-all"
@@ -135,8 +132,6 @@
             Forms, auth, animations, and professional UI.
           </p>
         </div>
-
-        <!-- Week 3 -->
         <div
           onclick="showWeek(3)"
           class="group cursor-pointer bg-zinc-900 border border-white/10 rounded-3xl p-10 hover:border-amber-400/50 hover:-translate-y-3 transition-all"
@@ -149,8 +144,6 @@
             Dashboards, real-time data, and analytics tools.
           </p>
         </div>
-
-        <!-- Week 4 -->
         <div
           onclick="showWeek(4)"
           class="group cursor-pointer bg-zinc-900 border border-white/10 rounded-3xl p-10 hover:border-emerald-400/50 hover:-translate-y-3 transition-all"
@@ -192,9 +185,9 @@
       }
 
       window.onload = () => {
-        animateCounter("days-count", 22);
-        animateCounter("projects-count", 21);
-        animateCounter("hours-count", 78);
+        animateCounter("days-count", 25);
+        animateCounter("projects-count", 25);
+        animateCounter("hours-count", 88);
       };
 
       const projectsData = {
@@ -242,11 +235,11 @@
         4: {
           title: "Week 4 - Interactive Experiences",
           projects: [
-            { name: "Day 22 - Drag & Drop Kanban Boards", link: "day22.html" },
-            { name: "Day 23 - Infinite Scrolling Feeds", link: "day23.html" },
-            { name: "Day 24 - Real-time Collaboration", link: "day24.html" },
+            { name: "Day 22 – Drag & Drop Kanban Boards", link: "day22.html" },
+            { name: "Day 23 – Infinite Scrolling Feeds", link: "day23.html" },
+            { name: "Day 24 – Real-time Collaboration", link: "day24.html" },
             {
-              name: "Day 25 - Interactive Data Visualizations",
+              name: "Day 25 – Multi-Step Wizards & Progressive Saving",
               link: "day25.html",
             },
           ],
