@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day 27 – Real-time Collaboration & Optimistic Updates</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["DM Sans", "sans-serif"],
+              display: ["Syne", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .font-display {
+        font-family: "Syne", sans-serif;
+      }
+      @keyframes pulse-dot {
+        0%,
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.5;
+          transform: scale(0.8);
+        }
+      }
+      .animate-pulse-dot {
+        animation: pulse-dot 2s infinite;
+      }
+      @keyframes flash-in {
+        0% {
+          background-color: rgba(124, 109, 250, 0.15);
+          border-color: #7c6dfa;
+        }
+        100% {
+          background-color: rgba(255, 255, 255, 0.05);
+          border-color: rgba(255, 255, 255, 0.07);
+        }
+      }
+      .flash {
+        animation: flash-in 0.6s ease forwards;
+      }
+      @keyframes slide-up {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .toast-show {
+        animation: slide-up 0.3s ease forwards;
+      }
+      .toast-hide {
+        opacity: 0;
+        transform: translateY(8px);
+        transition: all 0.3s;
+      }
+      ::-webkit-scrollbar {
+        display: none;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-zinc-950 text-zinc-100 font-sans min-h-screen overflow-hidden"
+  >
+    <!-- Back to Portfolio Button -->
+    <a
+      href="index.html"
+      class="inline-flex items-center gap-2.5 px-5 py-2.5 mb-8 text-sm font-medium text-zinc-400 hover:text-white transition-all group mx-auto block w-fit"
+    >
+      <i
+        class="fa-solid fa-arrow-left text-base transition-transform group-hover:-translate-x-0.5"
+      ></i>
+      <span>Back to Portfolio</span>
+    </a>
+
+    <div class="flex h-screen w-full">
+      <!-- Sidebar -->
+      <aside
+        class="w-56 flex-shrink-0 bg-zinc-900 border-r border-white/[0.07] flex flex-col p-4 gap-1"
+      >
+        <!-- Brand -->
+        <div class="flex items-center gap-3 px-2 py-1 mb-5">
+          <div
+            class="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-purple-400 flex items-center justify-center text-lg flex-shrink-0"
+          >
+            📦
+          </div>
+          <span class="font-display font-bold text-lg tracking-tight"
+            >VibeStore</span
+          >
+        </div>
+        <!-- Nav -->
+        <button
+          id="nav-dashboard"
+          onclick="navigateTo('dashboard')"
+          class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-zinc-400 hover:bg-white/10 hover:text-zinc-100 transition-all text-left w-full"
+        >
+          <i class="fa-solid fa-gauge-high w-4 text-center"></i> Dashboard
+        </button>
+        <button
+          id="nav-projects"
+          onclick="navigateTo('projects')"
+          class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-zinc-400 hover:bg-white/10 hover:text-zinc-100 transition-all text-left w-full"
+        >
+          <i class="fa-solid fa-folder-open w-4 text-center"></i> Projects
+        </button>
+        <button
+          id="nav-team"
+          onclick="navigateTo('team')"
+          class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-zinc-400 hover:bg-white/10 hover:text-zinc-100 transition-all text-left w-full"
+        >
+          <i class="fa-solid fa-users w-4 text-center"></i> Team
+        </button>
+        <button
+          id="nav-settings"
+          onclick="navigateTo('settings')"
+          class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-zinc-400 hover:bg-white/10 hover:text-zinc-100 transition-all text-left w-full"
+        >
+          <i class="fa-solid fa-sliders w-4 text-center"></i> Settings
+        </button>
+        <!-- User -->
+        <div class="mt-auto pt-4 border-t border-white/[0.07]">
+          <div
+            class="flex items-center gap-3 px-3 py-2 rounded-xl bg-white/[0.05]"
+          >
+            <div
+              class="w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-emerald-400 flex items-center justify-center text-xs font-bold text-white font-display flex-shrink-0"
+            >
+              M
+            </div>
+            <div>
+              <p class="text-sm font-medium">Mario</p>
+              <p class="text-xs text-zinc-500">Admin</p>
+            </div>
+          </div>
+        </div>
+      </aside>
+      <!-- Main -->
+      <main class="flex-1 overflow-y-auto p-8" id="main"></main>
+    </div>
+
+    <!-- Toast -->
+    <div
+      id="toast"
+      class="toast-hide fixed bottom-6 right-6 z-50 flex items-center gap-3 bg-zinc-800 border border-white/10 rounded-xl px-4 py-3 text-sm max-w-xs pointer-events-none"
+    >
+      <i class="fa-solid fa-bolt text-emerald-400 flex-shrink-0"></i>
+      <span id="toast-text" class="text-zinc-100 leading-snug"></span>
+    </div>
+
+    <script>
+      var store = {
+        user: { name: "Mario", role: "admin" },
+        projects: [
+          {
+            id: 1,
+            name: "Shine On Website",
+            status: "live",
+            progress: 100,
+            lastEditedBy: "Sarah",
+          },
+          {
+            id: 2,
+            name: "Vibe Coder Portfolio",
+            status: "in-progress",
+            progress: 85,
+            lastEditedBy: "You",
+          },
+          {
+            id: 3,
+            name: "Mobile App Redesign",
+            status: "in-review",
+            progress: 62,
+            lastEditedBy: "Alex",
+          },
+        ],
+        presence: ["Sarah", "Alex", "You"],
+        streak: 13,
+      };
+      var currentPage = "dashboard";
+
+      function navigateTo(page) {
+        currentPage = page;
+        document.querySelectorAll(".nav-item").forEach(function (el) {
+          el.classList.remove("bg-white/10", "text-zinc-100");
+          el.classList.add("text-zinc-400");
+        });
+        var active = document.getElementById("nav-" + page);
+        if (active) {
+          active.classList.add("bg-white/10", "text-zinc-100");
+          active.classList.remove("text-zinc-400");
+        }
+        render();
+      }
+
+      function statusBadge(s) {
+        if (s === "live")
+          return "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20";
+        if (s === "in-progress")
+          return "bg-blue-500/10 text-blue-400 border border-blue-500/20";
+        return "bg-amber-500/10 text-amber-400 border border-amber-500/20";
+      }
+
+      function statusLabel(s) {
+        if (s === "live") return "Live";
+        if (s === "in-progress") return "In Progress";
+        return "In Review";
+      }
+
+      function actIconBg(s) {
+        if (s === "live") return "bg-emerald-500/10 text-emerald-400";
+        if (s === "in-progress") return "bg-blue-500/10 text-blue-400";
+        return "bg-violet-500/10 text-violet-400";
+      }
+
+      function actIcon(s) {
+        if (s === "live") return "fa-circle-check";
+        if (s === "in-progress") return "fa-arrows-rotate";
+        return "fa-eye";
+      }
+
+      function render() {
+        var m = document.getElementById("main");
+        if (currentPage === "dashboard") m.innerHTML = renderDashboard();
+        else if (currentPage === "projects") m.innerHTML = renderProjects();
+        else m.innerHTML = renderPlaceholder(currentPage);
+      }
+
+      function renderDashboard() {
+        var pills = store.presence
+          .map(function (n) {
+            return (
+              '<div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium">' +
+              '<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse-dot inline-block"></span>' +
+              n +
+              "</div>"
+            );
+          })
+          .join("");
+        var items = store.projects
+          .map(function (p) {
+            return (
+              '<div class="flex items-center gap-4 bg-white/[0.05] border border-white/[0.07] rounded-xl px-4 py-3.5 hover:bg-white/[0.08] hover:border-white/[0.12] transition-all" id="act-' +
+              p.id +
+              '">' +
+              '<div class="w-9 h-9 rounded-xl flex-shrink-0 flex items-center justify-center text-sm ' +
+              actIconBg(p.status) +
+              '">' +
+              '<i class="fa-solid ' +
+              actIcon(p.status) +
+              '"></i>' +
+              "</div>" +
+              '<div class="flex-1 min-w-0">' +
+              '<p class="text-sm font-medium truncate">' +
+              p.name +
+              "</p>" +
+              '<p class="text-xs text-zinc-500 mt-0.5">Last edited by <span class="text-emerald-400">' +
+              p.lastEditedBy +
+              "</span></p>" +
+              "</div>" +
+              '<div class="flex items-center gap-2.5 flex-shrink-0">' +
+              '<div class="w-16 h-1 bg-zinc-800 rounded-full overflow-hidden">' +
+              '<div class="h-full bg-violet-500 rounded-full transition-all duration-700" style="width:' +
+              p.progress +
+              '%"></div>' +
+              "</div>" +
+              '<span class="font-display text-xs font-semibold text-violet-300 w-8 text-right">' +
+              p.progress +
+              "%</span>" +
+              "</div>" +
+              "</div>"
+            );
+          })
+          .join("");
+        return (
+          '<div class="mb-7">' +
+          '<h1 class="font-display text-2xl font-bold tracking-tight">Good evening, ' +
+          store.user.name +
+          " 👋</h1>" +
+          "<p class=\"text-sm text-zinc-500 mt-1\">Here's what's happening across your workspace</p>" +
+          "</div>" +
+          '<div class="flex items-center gap-2 bg-white/[0.05] border border-white/[0.07] rounded-2xl px-4 py-3 mb-6">' +
+          '<span class="text-xs text-zinc-500 font-medium mr-1 whitespace-nowrap">Live now</span>' +
+          pills +
+          "</div>" +
+          '<div class="grid grid-cols-3 gap-3.5 mb-7">' +
+          '<div class="bg-white/[0.05] border border-white/[0.07] rounded-2xl p-5 hover:border-white/[0.12] transition-all">' +
+          '<p class="text-xs font-medium text-zinc-500 uppercase tracking-wide mb-2.5 flex items-center gap-1.5"><i class="fa-solid fa-users text-xs"></i>Live users</p>' +
+          '<p class="font-display text-3xl font-bold tracking-tight text-emerald-400">' +
+          store.presence.length +
+          "</p>" +
+          '<p class="text-xs text-zinc-600 mt-1.5">Active right now</p>' +
+          "</div>" +
+          '<div class="bg-white/[0.05] border border-white/[0.07] rounded-2xl p-5 hover:border-white/[0.12] transition-all">' +
+          '<p class="text-xs font-medium text-zinc-500 uppercase tracking-wide mb-2.5 flex items-center gap-1.5"><i class="fa-solid fa-folder text-xs"></i>Projects</p>' +
+          '<p class="font-display text-3xl font-bold tracking-tight text-violet-300">' +
+          store.projects.length +
+          "</p>" +
+          '<p class="text-xs text-zinc-600 mt-1.5">Across all spaces</p>' +
+          "</div>" +
+          '<div class="bg-white/[0.05] border border-white/[0.07] rounded-2xl p-5 hover:border-white/[0.12] transition-all">' +
+          '<p class="text-xs font-medium text-zinc-500 uppercase tracking-wide mb-2.5 flex items-center gap-1.5"><i class="fa-solid fa-fire text-xs"></i>Streak</p>' +
+          '<p class="font-display text-3xl font-bold tracking-tight text-amber-400">' +
+          store.streak +
+          '<span class="text-lg">d</span></p>' +
+          '<p class="text-xs text-zinc-600 mt-1.5">Keep it going 🔥</p>' +
+          "</div>" +
+          "</div>" +
+          '<div class="flex items-center justify-between mb-3.5">' +
+          '<h2 class="font-display text-sm font-semibold">Recent Activity</h2>' +
+          '<div class="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-emerald-400 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">' +
+          '<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse-dot inline-block"></span>Live' +
+          "</div>" +
+          "</div>" +
+          '<div class="flex flex-col gap-2">' +
+          items +
+          "</div>"
+        );
+      }
+
+      function renderProjects() {
+        var cards = store.projects
+          .map(function (p) {
+            return (
+              '<div class="bg-white/[0.05] border border-white/[0.07] rounded-2xl p-5 hover:bg-white/[0.08] hover:border-white/[0.12] transition-all" id="proj-' +
+              p.id +
+              '">' +
+              '<div class="flex items-center justify-between mb-3">' +
+              '<span class="font-display text-base font-semibold">' +
+              p.name +
+              "</span>" +
+              '<span class="text-xs font-semibold px-2.5 py-1 rounded-full uppercase tracking-wide ' +
+              statusBadge(p.status) +
+              '">' +
+              statusLabel(p.status) +
+              "</span>" +
+              "</div>" +
+              '<p class="text-xs text-zinc-500 mb-3.5 flex items-center gap-1.5">' +
+              '<i class="fa-solid fa-pen-nib text-violet-400 text-xs"></i> Last edited by ' +
+              p.lastEditedBy +
+              "</p>" +
+              '<div class="flex items-center gap-3">' +
+              '<div class="flex-1 h-1.5 bg-zinc-800 rounded-full overflow-hidden">' +
+              '<div class="h-full rounded-full bg-gradient-to-r from-violet-500 to-violet-300 transition-all duration-700" style="width:' +
+              p.progress +
+              '%"></div>' +
+              "</div>" +
+              '<span class="font-display text-xs font-bold text-violet-300 w-9 text-right flex-shrink-0">' +
+              p.progress +
+              "%</span>" +
+              "</div>" +
+              "</div>"
+            );
+          })
+          .join("");
+        return (
+          '<div class="mb-7">' +
+          '<h1 class="font-display text-2xl font-bold tracking-tight">Projects</h1>' +
+          '<p class="text-sm text-zinc-500 mt-1">' +
+          store.projects.length +
+          " projects — updates streaming live</p>" +
+          "</div>" +
+          '<div class="flex items-center justify-between mb-3.5">' +
+          '<h2 class="font-display text-sm font-semibold">All Projects</h2>' +
+          '<div class="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-emerald-400 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">' +
+          '<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse-dot inline-block"></span>Live' +
+          "</div>" +
+          "</div>" +
+          '<div class="flex flex-col gap-3">' +
+          cards +
+          "</div>"
+        );
+      }
+
+      function renderPlaceholder(page) {
+        var labels = { team: "Team", settings: "Settings" };
+        return (
+          '<div class="mb-7">' +
+          '<h1 class="font-display text-2xl font-bold tracking-tight">' +
+          (labels[page] || page) +
+          "</h1>" +
+          '<p class="text-sm text-zinc-500 mt-1">Coming soon — stay tuned.</p>' +
+          "</div>"
+        );
+      }
+
+      function showToast(msg) {
+        var t = document.getElementById("toast");
+        document.getElementById("toast-text").textContent = msg;
+        t.classList.remove("toast-hide");
+        t.classList.add("toast-show");
+        clearTimeout(t._timer);
+        t._timer = setTimeout(function () {
+          t.classList.remove("toast-show");
+          t.classList.add("toast-hide");
+        }, 2800);
+      }
+
+      function flashItem(id) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        el.classList.remove("flash");
+        void el.offsetWidth;
+        el.classList.add("flash");
+      }
+
+      function simulateLiveUpdates() {
+        setInterval(function () {
+          if (Math.random() > 0.45) {
+            var idx = Math.floor(Math.random() * store.projects.length);
+            var p = store.projects[idx];
+            if (p.progress < 100) {
+              p.progress = Math.min(
+                100,
+                p.progress + Math.floor(Math.random() * 5) + 1,
+              );
+            }
+            p.lastEditedBy =
+              store.presence[Math.floor(Math.random() * store.presence.length)];
+            render();
+            showToast(p.name + " updated by " + p.lastEditedBy);
+            setTimeout(function () {
+              flashItem("act-" + p.id);
+              flashItem("proj-" + p.id);
+            }, 50);
+          }
+        }, 3800);
+      }
+
+      navigateTo("dashboard");
+      simulateLiveUpdates();
+    </script>
+  </body>
+</html>
