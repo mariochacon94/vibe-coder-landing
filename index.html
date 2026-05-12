@@ -30,6 +30,19 @@
           opacity: 0.85;
         }
       }
+      /* Mobile-friendly adjustments */
+      @media (max-width: 640px) {
+        .glass-counter {
+          gap: 12px;
+          padding: 20px 24px;
+        }
+        .glass-counter > div {
+          font-size: 0.95rem;
+        }
+        .text-5xl {
+          font-size: 2.5rem;
+        }
+      }
     </style>
   </head>
   <body class="bg-zinc-950 text-white font-sans min-h-screen">
@@ -52,19 +65,28 @@
         </p>
       </div>
 
-      <!-- Premium Glossy Counter -->
+      <!-- Premium Glossy Counter with Noun Project style icons -->
       <div class="flex justify-center mb-20">
         <div class="glass-counter inline-flex gap-16 rounded-3xl px-16 py-10">
           <div class="text-center">
             <div class="flex justify-center mb-3">
-              <div
-                class="w-12 h-12 bg-gradient-to-br from-blue-400 to-cyan-400 rounded-2xl flex items-center justify-center text-2xl stat-glow"
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-12 h-12 stat-glow text-blue-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
               >
-                📅
-              </div>
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2"
+                />
+              </svg>
             </div>
             <div id="days-count" class="text-5xl font-bold tabular-nums">
-              27
+              28
             </div>
             <div class="text-xs tracking-widest text-zinc-400">
               DAYS COMPLETED
@@ -72,14 +94,23 @@
           </div>
           <div class="text-center">
             <div class="flex justify-center mb-3">
-              <div
-                class="w-12 h-12 bg-gradient-to-br from-purple-400 to-violet-400 rounded-2xl flex items-center justify-center text-2xl stat-glow"
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-12 h-12 stat-glow text-purple-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
               >
-                🚀
-              </div>
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  d="M13 10V3L4 14h7v7l9-11h-7z"
+                />
+              </svg>
             </div>
             <div id="projects-count" class="text-5xl font-bold tabular-nums">
-              27
+              28
             </div>
             <div class="text-xs tracking-widest text-zinc-400">
               PROJECTS BUILT
@@ -87,11 +118,20 @@
           </div>
           <div class="text-center">
             <div class="flex justify-center mb-3">
-              <div
-                class="w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-400 rounded-2xl flex items-center justify-center text-2xl stat-glow"
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-12 h-12 stat-glow text-amber-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
               >
-                ⏱️
-              </div>
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  d="M12 8v4l3 3m6-3a9 9 0 01-18 0 9 9 0 0118 0z"
+                />
+              </svg>
             </div>
             <div id="hours-count" class="text-5xl font-bold tabular-nums">
               88
@@ -185,8 +225,8 @@
       }
 
       window.onload = () => {
-        animateCounter("days-count", 27);
-        animateCounter("projects-count", 27);
+        animateCounter("days-count", 28);
+        animateCounter("projects-count", 28);
         animateCounter("hours-count", 88);
       };
 
@@ -249,6 +289,10 @@
             {
               name: "Day 27 – Real-time Collaboration & Optimistic Updates",
               link: "day27.html",
+            },
+            {
+              name: "Day 28 – Advanced Data Tables with Real-time Sync",
+              link: "day28.html",
             },
           ],
         },
