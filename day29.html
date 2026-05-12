@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day 29 – Advanced Drag & Drop Dashboard Builder</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = { darkMode: "class" };
+    </script>
+    <style>
+      .font-display {
+        font-family: "Syne", sans-serif;
+      }
+      @keyframes pulse-dot {
+        0%,
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.5;
+          transform: scale(0.8);
+        }
+      }
+      .animate-pulse-dot {
+        animation: pulse-dot 2s infinite;
+      }
+      @keyframes flash-in {
+        0% {
+          background-color: rgba(124, 109, 250, 0.25);
+        }
+        100% {
+          background-color: rgba(255, 255, 255, 0.05);
+        }
+      }
+      .flash {
+        animation: flash-in 0.6s ease forwards;
+      }
+      .widget {
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .drop-zone {
+        transition: all 0.2s;
+      }
+    </style>
+  </head>
+  <body class="bg-zinc-950 text-zinc-100 font-sans min-h-screen">
+    <!-- Back to Portfolio -->
+    <a
+      href="index.html"
+      class="inline-flex items-center gap-2.5 px-5 py-2.5 mb-8 text-sm font-medium text-zinc-400 hover:text-white transition-all group mx-auto block w-fit"
+    >
+      <i
+        class="fa-solid fa-arrow-left text-base transition-transform group-hover:-translate-x-0.5"
+      ></i>
+      <span>Back to Portfolio</span>
+    </a>
+
+    <div class="flex h-[calc(100vh-60px)]">
+      <!-- Widget Library -->
+      <aside
+        class="w-72 bg-zinc-900 border-r border-white/10 p-6 flex flex-col"
+      >
+        <div class="flex items-center gap-3 mb-8">
+          <div
+            class="w-9 h-9 bg-gradient-to-br from-violet-500 to-purple-400 rounded-2xl flex items-center justify-center text-2xl"
+          >
+            📦
+          </div>
+          <h1 class="font-display font-bold text-2xl tracking-tighter">
+            Dashboard Builder
+          </h1>
+        </div>
+        <div
+          class="text-xs uppercase font-medium tracking-widest text-zinc-400 mb-4"
+        >
+          Widgets
+        </div>
+        <div
+          draggable="true"
+          ondragstart="dragStart(event)"
+          class="widget-item mb-3 flex items-center gap-3 px-5 py-4 bg-white/5 hover:bg-white/10 rounded-3xl cursor-grab"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-7 h-7 text-emerald-400"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M13 10V3L4 14h7v7l9-11h-7z"
+            />
+          </svg>
+          <span class="font-medium">Stat Card</span>
+        </div>
+        <div
+          draggable="true"
+          ondragstart="dragStart(event)"
+          class="widget-item mb-3 flex items-center gap-3 px-5 py-4 bg-white/5 hover:bg-white/10 rounded-3xl cursor-grab"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-7 h-7 text-blue-400"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2 2 2 0 01-2-2 2 2 0 01-2-2 2 2 0 012-2zm10 10v-6a2 2 0 01-2-2h-2a2 2 0 01-2 2v6a2 2 0 01-2 2z"
+            />
+          </svg>
+          <span class="font-medium">Chart Widget</span>
+        </div>
+      </aside>
+
+      <!-- Canvas -->
+      <main class="flex-1 p-8 overflow-auto">
+        <div
+          id="dashboard-canvas"
+          class="min-h-full bg-white/[0.03] border border-dashed border-white/30 rounded-3xl p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 drop-zone"
+          ondrop="drop(event)"
+          ondragover="allowDrop(event)"
+        ></div>
+      </main>
+    </div>
+
+    <!-- Toast -->
+    <div
+      id="toast"
+      class="hidden fixed bottom-6 right-6 bg-zinc-900 border border-white/10 text-white px-6 py-4 rounded-3xl shadow-2xl flex items-center gap-3"
+    >
+      <i class="fa-solid fa-check-circle text-emerald-400"></i>
+      <span id="toast-text" class="font-medium"></span>
+    </div>
+
+    <script>
+      let dashboardLayout =
+        JSON.parse(localStorage.getItem("dashboardLayout")) || [];
+      const wsChannel = new BroadcastChannel("vibe-dashboard-sync");
+
+      function saveLayout() {
+        localStorage.setItem(
+          "dashboardLayout",
+          JSON.stringify(dashboardLayout),
+        );
+        wsChannel.postMessage({ type: "update", layout: dashboardLayout });
+      }
+
+      function showToast(message) {
+        const toast = document.getElementById("toast");
+        document.getElementById("toast-text").textContent = message;
+        toast.classList.remove("hidden");
+        setTimeout(() => toast.classList.add("hidden"), 2200);
+      }
+
+      function renderDashboard() {
+        const canvas = document.getElementById("dashboard-canvas");
+        canvas.innerHTML = dashboardLayout.length
+          ? dashboardLayout
+              .map(
+                (w, i) => `
+          <div id="widget-${i}" class="widget group bg-white/[0.05] hover:bg-white/[0.08] border border-white/10 rounded-3xl p-6 relative cursor-grab"
+               draggable="true" ondragstart="dragWidgetStart(event, ${i})">
+            <!-- Drag Handle -->
+            <div class="absolute -left-1 top-6 w-6 h-6 bg-white/10 hover:bg-white/20 rounded-2xl flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-all">☰</div>
+            
+            <div class="flex justify-between items-start">
+              <div onclick="editWidget(${i})" class="flex-1 cursor-text">
+                <div class="text-sm text-zinc-400">${w.type}</div>
+                <h4 id="title-${i}" class="font-medium text-xl">${w.title}</h4>
+              </div>
+              <button onclick="removeWidget(${i}); event.stopImmediatePropagation()" class="text-zinc-400 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all">
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+            
+            <div onclick="editWidget(${i})" id="value-${i}" class="mt-8 text-5xl font-display font-bold tabular-nums">${w.value}</div>
+          </div>
+        `,
+              )
+              .join("")
+          : `<div class="flex flex-col items-center justify-center h-96 text-zinc-400 border-2 border-dashed border-white/20 rounded-3xl">
+          <p class="text-2xl mb-2">Drop widgets here</p>
+          <p class="text-sm">Your dashboard is empty — drag from the left</p>
+        </div>`;
+      }
+
+      function editWidget(i) {
+        const titleEl = document.getElementById(`title-${i}`);
+        const valueEl = document.getElementById(`value-${i}`);
+        const newTitle = prompt("Edit title:", dashboardLayout[i].title);
+        const newValue = prompt("Edit value:", dashboardLayout[i].value);
+        if (newTitle !== null) dashboardLayout[i].title = newTitle;
+        if (newValue !== null) dashboardLayout[i].value = newValue;
+        saveLayout();
+        renderDashboard();
+        showToast("Widget updated live");
+        document.getElementById(`widget-${i}`).classList.add("flash");
+      }
+
+      function removeWidget(i) {
+        if (confirm("Delete this widget?")) {
+          dashboardLayout.splice(i, 1);
+          saveLayout();
+          renderDashboard();
+        }
+      }
+
+      function dragStart(e) {
+        e.dataTransfer.setData("type", e.target.textContent.trim());
+      }
+
+      function dragWidgetStart(e, i) {
+        e.dataTransfer.setData("reorder", i);
+      }
+
+      function allowDrop(e) {
+        e.preventDefault();
+      }
+
+      function drop(e) {
+        e.preventDefault();
+        const type = e.dataTransfer.getData("type");
+        if (type) {
+          dashboardLayout.push({
+            type: type,
+            title: type.includes("Stat")
+              ? "Revenue"
+              : type.includes("Chart")
+                ? "Sessions"
+                : "Tasks",
+            value: type.includes("Stat")
+              ? "$24k"
+              : type.includes("Chart")
+                ? "4,892"
+                : "18",
+          });
+          saveLayout();
+          renderDashboard();
+          showToast("Widget added");
+        }
+      }
+
+      // Real WebSocket sync across tabs
+      wsChannel.onmessage = (e) => {
+        if (e.data.type === "update") {
+          dashboardLayout = e.data.layout;
+          renderDashboard();
+        }
+      };
+
+      window.onload = () => {
+        renderDashboard();
+      };
+    </script>
+  </body>
+</html>
